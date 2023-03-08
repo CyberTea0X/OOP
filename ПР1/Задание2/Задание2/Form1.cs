@@ -13,6 +13,7 @@ namespace Задание2
     public partial class Form1 : Form
     {
         decimal guess;
+        decimal delta = Convert.ToDecimal(Math.Pow(10, -28));
         public Form1()
         {
             InitializeComponent();
@@ -36,6 +37,7 @@ namespace Задание2
         private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
         {
             OnlyValidDecimal(in textBox1,ref e);
+            clear();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -88,6 +90,7 @@ namespace Задание2
 
         private void button2_Click(object sender, EventArgs e)
         {
+            clear();
             string entered_value = textBox1.Text.ToString();
             decimal number_decimal;
             string error_message;
@@ -96,19 +99,22 @@ namespace Задание2
                 MessageBox.Show(error_message);
                 return;
             }
-            decimal delta = Convert.ToDecimal(Math.Pow(10, -28));
-            this.guess = number_decimal / 2;
-            decimal result = ((number_decimal / this.guess) + this.guess) / 2;
-            while (Math.Abs(result - this.guess) > delta)
+            decimal result = number_decimal / 2;
+            while (Math.Abs(result - this.guess) > this.delta)
             {
                 do_newton_iter(in number_decimal, ref result, ref this.guess);
             }
+            decimal change = this.guess - result;
+            label9.Text = $"{Math.Abs(change)}";
+            decimal error = Math.Abs(result - this.guess);
+            label10.Text = $"{error}";
             label2.Text = $"{result}";
         }
         private void do_newton_iter(in decimal number, ref decimal result, ref decimal guess)
         {
             guess = result;
             result = ((number / guess) + guess) / 2;
+            label6.Text = $"{int.Parse(label6.Text.ToString()) + 1}";
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -128,7 +134,18 @@ namespace Задание2
                 result = number_decimal / 2;
             }
             do_newton_iter(in number_decimal, ref result, ref this.guess);
+            decimal change = Math.Abs(this.guess - result);
+            label9.Text = $"{change}";
+            decimal error = Math.Abs(result - this.guess);
+            label10.Text = $"{error}";
             label2.Text = $"{result}";
+        }
+        private void clear()
+        {
+            label2.Text = "0.00";
+            label6.Text = "0";
+            label9.Text = "0";
+            label10.Text = "0";
         }
     }
 }

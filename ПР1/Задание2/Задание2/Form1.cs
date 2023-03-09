@@ -30,7 +30,7 @@ namespace Задание2
                 {
                     e.Handled = true;
                 }
-                if (textBox1.Text.Contains('.') || textBox1.Text.Contains(',')) e.Handled = true;
+                if (textbox.Text.Contains('.') || textbox.Text.Contains(',')) e.Handled = true;
             }
         }
 

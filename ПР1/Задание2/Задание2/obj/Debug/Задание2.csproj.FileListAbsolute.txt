@@ -9,3 +9,14 @@ C:\Users\Anatoliy\Desktop\Папки\Уроки\ООП\ПР1\Задание2\З�
 C:\Users\Anatoliy\Desktop\Папки\Уроки\ООП\ПР1\Задание2\Задание2\obj\Debug\Задание2.csproj.CoreCompileInputs.cache
 C:\Users\Anatoliy\Desktop\Папки\Уроки\ООП\ПР1\Задание2\Задание2\obj\Debug\Задание2.exe
 C:\Users\Anatoliy\Desktop\Папки\Уроки\ООП\ПР1\Задание2\Задание2\obj\Debug\Задание2.pdb
+C:\Users\user\Desktop\Папки\Уроки\OOP\ПР1\Задание2\Задание2\bin\Debug\Задание2.exe.config
+C:\Users\user\Desktop\Папки\Уроки\OOP\ПР1\Задание2\Задание2\bin\Debug\Задание2.exe
+C:\Users\user\Desktop\Папки\Уроки\OOP\ПР1\Задание2\Задание2\bin\Debug\Задание2.pdb
+C:\Users\user\Desktop\Папки\Уроки\OOP\ПР1\Задание2\Задание2\obj\Debug\Задание2.csproj.AssemblyReference.cache
+C:\Users\user\Desktop\Папки\Уроки\OOP\ПР1\Задание2\Задание2\obj\Debug\Задание2.csproj.SuggestedBindingRedirects.cache
+C:\Users\user\Desktop\Папки\Уроки\OOP\ПР1\Задание2\Задание2\obj\Debug\Задание2.Form1.resources
+C:\Users\user\Desktop\Папки\Уроки\OOP\ПР1\Задание2\Задание2\obj\Debug\Задание2.Properties.Resources.resources
+C:\Users\user\Desktop\Папки\Уроки\OOP\ПР1\Задание2\Задание2\obj\Debug\Задание2.csproj.GenerateResource.cache
+C:\Users\user\Desktop\Папки\Уроки\OOP\ПР1\Задание2\Задание2\obj\Debug\Задание2.csproj.CoreCompileInputs.cache
+C:\Users\user\Desktop\Папки\Уроки\OOP\ПР1\Задание2\Задание2\obj\Debug\Задание2.exe
+C:\Users\user\Desktop\Папки\Уроки\OOP\ПР1\Задание2\Задание2\obj\Debug\Задание2.pdb

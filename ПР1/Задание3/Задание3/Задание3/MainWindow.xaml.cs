@@ -121,5 +121,43 @@ namespace Задание3
                 MessageBox.Show("Неверное основание");
             }
         }
+
+        private void textboxFromBaseGotFocus(object sender, RoutedEventArgs e)
+        {
+            textbox1.Text = "";
+        }
+
+        private void textbox1_text_changed(object sender, TextCompositionEventArgs e)
+        {
+            if (e is null)
+            {
+                return;
+            }
+            char pressed = Char.ToLower(e.Text[0]);
+
+            int num_base;
+            if (!int.TryParse(textBoxFromBase.Text, out num_base))
+            {
+                MessageBox.Show("Неверное основание");
+                return;
+            }
+            if (num_base <= 10 && (97 <= pressed && pressed <= 102))
+            {
+                e.Handled = true;
+            }
+            if (!(48 <= pressed && pressed <= 57) && !(97 <= pressed && pressed <= 102)) {
+                e.Handled = true;
+            }
+            if (Char.IsDigit(pressed) && (pressed - '0' > num_base - 1)) {
+                e.Handled = true;
+            }
+            if (num_base > 10)
+            {
+                if (pressed - 'a' > (num_base - 11))
+                {
+                    e.Handled = true;
+                }
+            }
+        }
     }
 }

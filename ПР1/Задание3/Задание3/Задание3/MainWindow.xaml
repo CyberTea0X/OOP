@@ -8,11 +8,11 @@
         Title="MainWindow" Height="227" Width="513">
     <Grid>
         <Button Content="Преобразовать" HorizontalAlignment="Left" Margin="41,76,0,0" VerticalAlignment="Top" Height="38" Width="418" Click="button_click"/>
-        <TextBox x:Name="textbox1" HorizontalAlignment="Left" Margin="42,54,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="417" Height="17" PreviewKeyDown="TextBox_PreviewKeyDown"/>
+        <TextBox x:Name="textbox1" HorizontalAlignment="Left" Margin="42,54,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="417" Height="17" PreviewKeyDown="TextBox_PreviewKeyDown" PreviewTextInput="textbox1_text_changed"/>
         <Label Content="Результат:" HorizontalAlignment="Left" Margin="41,114,0,0" VerticalAlignment="Top" Width="418"/>
         <Label Content="Из системы" HorizontalAlignment="Left" Margin="42,23,0,0" VerticalAlignment="Top" Height="26" Width="93"/>
         <Label Content="В систему" HorizontalAlignment="Left" Margin="226,23,0,0" VerticalAlignment="Top" Height="26" Width="80"/>
-        <TextBox x:Name="textBoxFromBase" HorizontalAlignment="Left" Margin="135,28,0,0" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="74" PreviewTextInput="textbox_text_changed" Height="17" PreviewKeyDown="TextBox_PreviewKeyDown"/>
+        <TextBox x:Name="textBoxFromBase" HorizontalAlignment="Left" Margin="135,28,0,0" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="74" PreviewTextInput="textbox_text_changed" Height="17" PreviewKeyDown="TextBox_PreviewKeyDown" GotFocus="textboxFromBaseGotFocus"/>
         <TextBox x:Name="textBoxIntoBase" HorizontalAlignment="Left" Margin="311,28,0,0" TextWrapping="Wrap" Text="2" VerticalAlignment="Top" Width="74" PreviewTextInput="textbox_text_changed" Height="17" PreviewKeyDown="TextBox_PreviewKeyDown"/>
         <TextBox x:Name="output" HorizontalAlignment="Left" Margin="42,140,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
 

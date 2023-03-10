@@ -16,6 +16,11 @@ namespace ПР1_проект
         {
             InitializeComponent();
         }
+        /// <summary>
+        /// Пункт 1. Неявное преобразование.
+        /// </summary>
+        /// Неявное преобразование простых и ссылочных типов,
+        /// в виде комментариев внести в программу таблицу неявных преобразований;
         public void ImplicitCasting()
         {
             int firstValue = 25;
@@ -39,6 +44,11 @@ namespace ПР1_проект
             Person person = empl;  // Неявное преобразование ссылочного типа
             MessageBox.Show(result.ToString()); 
         }
+        /// <summary>
+        /// Пункт 2. Явное преобразование.
+        /// </summary>
+        /// Явное преобразование простых и ссылочных типов, 
+        /// виде комментариев внести в программу таблицу явных преобразований;
         public void ExplicitCasting()
         {
             /*Таблица явных преобразований
@@ -50,13 +60,15 @@ namespace ПР1_проект
             |int          |sbyte, byte, short, ushort, uint, ulong или char
             |uint         |sbyte, byte, short, ushort, int или char
             */
-            long num1 = 123123213;
+            long num1 = 1231232133333333;
             int num2 = (int)(num1 + 1000);
             Vec2 vector = new Vec2(1.0F, 1.0F);
             var raw_vector = (int[])vector;
             MessageBox.Show(raw_vector[0].ToString() + ", " + raw_vector[1].ToString());
         }
-
+        /// <summary>
+        /// Пункт 3. Вызвать и обработать исключение преобразования типов.
+        /// </summary>
         public void CatchCastingException()
         {
             bool flag = true;
@@ -70,7 +82,9 @@ namespace ПР1_проект
                 MessageBox.Show($"Поймано исключение пребразования типов {e}");
             }
         }
-
+        /// <summary>
+        /// Пункт 4. Безопасное приведение ссылочных типов с помощью операторов as и is.
+        /// </summary>
         public void SafeCasting()
         {
             Employee employee = new Employee();
@@ -85,7 +99,9 @@ namespace ПР1_проект
             }
 
         }
-
+        /// <summary>
+        /// Пункт 5. Пользовательское преобразование типов Implicit, Explicit;
+        /// </summary>
         public void UserImplicitExplicit()
         {
             Vec2 vec = new Vec2(1.0F, 1.0F);
@@ -93,7 +109,11 @@ namespace ПР1_проект
             float[] float_vector = vec;
             MessageBox.Show("Успешно выполнены явное и неявное пользовательские преобразования");
         }
-
+        /// <summary>
+        /// Пункт 6. 6)	Преобразование с помощью класса Convert и преобразование 
+        /// строки в число с помощью методов Parse,
+        /// TryParse класса System.Int32.
+        /// </summary>
         public void ConvertTask()
         {
             double dNumber = 23.15;
@@ -166,7 +186,12 @@ namespace ПР1_проект
         {
             ConvertTask();
         }
-
+        /// <summary>
+        /// Пункт 7. Написать программу, позволяющую ввод в текстовое поле TextBox
+        /// только символов, задающих правильный формат вещественного числа со знаком.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
         {
             char pressed = e.KeyChar;
@@ -181,7 +206,11 @@ namespace ПР1_проект
                 if (textBox1.Text.Contains('.')) e.Handled = true;
             }
         }
-
+        /// <summary>
+        /// Возвращает динамический тип с каким-то значением типа type
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
         private dynamic SetType(string type)
         {
             //char, string, byte, int, float, double, decimal, bool, object
@@ -199,7 +228,13 @@ namespace ПР1_проект
                 default: return null;
             }
         }
-
+        /// <summary>
+        /// Проверяет явное пребразование типа в тип.
+        /// </summary>
+        /// <param name="value1"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
         private bool TestExplicitIntoType(dynamic value1, string type) {
             try
             {
@@ -240,7 +275,13 @@ namespace ПР1_проект
             }
             return true;
         }
-
+        /// <summary>
+        /// Проверяет неявное преобразование типа в тип.
+        /// </summary>
+        /// <param name="value1"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
         private bool TestImplicitIntoType(dynamic value1, string type)
         {
             try
@@ -280,17 +321,21 @@ namespace ПР1_проект
             }
             return true;
         }
-
+        /// <summary>
+        /// Кнопка, при нажатии которой происходит обработка преобразования из одного типа в другой.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button7_Click(object sender, EventArgs e)
         {
             if (comboBox1.SelectedItem is null || comboBox2.SelectedItem is null)
             {
-                MessageBox.Show("Не, ну ты бы выбрал что-нибудь для начала");
+                MessageBox.Show("Выберите типы для преобразования");
                 return;
             }
             if (comboBox3.SelectedItem is null)
             {
-                MessageBox.Show("Ну и как мне конвертировать это вот всё? Явно или неявно?");
+                MessageBox.Show("Выберите явное или неявное преобразование");
                 return;
             }
             dynamic value1 = SetType(comboBox1.SelectedItem.ToString());

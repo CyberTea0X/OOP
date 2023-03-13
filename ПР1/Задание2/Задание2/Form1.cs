@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,7 @@ namespace Задание2
     {
         decimal guess;
         decimal delta = Convert.ToDecimal(Math.Pow(10, -28));
+        decimal? exact = null;
         public Form1()
         {
             InitializeComponent();
@@ -88,6 +90,36 @@ namespace Задание2
             return true;
         }
 
+        private decimal newton_sqrt(decimal number, decimal initial, out int iterarions, ref decimal guess, decimal delta)
+        {
+            decimal result = initial;
+            iterarions = 0;
+            while (Math.Abs(result - guess) > delta)
+            {
+                do_newton_iter(in number, ref result, ref guess);
+                iterarions += 1;
+            }
+            return result;
+        }
+
+        decimal calc_initial_appr(decimal initial)
+        {
+            if (checkBox1.Checked)
+            {
+                return (decimal)Math.Sqrt((double)initial);
+            }
+            if (initial < 1)
+            {
+                return initial / 2;
+            }
+            uint r = (uint)Math.Log((double)initial, 2.0) + 1;
+            if (r % 2 == 0)
+            {
+                return (decimal)Math.Pow(2, r / 2);
+            }
+            return (decimal)(r / 2 + 1);
+        }
+
         private void button2_Click(object sender, EventArgs e)
         {
             clear();
@@ -99,22 +131,18 @@ namespace Задание2
                 MessageBox.Show(error_message);
                 return;
             }
-            decimal result = number_decimal / 2;
-            while (Math.Abs(result - this.guess) > this.delta)
-            {
-                do_newton_iter(in number_decimal, ref result, ref this.guess);
-            }
+            int iterations;
+            decimal initial = calc_initial_appr(number_decimal);
+            decimal result = newton_sqrt(number_decimal, initial, out iterations, ref this.guess, this.delta);
             decimal change = this.guess - result;
+            label6.Text = $"{iterations}";
             label9.Text = $"{Math.Abs(change)}";
-            decimal error = Math.Abs(result - this.guess);
-            label10.Text = $"{error}";
             label2.Text = $"{result}";
         }
         private void do_newton_iter(in decimal number, ref decimal result, ref decimal guess)
         {
             guess = result;
             result = ((number / guess) + guess) / 2;
-            label6.Text = $"{int.Parse(label6.Text.ToString()) + 1}";
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -122,30 +150,39 @@ namespace Задание2
             string entered_value = textBox1.Text.ToString();
             decimal number_decimal;
             string error_message;
+            decimal result;
+            int _;
             if (!parse_decimal_value(in entered_value, out number_decimal, out error_message))
             {
                 MessageBox.Show(error_message);
                 return;
             }
-            decimal result;
+            if (this.exact == null)
+            {
+                this.exact = newton_sqrt(number_decimal, calc_initial_appr(number_decimal), out _, ref this.guess, this.delta);
+            }
             entered_value = label2.Text.ToString();
             if (!parse_decimal_value(entered_value, out result, out error_message))
             {
-                result = number_decimal / 2;
+                result = calc_initial_appr(number_decimal);
+                label11.Text = $"{result}";
             }
             do_newton_iter(in number_decimal, ref result, ref this.guess);
             decimal change = Math.Abs(this.guess - result);
+            decimal error = Math.Abs(result - (decimal)this.exact);
+            label6.Text = $"{int.Parse(label6.Text.ToString()) + 1}";
             label9.Text = $"{change}";
-            decimal error = Math.Abs(result - this.guess);
             label10.Text = $"{error}";
             label2.Text = $"{result}";
         }
         private void clear()
         {
+            this.exact = null;
             label2.Text = "0.00";
             label6.Text = "0";
             label9.Text = "0";
             label10.Text = "0";
+            label11.Text = "0";
         }
     }
 }

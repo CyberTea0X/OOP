@@ -102,22 +102,19 @@ namespace Задание2
             return result;
         }
 
-        decimal calc_initial_appr(decimal initial)
+        void calc_initial_appr(in string initial, out decimal appr)
         {
+            decimal initial_decimal = Convert.ToDecimal(initial.Replace('.', ','));
             if (checkBox1.Checked)
             {
-                return (decimal)Math.Sqrt((double)initial);
+                appr = (decimal)Math.Sqrt((double)initial_decimal);
             }
-            if (initial < 1)
+            if (initial_decimal < 1)
             {
-                return initial / 2;
+                appr = initial_decimal / 2;
             }
-            uint r = (uint)Math.Log((double)initial, 2.0) + 1;
-            if (r % 2 == 0)
-            {
-                return (decimal)Math.Pow(2, r / 2);
-            }
-            return (decimal)(r / 2 + 1);
+            double r = Math.Round(initial.Length * 1.6);  // Число бит в двоичной записи числа / 2
+            appr = (decimal)Math.Pow(2, r);
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -132,7 +129,8 @@ namespace Задание2
                 return;
             }
             int iterations;
-            decimal initial = calc_initial_appr(number_decimal);
+            decimal initial;
+            calc_initial_appr(entered_value, out initial);
             decimal result = newton_sqrt(number_decimal, initial, out iterations, ref this.guess, this.delta);
             decimal change = this.guess - result;
             label6.Text = $"{iterations}";
@@ -159,12 +157,14 @@ namespace Задание2
             }
             if (this.exact == null)
             {
-                this.exact = newton_sqrt(number_decimal, calc_initial_appr(number_decimal), out _, ref this.guess, this.delta);
+                decimal initial;
+                calc_initial_appr(entered_value, out initial);
+                this.exact = newton_sqrt(number_decimal, initial, out _, ref this.guess, this.delta);
             }
             entered_value = label2.Text.ToString();
             if (!parse_decimal_value(entered_value, out result, out error_message))
             {
-                result = calc_initial_appr(number_decimal);
+                calc_initial_appr(entered_value, out result);
                 label11.Text = $"{result}";
             }
             do_newton_iter(in number_decimal, ref result, ref this.guess);

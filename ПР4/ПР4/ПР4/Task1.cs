@@ -19,6 +19,10 @@ namespace ПР4
             this.real = real;
             this.imaginary = imaginary;
         }
+        public double Modulus()
+        {
+            return Math.Sqrt(real * real + imaginary * imaginary);
+        }
 
         public static ComplexNumber operator +(ComplexNumber a, ComplexNumber b)
         {

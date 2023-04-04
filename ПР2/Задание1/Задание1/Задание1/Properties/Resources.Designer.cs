@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Задание1.Properties
+namespace Task1.Properties
 {
 
 

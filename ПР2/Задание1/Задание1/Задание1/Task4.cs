@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -58,12 +59,8 @@ namespace Задание1
         {
             Random random = new Random();
             for (int i = 0; i < matrix.GetLength(0); i++)
-            {
                 for (int j = 0; j < matrix.GetLength(1); j++)
-                {
                     matrix[i, j] = random.Next(max_rand);
-                }
-            }
         }
         public static int[,] MultiplyMatrices(int[,] matrix1, int[,] matrix2)
         {
@@ -78,6 +75,27 @@ namespace Задание1
                         result[i, j] += matrix1[i, k] * matrix2[k, j];
 
             return result;
+        }
+        public static bool try_get_matrix(Panel panel, out int[,] matrix)
+        {
+            if (panel.Controls.Count > 0)
+            {
+                var data_grid = (panel.Controls[panel.Controls.Count - 1] as DataGridView);
+                matrix = new int[data_grid.Rows.Count, data_grid.Columns.Count];
+
+                for (int i = 0; i < data_grid.Rows.Count; i++)
+                {
+                    for (int j = 0; j < data_grid.Columns.Count; j++)
+                    {
+                        DataGridViewCell cell = data_grid.Rows[i].Cells[j];
+                        int value = Convert.ToInt32(cell.Value);
+                        matrix[i, j] = value;
+                    }
+                }
+                return true;
+            }
+            matrix = null;
+            return false;
         }
     }
 }

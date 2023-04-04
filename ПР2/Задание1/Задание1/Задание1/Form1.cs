@@ -12,8 +12,6 @@ namespace Task1
 {
     public partial class Form1 : Form
     {
-        internal int[,] matrix1;
-        internal int[,] matrix2;
         public Form1()
         {
             InitializeComponent();
@@ -156,7 +154,7 @@ namespace Task1
                 MessageBox.Show("Значения столбцов или строк имеют неверный формат!");
                 return;
             }
-            matrix1 = new int[rows, columns];
+            int[,] matrix1 = new int[rows, columns];
             Array.Clear(matrix1, 0, matrix1.Length);
             try
             {
@@ -185,7 +183,7 @@ namespace Task1
                 MessageBox.Show("Значения столбцов или строк имеют неверный формат!");
                 return;
             }
-            matrix2 = new int[rows, columns];
+            int[,] matrix2 = new int[rows, columns];
             Array.Clear(matrix2, 0, matrix2.Length);
             try
             {
@@ -199,7 +197,8 @@ namespace Task1
 
         private void button4_Click(object sender, EventArgs e)
         {
-            if (matrix1 == null || matrix2 == null)
+            int[,] matrix1, matrix2;
+            if (!Task4.try_get_matrix(panel1, out matrix1) || !Task4.try_get_matrix(panel2, out matrix2))
             {
                 MessageBox.Show("Сначала нужно создать матрицы");
                 return;
@@ -223,13 +222,14 @@ namespace Task1
 
         private void button7_Click(object sender, EventArgs e)
         {
-            if (matrix1 != null)
+            int[,] matrix1, matrix2;
+            if (Task4.try_get_matrix(panel1, out matrix1))
             {
                 Task4.RandomMatrix(ref matrix1);
                 panel1.Controls.RemoveAt(panel1.Controls.Count - 1);
                 Task4.ShowMatrix(panel1, matrix1);
             }
-            if (matrix2 != null)
+            if (Task4.try_get_matrix(panel2, out matrix2))
             {
                 Task4.RandomMatrix(ref matrix2);
                 panel2.Controls.RemoveAt(panel2.Controls.Count - 1);

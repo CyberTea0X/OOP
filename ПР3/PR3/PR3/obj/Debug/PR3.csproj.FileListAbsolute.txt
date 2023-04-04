@@ -1,0 +1,11 @@
+C:\Users\user\Desktop\Папки\Уроки\OOP\ПР3\PR3\PR3\bin\Debug\PR3.exe.config
+C:\Users\user\Desktop\Папки\Уроки\OOP\ПР3\PR3\PR3\bin\Debug\PR3.exe
+C:\Users\user\Desktop\Папки\Уроки\OOP\ПР3\PR3\PR3\bin\Debug\PR3.pdb
+C:\Users\user\Desktop\Папки\Уроки\OOP\ПР3\PR3\PR3\obj\Debug\PR3.csproj.AssemblyReference.cache
+C:\Users\user\Desktop\Папки\Уроки\OOP\ПР3\PR3\PR3\obj\Debug\PR3.csproj.SuggestedBindingRedirects.cache
+C:\Users\user\Desktop\Папки\Уроки\OOP\ПР3\PR3\PR3\obj\Debug\PR3.Form1.resources
+C:\Users\user\Desktop\Папки\Уроки\OOP\ПР3\PR3\PR3\obj\Debug\PR3.Properties.Resources.resources
+C:\Users\user\Desktop\Папки\Уроки\OOP\ПР3\PR3\PR3\obj\Debug\PR3.csproj.GenerateResource.cache
+C:\Users\user\Desktop\Папки\Уроки\OOP\ПР3\PR3\PR3\obj\Debug\PR3.csproj.CoreCompileInputs.cache
+C:\Users\user\Desktop\Папки\Уроки\OOP\ПР3\PR3\PR3\obj\Debug\PR3.exe
+C:\Users\user\Desktop\Папки\Уроки\OOP\ПР3\PR3\PR3\obj\Debug\PR3.pdb

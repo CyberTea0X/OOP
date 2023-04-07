@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace Задание1
 {
-    internal class Task4
+    public class Task4
     {
         public static void ShowMatrix(Panel panel, in int[,] matrix)
         {

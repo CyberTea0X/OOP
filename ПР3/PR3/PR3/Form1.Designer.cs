@@ -57,14 +57,14 @@
             this.label15 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Button();
+            this.textBox4 = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.button2 = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.textBox2 = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -146,7 +146,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 25);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(796, 420);
+            this.tabPage2.Size = new System.Drawing.Size(858, 420);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Задание2";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -398,30 +398,50 @@
             this.tabPage3.Controls.Add(this.textBox2);
             this.tabPage3.Location = new System.Drawing.Point(4, 25);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(796, 420);
+            this.tabPage3.Size = new System.Drawing.Size(858, 420);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Задание3";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // textBox2
+            // label4
             // 
-            this.textBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox2.Location = new System.Drawing.Point(8, 51);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(776, 38);
-            this.textBox2.TabIndex = 0;
-            this.textBox2.Text = "2147483647";
-            this.textBox2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox_OnlyValid_Numeric_KeyPress);
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label4.Location = new System.Drawing.Point(8, 187);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(150, 32);
+            this.label4.TabIndex = 32;
+            this.label4.Text = "Результат";
             // 
-            // label1
+            // label3
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(8, 16);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(118, 32);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Число 1";
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label3.Location = new System.Drawing.Point(363, 92);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(36, 36);
+            this.label3.TabIndex = 31;
+            this.label3.Text = "X";
+            // 
+            // button2
+            // 
+            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button2.Location = new System.Drawing.Point(361, 181);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(38, 38);
+            this.button2.TabIndex = 30;
+            this.button2.Text = "=";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // textBox4
+            // 
+            this.textBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.textBox4.Location = new System.Drawing.Point(8, 225);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.ReadOnly = true;
+            this.textBox4.Size = new System.Drawing.Size(776, 38);
+            this.textBox4.TabIndex = 5;
             // 
             // label2
             // 
@@ -443,45 +463,25 @@
             this.textBox3.Text = "2";
             this.textBox3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox_OnlyValid_Numeric_KeyPress);
             // 
-            // textBox4
+            // label1
             // 
-            this.textBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox4.Location = new System.Drawing.Point(8, 225);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.ReadOnly = true;
-            this.textBox4.Size = new System.Drawing.Size(776, 38);
-            this.textBox4.TabIndex = 5;
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label1.Location = new System.Drawing.Point(8, 16);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(118, 32);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Число 1";
             // 
-            // button2
+            // textBox2
             // 
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button2.Location = new System.Drawing.Point(361, 181);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(38, 38);
-            this.button2.TabIndex = 30;
-            this.button2.Text = "=";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label3.Location = new System.Drawing.Point(363, 92);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(36, 36);
-            this.label3.TabIndex = 31;
-            this.label3.Text = "X";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label4.Location = new System.Drawing.Point(8, 187);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(150, 32);
-            this.label4.TabIndex = 32;
-            this.label4.Text = "Результат";
+            this.textBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.textBox2.Location = new System.Drawing.Point(8, 51);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(776, 38);
+            this.textBox2.TabIndex = 0;
+            this.textBox2.Text = "2147483647";
+            this.textBox2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox_OnlyValid_Numeric_KeyPress);
             // 
             // Form1
             // 

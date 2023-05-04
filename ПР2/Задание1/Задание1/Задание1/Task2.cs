@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Задание1
 {
-    internal class Task2
+    public class Task2
     {
         private static int FindGCDEuclid(int a, int b)
         {

@@ -22,3 +22,15 @@ C:\Users\user\Desktop\Папки\Уроки\OOP\ПР1\ПР1 проект\ПР1 �
 C:\Users\user\Desktop\Папки\Уроки\OOP\ПР1\ПР1 проект\ПР1 проект\obj\Debug\ПР1 проект.pdb
 C:\Users\user\Desktop\Папки\Уроки\OOP\ПР1\ПР1 проект\ПР1 проект\bin\Debug\ПР1 проект.xml
 C:\Users\Anatoliy\Desktop\Папки\Уроки\ООП\ПР1\ПР1 проект\ПР1 проект\bin\Debug\ПР1 проект.xml
+C:\Users\user\Desktop\Папки\Уроки\OOP\ПР1\Задание4\ПР1 проект\bin\Debug\ПР1 проект.exe.config
+C:\Users\user\Desktop\Папки\Уроки\OOP\ПР1\Задание4\ПР1 проект\bin\Debug\ПР1 проект.xml
+C:\Users\user\Desktop\Папки\Уроки\OOP\ПР1\Задание4\ПР1 проект\bin\Debug\ПР1 проект.exe
+C:\Users\user\Desktop\Папки\Уроки\OOP\ПР1\Задание4\ПР1 проект\bin\Debug\ПР1 проект.pdb
+C:\Users\user\Desktop\Папки\Уроки\OOP\ПР1\Задание4\ПР1 проект\obj\Debug\ПР1 проект.csproj.AssemblyReference.cache
+C:\Users\user\Desktop\Папки\Уроки\OOP\ПР1\Задание4\ПР1 проект\obj\Debug\ПР1 проект.csproj.SuggestedBindingRedirects.cache
+C:\Users\user\Desktop\Папки\Уроки\OOP\ПР1\Задание4\ПР1 проект\obj\Debug\ПР1_проект.Form1.resources
+C:\Users\user\Desktop\Папки\Уроки\OOP\ПР1\Задание4\ПР1 проект\obj\Debug\ПР1_проект.Properties.Resources.resources
+C:\Users\user\Desktop\Папки\Уроки\OOP\ПР1\Задание4\ПР1 проект\obj\Debug\ПР1 проект.csproj.GenerateResource.cache
+C:\Users\user\Desktop\Папки\Уроки\OOP\ПР1\Задание4\ПР1 проект\obj\Debug\ПР1 проект.csproj.CoreCompileInputs.cache
+C:\Users\user\Desktop\Папки\Уроки\OOP\ПР1\Задание4\ПР1 проект\obj\Debug\ПР1 проект.exe
+C:\Users\user\Desktop\Папки\Уроки\OOP\ПР1\Задание4\ПР1 проект\obj\Debug\ПР1 проект.pdb

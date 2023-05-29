@@ -182,3 +182,5 @@ class Auto: Car
 Transport tesla = new Auto();
 tesla.Move();           // легковая машина едет
 ```
+
+Возможно, у вас возник вопрос, чем отличаются абстрактные классы от интерфейсов, тогда вам [сюда](./abstract_classes_vs_interfaces.md)

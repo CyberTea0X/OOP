@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MeasuringDevice
+﻿namespace MeasuringDevice
 {
-    public interface MeasuringDevice
+    public interface IMeasuringDevice
     {
         /// <summary>
         /// Преобразует необработанные данные, собранные устройством измерения, в значение в метрических единицах.

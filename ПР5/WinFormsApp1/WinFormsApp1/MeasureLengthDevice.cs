@@ -53,6 +53,7 @@ namespace WinFormsApp1
         public void StartCollecting()
         {
             controller = DeviceController.StartDevice(measurementType);
+            GetMeasurements();
         }
 
         public void StopCollecting()

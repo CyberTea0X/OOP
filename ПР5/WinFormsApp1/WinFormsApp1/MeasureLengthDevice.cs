@@ -21,7 +21,6 @@ namespace WinFormsApp1
 
         public int[] GetRawData()
         {
-            GetMeasurements();
             return dataCaptured;
         }
 

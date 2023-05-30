@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'Конспект/oop/**'
+      - 'summary/oop/**'
 
 jobs:
   deploy:
@@ -20,11 +20,11 @@ jobs:
         with:
           mdbook-version: 'latest'
       - name: Build Book
-        working-directory: ./Конспект/oop
+        working-directory: ./summary/oop
         run: mdbook build
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         if: ${{ github.ref == 'refs/heads/main' }}
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: './Конспект/oop/book'
+          publish_dir: './summary/oop/book'

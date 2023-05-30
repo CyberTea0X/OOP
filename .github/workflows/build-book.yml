@@ -1,11 +1,11 @@
-name: github pages
+name: GitHub Pages
 
 on:
   push:
     branches:
       - main
     paths:
-      - './Конспект/oop/**'
+      - 'Конспект/oop/**'
 
 jobs:
   deploy:
@@ -14,17 +14,17 @@ jobs:
       group: ${{ github.workflow }}-${{ github.ref }}
     steps:
       - uses: actions/checkout@v2
-
+        with:
+          path: 'Конспект/oop'
       - name: Setup mdBook
         uses: peaceiris/actions-mdbook@v1
         with:
           mdbook-version: 'latest'
-
-      - run: mdbook build
-
+      - name: Build Book
+        run: mdbook build Конспект/oop/book --dest-dir Конспект/oop/book/output
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         if: ${{ github.ref == 'refs/heads/main' }}
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./Конспект/oop/book
+          publish_dir: 'Конспект/oop/book/output'

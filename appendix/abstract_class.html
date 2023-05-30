@@ -1,0 +1,346 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Абстрактный класс - ООП практические работы 5-8</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = null;
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../intro.html"><strong aria-hidden="true">1.</strong> Введение</a></li><li class="chapter-item expanded "><a href="../practices/pr5/p5.html"><strong aria-hidden="true">2.</strong> Практическая работа №5</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../practices/pr5/key_concepts.html"><strong aria-hidden="true">2.1.</strong> Ключевые понятия</a></li><li class="chapter-item expanded "><a href="../practices/pr5/task1.html"><strong aria-hidden="true">2.2.</strong> Задание 1. Использование интерфейсов</a></li><li class="chapter-item expanded "><a href="../practices/pr5/task2.html"><strong aria-hidden="true">2.3.</strong> Задание 2. Создание абстрактного класса</a></li><li class="chapter-item expanded "><a href="../practices/pr5/task3.html"><strong aria-hidden="true">2.4.</strong> Задание 3. Создание архитектуры приложения с помощью интерфейсов</a></li></ol></li><li class="chapter-item expanded "><a href="../appendix/page.html"><strong aria-hidden="true">3.</strong> Приложение</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../appendix/interfaces.html"><strong aria-hidden="true">3.1.</strong> Интерфейсы</a></li><li class="chapter-item expanded "><a href="../appendix/abstract_class.html" class="active"><strong aria-hidden="true">3.2.</strong> Абстрактный класс</a></li><li class="chapter-item expanded "><a href="../appendix/multiple_interface_inherit.html"><strong aria-hidden="true">3.3.</strong> Множественное наследование</a></li><li class="chapter-item expanded "><a href="../appendix/explicit_interfaces.html"><strong aria-hidden="true">3.4.</strong> Явная реализация интерфейсов</a></li><li class="chapter-item expanded "><a href="../appendix/abstract_classes_vs_interfaces.html"><strong aria-hidden="true">3.5.</strong> Абстрактные классы vs интерфейсы</a></li><li class="chapter-item expanded "><a href="../appendix/intefaces_and_abstract_classes_in_app_design.html"><strong aria-hidden="true">3.6.</strong> Справка по проектированию с использованием абстрактных классов и интерфейсов</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">ООП практические работы 5-8</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="Абстрактный-класс"><a class="header" href="#Абстрактный-класс">Абстрактный класс</a></h1>
+<p>Абстрактные классы в C#. Для абстрактного класса такое создание объекта через new невозможно, т.к. абстрактный класс - это шаблон или базовый класс, который предназначен для наследования другими классами.
+У абстрактных классов могут быть как <a href="#%D0%90%D0%B1%D1%81%D1%82%D1%80%D0%B0%D0%BA%D1%82%D0%BD%D1%8B%D0%B5-%D0%BC%D0%B5%D1%82%D0%BE%D0%B4%D1%8B">абстрактные методы</a> (методы без реализации), так и не абстрактные методы. Если у класса есть хотя бы один абстрактный метод, то он должен быть объявлен как абстрактный.
+Абстрактные классы могут использоваться в ситуациях, когда вы хотите определить набор общих поведений или свойств, которые должны быть реализованы производными классами (однако, если производный класс абстрактный, <a href="#%D0%9E%D1%82%D0%BA%D0%B0%D0%B7-%D0%BE%D1%82-%D1%80%D0%B5%D0%B0%D0%BB%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8-%D0%B0%D0%B1%D1%81%D1%82%D1%80%D0%B0%D0%BA%D1%82%D0%BD%D1%8B%D1%85-%D1%87%D0%BB%D0%B5%D0%BD%D0%BE%D0%B2">этого можно и не делать</a>).</p>
+<p>Определив абстрактный класс, вы можете обеспечить согласованный интерфейс для всех классов, которые наследуются от него.</p>
+<p>При определении абстрактных классов используется ключевое слово <code>abstract</code>. Например, определим абстрактный класс, который представляет некое транспортное средство:</p>
+<pre><code class="language-C#">abstract class Transport
+{
+    public void Move()
+    {
+        Console.WriteLine(&quot;Транспортное средство движется&quot;);
+    }
+}
+</code></pre>
+<p>А также определим несколько производных классов</p>
+<pre><code class="language-C#">// класс корабля
+class Ship : Transport { }
+// класс самолета
+class Aircraft : Transport { }
+// класс машины
+class Car : Transport { }
+</code></pre>
+<pre><code class="language-C#">Transport car = new Car();
+Transport ship = new Ship();
+Transport aircraft = new Aircraft();
+car.Move(); // Выведет: Транспортное средство движется
+ship.Move(); // Выведет: Транспортное средство движется
+aircraft.Move(); // Выведет: Транспортное средство движется
+</code></pre>
+<p>Транспортное средство представляет некоторую абстракцию, которая не имеет конкретного воплощения. То есть есть легковые и грузовые машины, самолеты, морские судна, кто-то на космическом корабле любит покататься, но как такового транспортного средства нет. Тем не менее все транспортные средства имеют нечто общее - они могут перемещаться. И для этого в классе определен метод Move, который эмулирует перемещение.</p>
+<p>Главное отличие абстрактных классов от обычных состоит в том, что мы НЕ можем использовать конструктор абстрактного класса для создания экземпляра класса. Например, следующий код выдаст ошибку:</p>
+<pre><code class="language-C#">Transport tesla = new Transport();  // Ошибка компиляции
+</code></pre>
+<h2 id="Конструкторы"><a class="header" href="#Конструкторы">Конструкторы</a></h2>
+<p>Выше писалось, что мы не можем использовать конструктор абстрактного класса для создания экземпляра этого класса. Тем не менее такой класс также может определять конструкторы:</p>
+<pre><code class="language-C#">abstract class Transport
+{
+    public string Name { get; }
+    // конструктор абстрактного класса Transport
+    public Transport(string name)
+    {
+        Name = name;
+    }
+    public void Move() =&gt;Console.WriteLine($&quot;{Name} движется&quot;);
+}
+</code></pre>
+<p>В данном случае в абстрактном классе Transport определен конструктор - с помощью параметра он устанавливает значение свойства Name, которое хранит название транспортного средства. И в этом случае производные классы должны в своих конструкторах вызвать этот конструктор.</p>
+<h2 id="Абстрактные-члены-классов"><a class="header" href="#Абстрактные-члены-классов">Абстрактные члены классов</a></h2>
+<p>Кроме обычных свойств и методов абстрактный класс может иметь абстрактные члены классов, которые определяются с помощью ключевого слова <code>abstract</code> и не имеют никакого функционала. В частности, абстрактными могут быть:</p>
+<ul>
+<li>
+<p><a href="#%D0%90%D0%B1%D1%81%D1%82%D1%80%D0%B0%D0%BA%D1%82%D0%BD%D1%8B%D0%B5-%D0%BC%D0%B5%D1%82%D0%BE%D0%B4%D1%8B">Методы</a></p>
+</li>
+<li>
+<p><a href="#%D0%90%D0%B1%D1%81%D1%82%D1%80%D0%B0%D0%BA%D1%82%D0%BD%D1%8B%D0%B5-%D1%81%D0%B2%D0%BE%D0%B9%D1%81%D1%82%D0%B2%D0%B0">Свойства</a></p>
+</li>
+<li>
+<p>Индексаторы</p>
+</li>
+<li>
+<p>События</p>
+</li>
+</ul>
+<p>Абстрактные члены классов не должны иметь модификатор <code>private</code>. При этом производный класс обязан переопределить и реализовать все абстрактные методы и свойства, которые имеются в базовом абстрактном классе.</p>
+<h3 id="Абстрактные-методы"><a class="header" href="#Абстрактные-методы">Абстрактные методы</a></h3>
+<p>Например, выше в примере с транспортными средствами метод Move описывает передвижение транспортного средства. Однако различные типы транспорта перемещаются по разному - ездят по земле, летят по воздуху, плывут на воде и т.д. В этом случае мы можем сделать метод <code>Move</code> абстрактным.</p>
+<pre><code class="language-C#">abstract class Transport
+{
+    public abstract void Move();
+}
+</code></pre>
+<p>А его реализацию метода <code>Move</code> переложить на производные классы:</p>
+<pre><code class="language-C#">class Ship : Transport 
+{
+    // мы должны реализовать все абстрактные методы и свойства базового класса
+    public override void Move()
+    {
+        Console.WriteLine(&quot;Корабль плывет&quot;);
+    }
+}
+
+class Aircraft : Transport
+{
+    public override void Move()
+    {
+        Console.WriteLine(&quot;Самолет летит&quot;);
+    }
+}
+
+class Car : Transport
+{
+    public override void Move()
+    {
+        Console.WriteLine(&quot;Машина едет&quot;);
+    }
+}
+</code></pre>
+<p>Применение классов:</p>
+<pre><code class="language-C#">Transport car = new Car();
+Transport ship = new Ship();
+Transport aircraft = new Aircraft();
+ 
+car.Move();         // Выведет: Машина едет
+ship.Move();        // Выведет: Корабль плывет
+aircraft.Move();    // Выведет: Самолет летит
+</code></pre>
+<h3 id="Абстрактные-свойства"><a class="header" href="#Абстрактные-свойства">Абстрактные свойства</a></h3>
+<p>Следует отметить использование абстрактных свойств:</p>
+<pre><code class="language-C#">abstract class Transport
+{
+    // абстрактное свойство для хранения скорости
+    public abstract int Speed { get; set; } 
+}
+</code></pre>
+<p>Определим производный класс:</p>
+<pre><code class="language-C#">class Ship: Transport
+{
+    int speed;
+    public override int Speed 
+    { 
+        get =&gt; speed; 
+        set =&gt; speed = value; 
+    }
+}
+</code></pre>
+<h3 id="Отказ-от-реализации-абстрактных-членов"><a class="header" href="#Отказ-от-реализации-абстрактных-членов">Отказ от реализации абстрактных членов</a></h3>
+<p>Производный класс обязан реализовать все абстрактные члены базового класса. Однако мы можем отказаться от реализации, но в этом случае производный класс также должен быть определен как абстрактный:</p>
+<pre><code class="language-C#">abstract class Transport
+{
+    public abstract void Move();
+}
+// класс машины
+abstract class Car :Transport{}
+</code></pre>
+<p>Однако любые неабстрактные классы, производные от Car, все равно должны реализовать все унаследованные абстрактные методы и свойства:</p>
+<pre><code class="language-C#">/// Класс легковой машины
+class Auto: Car
+{
+    public override void Move()
+    {
+        Console.WriteLine(&quot;легковая машина едет&quot;);
+    }
+}
+
+Transport tesla = new Auto();
+tesla.Move();           // легковая машина едет
+</code></pre>
+<p>Возможно, у вас возник вопрос, чем отличаются абстрактные классы от интерфейсов, тогда вам <a href="./abstract_classes_vs_interfaces.html">сюда</a></p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../appendix/interfaces.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../appendix/multiple_interface_inherit.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../appendix/interfaces.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../appendix/multiple_interface_inherit.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

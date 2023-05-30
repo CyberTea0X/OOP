@@ -1,0 +1,650 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Задание 1. Использование интерфейсов - ООП практические работы 5-8</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = null;
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../../intro.html"><strong aria-hidden="true">1.</strong> Введение</a></li><li class="chapter-item expanded "><a href="../../practices/pr5/p5.html"><strong aria-hidden="true">2.</strong> Практическая работа №5</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../practices/pr5/key_concepts.html"><strong aria-hidden="true">2.1.</strong> Ключевые понятия</a></li><li class="chapter-item expanded "><a href="../../practices/pr5/task1.html" class="active"><strong aria-hidden="true">2.2.</strong> Задание 1. Использование интерфейсов</a></li><li class="chapter-item expanded "><a href="../../practices/pr5/task2.html"><strong aria-hidden="true">2.3.</strong> Задание 2. Создание абстрактного класса</a></li><li class="chapter-item expanded "><a href="../../practices/pr5/task3.html"><strong aria-hidden="true">2.4.</strong> Задание 3. Создание архитектуры приложения с помощью интерфейсов</a></li></ol></li><li class="chapter-item expanded "><a href="../../appendix/page.html"><strong aria-hidden="true">3.</strong> Приложение</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../appendix/interfaces.html"><strong aria-hidden="true">3.1.</strong> Интерфейсы</a></li><li class="chapter-item expanded "><a href="../../appendix/abstract_class.html"><strong aria-hidden="true">3.2.</strong> Абстрактный класс</a></li><li class="chapter-item expanded "><a href="../../appendix/multiple_interface_inherit.html"><strong aria-hidden="true">3.3.</strong> Множественное наследование</a></li><li class="chapter-item expanded "><a href="../../appendix/explicit_interfaces.html"><strong aria-hidden="true">3.4.</strong> Явная реализация интерфейсов</a></li><li class="chapter-item expanded "><a href="../../appendix/abstract_classes_vs_interfaces.html"><strong aria-hidden="true">3.5.</strong> Абстрактные классы vs интерфейсы</a></li><li class="chapter-item expanded "><a href="../../appendix/intefaces_and_abstract_classes_in_app_design.html"><strong aria-hidden="true">3.6.</strong> Справка по проектированию с использованием абстрактных классов и интерфейсов</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">ООП практические работы 5-8</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="Задание-1-Использование-интерфейсов"><a class="header" href="#Задание-1-Использование-интерфейсов">Задание 1. Использование интерфейсов</a></h1>
+<h2 id="Содержание"><a class="header" href="#Содержание">Содержание:</a></h2>
+<ul>
+<li>Интерфейс: <a href="#%D0%A7%D0%B0%D1%81%D1%82%D1%8C-11">Часть 1.1</a></li>
+<li>Перечисление: <a href="#%D0%A7%D0%B0%D1%81%D1%82%D1%8C-12">Часть 1.2</a></li>
+<li>Измерительное устройство: <a href="#%D0%A7%D0%B0%D1%81%D1%82%D1%8C-13">Часть 1.3</a></li>
+<li>Внешний вид программы: <a href="#%D0%A7%D0%B0%D1%81%D1%82%D1%8C-14">Часть 1.4</a></li>
+</ul>
+<p>Для начала создадим новый проект с графическим интерфейсом, например, так выглядит создание проекта с Windows Forms:</p>
+<p><img src="../../global/images/win-forms-app-creation.png" alt="Скриншот создания проекта" /></p>
+<h2 id="Часть-11"><a class="header" href="#Часть-11">Часть 1.1</a></h2>
+<p>Теперь добавим в новый элемент нажатием <strong>Ctrl+Shift+A</strong>, в котором мы будем хранить наш интерфейс измерительного прибора. Назовём его <code>MeasuringDevice.cs</code></p>
+<p>Cкопируем код с методички, кстати, с переведённой документацией. Вот как должен выглядить файл после копирования:</p>
+<blockquote>
+<p>p.s там есть кнопочка справа вверху кодового блока, можно не выделять</p>
+</blockquote>
+<h3 id="imeasuringdevice"><a class="header" href="#imeasuringdevice">IMeasuringDevice</a></h3>
+<pre><code class="language-C#">namespace MeasuringDevice
+{
+    public interface IMeasuringDevice
+    {
+        /// &lt;summary&gt;
+        /// Преобразует необработанные данные, собранные устройством измерения, в значение в метрических единицах.
+        /// &lt;/summary&gt;
+        /// &lt;returns&gt;Последнее измерение устройства преобразовано в метрические единицы.&lt;/returns&gt;
+        decimal MetricValue();
+
+        /// &lt;summary&gt;
+        /// Преобразует необработанные данные, собранные устройством измерения, в значение в имперических единицах.
+        /// &lt;/summary&gt;
+        /// &lt;returns&gt;Последнее измерение устройства преобразовано в имперические единицы.&lt;/returns&gt;
+        decimal ImperialValue();
+
+        /// &lt;summary&gt;
+        /// Запускает сбор данных устройства измерения.
+        /// &lt;/summary&gt;
+        void StartCollecting();
+
+        /// &lt;summary&gt;
+        /// Останавливает сбор данных устройства измерения.
+        /// &lt;/summary&gt;
+        void StopCollecting();
+
+        /// &lt;summary&gt;
+        /// Предоставляет доступ к необработанным данным, собранным устройством измерения, в любых единицах, используемых устройством.
+        /// &lt;/summary&gt;
+        /// &lt;returns&gt;Необработанные данные, собранные устройством измерения, в их сыром формате.&lt;/returns&gt;
+        int[] GetRawData();
+    }
+}
+</code></pre>
+<h2 id="Часть-12"><a class="header" href="#Часть-12">Часть 1.2</a></h2>
+<p>Теперь нужно создать перечисление <code>Units</code>, которое описывает выбранную систему измерения (метрическая или империческая). Добавим новый элемент нажатием <strong>Ctrl+Shift+A</strong> и назовём его <code>UnitsEnumeration.cs</code>. Нам нужно объявить перечисление через ключевое слово <code>enum</code>, затем назвать  его <code>Units</code>. Членами перечисления должны быть <code>Metric</code> и <code>Imperial</code>. Также, можно добавить комментарии.</p>
+<p>Вот как выглядит моя реализация этого перечисления:</p>
+<h3 id="units"><a class="header" href="#units">Units</a></h3>
+<pre><code class="language-C#">namespace UnitsEnumeration
+{
+    /// &lt;summary&gt;
+    /// Перечисление, которое используется для указания системы измерения.
+    /// &lt;/summary&gt;
+    public enum Units
+    {
+        Metric,
+        Imperial
+    }
+}
+</code></pre>
+<h2 id="Часть-13"><a class="header" href="#Часть-13">Часть 1.3</a></h2>
+<p>Далее создадим класс <code>MeasureLengthDevice</code>, где нам нужно будет реализовать интерфейс <code>IMeasuringDevice</code>. Для этого создадим файл <code>MeasureLengthDevice.cs</code> где этот класс и определим, также нам нужно установить уровень доступа public:</p>
+<pre><code class="language-C#">namespace WinFormsApp1
+{
+    public class MeasureLengthDevice
+    {
+    }
+}
+</code></pre>
+<p>Теперь добавим наследование от нашего интерфейса <a href="#imeasuringdevice"><code>IMeasuringDevice</code></a></p>
+<pre><code class="language-C#">using MeasuringDevice;
+
+namespace WinFormsApp1
+{
+    public class MeasureLengthDevice: IMeasuringDevice
+    {
+    }
+
+}
+</code></pre>
+<p>Теперь необходимо использовать мастер реализации интерфейса для создания заглушек методов для каждого из методов в интерфейсе IMeasuringDevice.</p>
+<p>Для этого нажимаем <strong>(CTRL + '.')</strong>, после чего нажимаем <strong>Реализовать интерфейс</strong>. В итоге мы получаем класс с заглушками под методы интерфейса:</p>
+<pre><code class="language-C#">// ...
+namespace WinFormsApp1
+{
+    public class MeasureLengthDevice : IMeasuringDevice
+    {
+        public int[] GetRawData()
+        {
+            throw new NotImplementedException();
+        }
+
+        public decimal ImperialValue()
+        {
+            throw new NotImplementedException();
+        }
+
+        public decimal MetricValue()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void StartCollecting()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void StopCollecting()
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+}
+</code></pre>
+<p>Теперь нам надо добавить перечисление DeviceType и класс DeviceController.
+Поместим их в отдельные файлы, начнём с перечисления. Жмём <strong>Ctrl+Shift+A</strong></p>
+<p>DeviceType должен быть перечислением, состоящим из <code>LENGTH</code> и <code>MASS</code>.
+Вот примерная реализация данного перечисления:</p>
+<h3 id="devicetype"><a class="header" href="#devicetype">DeviceType</a></h3>
+<pre><code class="language-C#">namespace DeviceTypeNS
+{
+    public enum DeviceType
+    {
+        LENGTH,
+        MASS
+    }
+}
+</code></pre>
+<p>Далее снова жмём <strong>Ctrl+Shift+A</strong> и добавляем класс DeviceController.
+Класс пока что оставим пустым, вернёмся к нему позже.</p>
+<pre><code class="language-C#">namespace DeviceControllerNS
+{
+    public class DeviceController
+    {
+    }
+}
+</code></pre>
+<p>Теперь нужно вернуться к классу MeasureLengthDevice. В него нужно добавить поля из указанной таблицы:</p>
+<div class="table-wrapper"><table><thead><tr><th>Модификатор доступа</th><th>Тип</th><th>Название</th></tr></thead><tbody>
+<tr><td>private</td><td>Units</td><td>unitsToUse</td></tr>
+<tr><td>private</td><td>int[]</td><td>dataCaptured</td></tr>
+<tr><td>private</td><td>int</td><td>mostRecentMeasure</td></tr>
+<tr><td>private</td><td>DeviceController</td><td>controller</td></tr>
+<tr><td>private</td><td>DeviceType</td><td>measurementType</td></tr>
+</tbody></table>
+</div>
+<p>Примерно так теперь должен выглядить класс после добавления полей:</p>
+<pre><code class="language-C#">using MeasuringDevice;
+using UnitsEnumeration;
+using DeviceControllerNS;
+using DeviceTypeNS;
+
+namespace WinFormsApp1
+{
+    public class MeasureLengthDevice : IMeasuringDevice
+    {
+        private Units unitsToUse;
+        private int[] dataCaptured;
+        private int mostRecentMeasure;
+        private DeviceController controller;
+        private DeviceType measurementType;
+        public int[] GetRawData()
+        {
+            throw new NotImplementedException();
+        }
+
+        public decimal ImperialValue()
+        {
+            throw new NotImplementedException();
+        }
+
+        public decimal MetricValue()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void StartCollecting()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void StopCollecting()
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+}
+</code></pre>
+<p>Изменим поле measurementType, сделав его константным и инициализируем его как <code>DeviceType.LENGTH</code></p>
+<pre><code class="language-C#">//...
+public class MeasureLengthDevice : IMeasuringDevice
+    {
+        //...
+        private const DeviceType measurementType = DeviceType.LENGTH;
+        //...
+    }
+//...
+</code></pre>
+<p>Теперь нам нужно найти метод <code>StartCollecting</code>, а затем удалить тело метода по умолчанию, которое вставляет Visual Studio, что создает исключение <code>NotImplementedException</code>, добавить в метод <code>StartCollecting</code> код для создания экземпляра поля контроллера с помощью статического метода <code>StartDevice</code> класса <code>DeviceController</code>. Для этого нужно передать значение в поле MeasurementType в качестве параметра методу <code>StartCollecting</code>.</p>
+<p>Кстати класс <code>DeviceController</code> у нас пуст, так что вернёмся к нему и придумаем
+метод <code>StartDevice</code>. Ещё раз напомню что он из себя представляет: берёт <code>MeasurmentType</code> в качестве параметра, возвращает <code>DeviceController</code>.</p>
+<p>Возможная реализация:</p>
+<pre><code class="language-C#">using DeviceTypeNS;
+namespace DeviceControllerNS
+{
+    public class DeviceController
+    {
+        DeviceType measurementType;
+
+        public DeviceController(DeviceType measurementType)
+        {
+            this.measurementType = measurementType;
+        }
+
+        public static DeviceController StartDevice(DeviceType measurementType)
+        {
+            return new DeviceController(measurementType);
+        }
+    }
+}
+// Meow
+</code></pre>
+<p>Вернёмся обратно в <code>MeasureLengthDevice</code>. Нам нужно найти метод <code>StartCollecting</code>, а затем удалить тело метода по умолчанию, после чего добавить в метод <code>StartCollecting</code> код для создания экземпляра поля контроллера с помощью статического метода <code>StartDevice</code> класса <code>DeviceController</code>. Для этого нужно передать значение в поле MeasurementType в качестве параметра методу <code>StartCollecting</code>.</p>
+<pre><code class="language-C#">//...
+public void StartCollecting()
+{
+    controller = DeviceController.StartDevice(measurementType);
+}
+//...
+</code></pre>
+<p>Теперь нам надо добавить метод <code>GetMeasurements</code>, его можно просто скопировать.</p>
+<h3 id="getmeasurements"><a class="header" href="#getmeasurements">GetMeasurements</a></h3>
+<pre><code class="language-C#">private void GetMeasurements()
+{
+    dataCaptured = new int[10];
+    System.Threading.ThreadPool.QueueUserWorkItem((dummy) =&gt;
+    {
+        int x = 0;
+        Random timer = new Random();
+ 
+        while (controller != null)
+        {
+            System.Threading.Thread.Sleep(timer.Next(1000, 5000));
+            dataCaptured[x] = controller != null ?
+                controller.TakeMeasurement() : dataCaptured[x];
+            mostRecentMeasure = dataCaptured[x]; 
+            x++;
+            if (x == 10)
+            {
+                x = 0;
+            }
+        }
+    });
+}
+</code></pre>
+<p>Заметили эту волнистую красную линию? Нажмите туда, а затем нажмите <strong>(CTRL + '.'</strong>).
+Затем нажмите создать метод <strong>TakeMeasurment</strong>. Линия пропадёт, но это ещё не всё.
+Наводимся на метод, нажимаем <strong>DeviceController</strong>, таким образом переходим к определению этого класса.
+Если не поняли мои махинации с хоткеями и остальным, то просто перейдите к классу <code>DeviceController</code>.</p>
+<p>Найдём вот такой метод:</p>
+<pre><code class="language-C#">//...
+internal int TakeMeasurement()
+{
+    throw new NotImplementedException();
+}
+//...
+</code></pre>
+<p>Visual Studio заботливо написал для нас тип возвращаемого значения <code>int</code> и заглушку.
+Наша задача вместо заглушки возвращать какое-то число...</p>
+<p>Моя реализация:</p>
+<h3 id="takemeasurement"><a class="header" href="#takemeasurement">TakeMeasurement</a></h3>
+<pre><code class="language-C#">//...
+public int TakeMeasurement()
+{
+    Random random = new Random();
+    return random.Next(1, 10);
+}
+//...
+</code></pre>
+<p>Продолжим путешествовать по коду. Теперь вернёмся к нашему классу <code>MeasureLengthDevice</code>.
+Вообще, метод <a href="#getmeasurements">GetMeasurments</a> призван эмулировать работу некоторого устройства,
+которое производит замеры. Так что нам нужно добавить вызов этого метода в методе <code>StartCollecting</code></p>
+<pre><code class="language-C#">//...
+public void StartCollecting()
+{
+    controller = DeviceController.StartDevice(measurementType);
+    GetMeasurements();
+}
+//...
+</code></pre>
+<p>Мы будем использовать код метода GetMeasurements для заполнения массива dataCaptured. Этот массив действует как циклический буфер фиксированной длины, перезаписывая самое старое значение каждый раз при выполнении нового измерения. Далее мы изменим этот класс, чтобы он реагировал на события, которые устройство вызывает всякий раз, когда оно обнаруживает новое измерение.</p>
+<p>Найдём метод StopCollecting, а затем удалим тело метода по умолчанию, которое вставляет Visual Studio, что создает исключение NotImplementedException. Добавим условный блок кода, который запускается только в том случае, если объект <code>controller</code> не равен <code>null</code>.</p>
+<pre><code class="language-C#">//...
+public void StopCollecting()
+{
+    if (controller != null)
+    {
+
+    }
+}
+//...
+</code></pre>
+<p>В условном блоке кода добавим код для вызова метода StopDevice объекта контроллера, а затем установим для поля контроллера значение <code>null</code>.</p>
+<pre><code class="language-C#">//...
+public void StopCollecting()
+{
+    if (controller != null)
+    {
+        controller.StopDevice();
+        controller = null;
+    }
+}
+//...
+</code></pre>
+<p><code>controller</code> подчёркивается зелёной волнистой линией. VS studio говорит, что <code>controller</code> не может быть
+<code>null</code>. Таким образом надо слегка изменить наше поле.</p>
+<pre><code class="language-C#">//...
+private int mostRecentMeasure;
+private DeviceController? controller;  //*
+private const DeviceType measurementType = DeviceType.LENGTH;
+//...
+</code></pre>
+<p>А ещё, пора избавится от красной линии в <code>StopCollecting</code>. <strong>(CTRL + '.')</strong>, создать метод <strong>StopDevice</strong>.
+Переместимся в класс <code>DeviceController</code> и реализуем метод <code>StopDevice</code>.</p>
+<p>Лично я поменял много кода. Вот возможная реализация класса <code>DeviceController</code>:</p>
+<pre><code class="language-C#">using DeviceTypeNS;
+
+namespace DeviceControllerNS
+{
+    public class DeviceController
+    {
+        DeviceType measurementType;
+        bool isStopped;  // Новый код
+
+        public DeviceController(DeviceType measurementType)
+        {
+            this.measurementType = measurementType;
+            this.isStopped = false;  // Новый код
+        }
+
+        public static DeviceController StartDevice(DeviceType measurementType)
+        {
+            return new DeviceController(measurementType);
+        }
+
+        public void StopDevice()
+        {
+            this.isStopped = true;  // Новый код
+        }
+
+        public int TakeMeasurement()
+        {
+            if (!this.isStopped)  // Новый код
+            {
+                Random random = new Random();
+                return random.Next(1, 10);
+            }
+            throw new Exception(&quot;Устройство остановлено, однако, была попытка сделать измерение&quot;);  // Новый код
+        }
+    }
+}
+</code></pre>
+<p>Возвращаемся к классу <code>MeasureLengthDevice</code></p>
+<p>Найдём метод <code>GetRawData</code>, а затем удалим тело метода по умолчанию, которое вставляет Visual Studio, что создает исключение <code>NotImplementedException</code>. Добавим код для возврата массива <code>dataCaptured</code>.</p>
+<p>Возможная реализация метода:</p>
+<pre><code class="language-C#">//...
+public int[] GetRawData()
+{
+    return dataCaptured;
+}
+//...
+</code></pre>
+<p>Найдём метод <code>MetricValue</code>, а затем удалим тело метода по умолчанию. Добавим код для проверки <code>unitsToUse</code> и, если они метрические, вернём значение из поля <code>mostRecentMeasure</code>. Если текущие единицы измерения эмпирические, вернём результат умножения поля <code>mostRecentMeasure</code> на 25,4.</p>
+<p>Возможная реализация метода <code>MetricValue</code>:</p>
+<pre><code class="language-C#">//...
+public decimal MetricValue()
+{
+    switch (unitsToUse)
+    {
+        case Units.Metric:
+            return mostRecentMeasure;
+        case Units.Imperial:
+            return (decimal)(mostRecentMeasure * 25.4);
+        default:
+            throw new NotImplementedException();
+    }
+}
+//...
+</code></pre>
+<p>Найдём метод <code>ImperialValue</code>, а затем удалим тело метода по умолчанию. Добавим код для проверки <code>unitsToUse</code> и, если они эмпирические, вернём значение из поля mostRecentMeasure. Если текущие единицы измерения являются метрическими, вернём результат умножения поля <code>mostRecentMeasure</code> на 0,03937.</p>
+<p>Возможная реализация метода <code>ImperialValue</code>:</p>
+<pre><code class="language-C#">//...
+public decimal ImperialValue()
+{
+    switch (unitsToUse)
+    {
+        case Units.Metric:
+            return (decimal)(mostRecentMeasure * 0.03937);
+        case Units.Imperial:
+            return mostRecentMeasure;
+        default:
+            throw new NotImplementedException();
+    }
+}
+//...
+</code></pre>
+<p>Добавим в класс конструктор, который принимает параметр типа <code>Units</code> и задает для поля <code>unitToUse</code> значение, заданное этим параметром. Чтобы добавить конструктор можно нажать по названию класса и нажать
+<strong>(CTRL + '.')</strong>, после чего выбрать <strong>Создать конструктор</strong>. Ставим галочку только на <strong>unitsToUse</strong>.</p>
+<p>Конструктор, который для нас любезно собрал VS studio:</p>
+<pre><code class="language-C#">//...
+public MeasureLengthDevice(Units unitsToUse)
+{
+    this.unitsToUse = unitsToUse;
+}
+//...
+</code></pre>
+<p>Также, VS studio жалуется на <code>null</code> в <code>dataCaptured</code>, поэтому это следует исправить:</p>
+<pre><code class="language-C#">//...
+public MeasureLengthDevice(Units unitsToUse)
+{
+    this.unitsToUse = unitsToUse;
+    this.dataCaptured = new int[0];
+}
+//...
+</code></pre>
+<p>Дальше стоит запустить проект. Проект должен быть успешно собран.</p>
+<h2 id="Часть-14"><a class="header" href="#Часть-14">Часть 1.4</a></h2>
+<p>Итак, самое сложное позади, остался лишь интерфейс.</p>
+<h3 id="Примерные-требования-к-интерфейсу"><a class="header" href="#Примерные-требования-к-интерфейсу">Примерные требования к интерфейсу:</a></h3>
+<p>Listbox или что-то такое чтобы отображать данные.</p>
+<p>Кнопка &quot;Получить необработанные данные&quot;: выводит полученные данные на экран.</p>
+<p>Кнопка создания устройства: Нужно создать экземпляр <code>MeasureLengthDevice</code> и записать в поле <code>device</code>.
+При его создании необходимо использовать выбранную систему измерения.</p>
+<p>Кнопка начала сбора: Нужно запустить метод StartCollecting на нашем измерительном устройстве.</p>
+<p>Кнопка окончания сбора: Нужно как-то завершить сбор данных.</p>
+<p>Кнопка &quot;Метрическое значение&quot;: выводит последнее измерение устройства в метрической системе.</p>
+<p>Кнопка &quot;Эмпирическое значение&quot;: выводит последнее измерение устройства в эмпирической системе.</p>
+<p>Пример интерфейса:</p>
+<p><img src="./images/pr5-app-interface.png" alt="Интерфейс приложения" /></p>
+<p>Если вы всё сделали правильно, то после запуска устройства оно начнёт делать замеры.
+После нажатия на кнопку &quot;Получить необработанные данные&quot; будет отображаться содержимое
+циклического буфера. По началу там будут только нули, но со временем буфер станет заполнятся
+значениями. Оставшиеся кнопки должны по большей части просто вызывать методы нашего класса.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../practices/pr5/key_concepts.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../../practices/pr5/task2.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../practices/pr5/key_concepts.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../../practices/pr5/task2.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

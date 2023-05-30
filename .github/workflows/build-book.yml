@@ -20,7 +20,7 @@ jobs:
         with:
           mdbook-version: 'latest'
       - name: Build Book
-        working-directory: ../Конспект/oop
+        working-directory: ./Конспект/oop
         run: mdbook build
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3

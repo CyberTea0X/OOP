@@ -62,10 +62,9 @@ interface IMovable
 Также с помощью модификатора public мы можем сделать интерфейс общедоступным:
 
 ```C#
+//...
 public interface IMovable
-{
-    void Move();
-}
+//...
 ```
 
 ## Реализация по умолчанию
@@ -103,6 +102,49 @@ interface IMovable
 }
 ```
 Благодаря интерфейсам, можно реализовать [множественное наследование](./multiple_interface_inherit.md), которое на самом деле называется композицией. 
+
+## Примеры применения интерфейсов
+
+### Интерфейсы без реализации по умолчанию
+```C#
+interface IMovable
+{
+    void Move();
+}
+class Person : IMovable
+{
+    public void Move() => Console.WriteLine("Человек идет");
+}
+struct Car : IMovable
+{
+    public void Move() => Console.WriteLine("Машина едет");
+}
+
+Person Tom = new Person();
+Car Volga = new Car();
+Tom.Move();  // Выведет: Человек идет
+Volga.Move();  // Выведет: Машина едет
+```
+### Интефейсы с реализацией по умолчанию
+
+```C#
+interface IMovable
+{
+    void Move() => Console.WriteLine("Walking");
+}
+
+class Person : IMovable { }
+
+class Car : IMovable
+{
+    public void Move() => Console.WriteLine("Driving");
+}
+
+IMovable tom = new Person();
+Car tesla = new Car();
+tom.Move();     // Walking
+tesla.Move();   // Driving
+```
 
 ## Бонус: старый синтаксис интерфейсов (C# <8.0)
 

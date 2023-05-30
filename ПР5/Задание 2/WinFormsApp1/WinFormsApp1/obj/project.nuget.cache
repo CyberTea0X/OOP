@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "r3M6rkbABqf4rPR4Xp3G5Lw2ZX6ggO4bVei29MhMzxYqUMWPr5qJDusYMP/VGlCZRty0iCDueKwh9c6SLefp8g==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Anatoliy\\Desktop\\Folders\\Уроки\\OOP\\ПР5\\Задание 2\\WinFormsApp1\\WinFormsApp1\\WinFormsApp1.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Anatoliy\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.16\\microsoft.windowsdesktop.app.ref.6.0.16.nupkg.sha512",
+    "C:\\Users\\Anatoliy\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.16\\microsoft.netcore.app.ref.6.0.16.nupkg.sha512",
+    "C:\\Users\\Anatoliy\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.16\\microsoft.aspnetcore.app.ref.6.0.16.nupkg.sha512",
+    "C:\\Users\\Anatoliy\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\6.0.16\\microsoft.netcore.app.host.win-x64.6.0.16.nupkg.sha512"
+  ],
+  "logs": []
+}

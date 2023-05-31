@@ -81,7 +81,7 @@
 
 Пускай будет интерфейс `ISearch`, который будет реализовывать возможность гибкого поиска по какой-либо коллекции, пускай будет абстрактный класс `Library` который будет использовать `ISearch`.
 
-Также добавим абстрактный класс магазина `Shop`, где используем интерфейсы `IHasAuthor`, `IHasName`, `IHasReleaseDate`
+Также добавим абстрактный класс магазина `Shop`, где используем интерфейсы `IHasAuthor`, `IHasName`, `IHasDescription`, `IHasReleaseDate`
 
 Как-то так. План следующий:
  - Реализуем интерфейсы.
@@ -99,10 +99,10 @@
  - [ISearch](#isearch)
 
 Список всех абстрактных классов для реализации:
- - [Page]()
- - [Book]()
- - [Library]()
- - [Shop]()
+ - [Page](#page)
+ - [Book](#book)
+ - [Library](#library)
+ - [Shop](#shop)
 
 Начнём с того, что создадим заглушки под каждый интерфейс.
 Жмём **(Ctrl+Shift+A)**, выбираем интерфейс и называем его `IHasDescription`, создаём.
@@ -249,7 +249,125 @@ public interface ISearch <T>
 }
 ```
 
+Теперь, когда мы реализовали все интерфейсы, пока бы начать реализовывать классы.
+
 ### Page
+
+```C#
+public abstract class Page : IHasReleaseDate, IHasName, IHasDescription
+{
+    protected Page(DateTime releaseDate, string name, string description)
+    {
+        this.releaseDate = releaseDate;
+        this.name = name;
+        this.description = description;
+    }
+
+    public DateTime releaseDate { get; set; }
+    public string name { get; set; }
+    public string description { get; set; }
+
+    public string Name => name;
+
+    public string Description { get => description; set { description = value; } }
+
+    abstract public bool IsValidName(string name);
+}
+```
+Для книги нам необходимо реализовать все наши интерфейсы кроме `ISearch`:
+
+```C#
+public abstract class Book: IForSale, IHasAuthor, IHasDescription, IHasGenre, IHasName, IHasPages, IHasReleaseDate
+{
+
+}
+```
+
+ > Совет: пользуйтесь **(Ctrl + '.')** для реализации интерфейсов.
+
+### Book
+
+```C#
+public abstract class Book : IForSale, IHasAuthor, IHasDescription, IHasGenre, IHasName, IHasPages, IHasReleaseDate
+{
+    protected Book(string name, int price, int discount, string authorName, uint authorAge, string authorAbout, string description, Page[] pages, DateTime releaseDate)
+    {
+        this.name = name;
+        this.price = price;
+        this.discount = discount;
+        this.authorName = authorName;
+        this.authorAge = authorAge;
+        this.authorAbout = authorAbout;
+        Description = description;
+        this.pages = pages;
+        this.releaseDate = releaseDate;
+    }
+
+    public string name { get; set; }
+    public int price { get; set; }
+    public int discount { get; set; }
+    public string authorName { get; set; }
+    public uint authorAge { get; set; }
+    public string authorAbout { get; set; }
+    public string AuthorName => authorName;
+
+    public uint AuthorAge => authorAge;
+
+    public string AuthorAbout => authorAbout;
+
+    public string Description { get; set; }
+    public abstract HashSet<string> Genres { get; }
+
+    public string Name => name;
+
+    public Page[] pages { get; set; }
+    public DateTime releaseDate { get; set; }
+
+    public abstract bool IsValidName(string name);
+
+    public abstract bool ValidateAuthor();
+}
+```
+
+Library` должен реализовывать `ISearch`.
+### Library
+
+```C#
+public abstract class Library : ISearch<Page>
+{
+    public abstract Page Find(Func<Page, bool> predicate);
+    public abstract Page[] SearchAll();
+}
+```
+
+Абстрактный класс `Shop` реализует интерфейсы `IHasAuthor`, `IHasName`, `IHasDescription`, `IHasReleaseDate`
+
+### Shop
+
+```C#
+public abstract class Shop : IHasAuthor, IHasName, IHasDescription, IHasReleaseDate
+{
+    protected Shop(string authorName, uint authorAge, string authorAbout, string name, string description, DateTime releaseDate)
+    {
+        AuthorName = authorName;
+        AuthorAge = authorAge;
+        AuthorAbout = authorAbout;
+        Name = name;
+        Description = description;
+        this.releaseDate = releaseDate;
+    }
+
+    public string AuthorName { get; }
+    public uint AuthorAge { get; }
+    public string AuthorAbout { get; }
+    public string Name { get; }
+    public string Description { get; set; }
+    public DateTime releaseDate { get; set; }
+
+    public abstract bool IsValidName(string name);
+    public abstract bool ValidateAuthor();
+}
+```
 
 ## Часть 4.
 

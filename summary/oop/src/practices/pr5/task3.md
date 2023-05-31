@@ -94,7 +94,6 @@
  - [IHasGenre](#ihasgenre)
  - [IHasReleaseDate](#ihasreleasedate)
  - [IHasName](#ihasname)
- - [IPage](#ipage)
  - [IHasPages](#ihaspages)
  - [IForSale](#iforsale)
  - [ISearch](#isearch)

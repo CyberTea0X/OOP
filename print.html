@@ -1374,20 +1374,90 @@ namespace MeasureMassDeviceNS
 <p>Тут мы ограничены лишь своей фантазией.
 Заметим, что сказано частично или полностью реализовать классы, что будет проблемой при создании абсолютно воображаемого приложения. </p>
 <h3 id="Возможная-реализация-архитектуры-приложения-с-помощью-интерфейсов-В-разработке"><a class="header" href="#Возможная-реализация-архитектуры-приложения-с-помощью-интерфейсов-В-разработке">Возможная реализация архитектуры приложения с помощью интерфейсов (В разработке!)</a></h3>
-<p>Ну что же, проект делать всеравно другой в итоге, сделаем книжный магазин!</p>
+<p>Ну что же, проект делать всеравно другой в итоге, сделаем книжный магазин!
+В интерфейсы пожалуй будем добавлять только методы.</p>
 <p>Итак, какие сущности обитают в книжном магазине? Книги?
 В общем так, рассмотрим воображаемый сайт книжного магазина. Там обязательно есть кнопочка купить, 
 есть страничка книги, есть поиск книг... На этом пожалуй хватит.</p>
-<p>Пускай будет интерфейс <code>IBook</code>, пускай будет интерфейс <code>IForSale</code>, 
-Из <code>IBook</code> и <code>IForSale</code> соберём книгу. </p>
-<p>Пускай будет интерфейс <code>ISearch</code>, который будет реализовывать возможность гибкого поиска по какой-либо коллекции, пускай будет абстрактный класс <code>BookCollection</code> который будет использовать <code>ISearch</code>.</p>
+<p>Пускай будет интерфейс <code>IBook</code>, хотя, тогда в нём будут лишь поля, да и громоздний наверное выйдет интерфейс...</p>
+<p>Тогда сделаем интерфейсы <code>IHasDescription</code>, <code>IHasAuthor</code>, <code>IHasGenre</code>, <code>IHasReleaseDate</code>, <code>IHasName</code>, <code>IHasPages</code>.</p>
+<p>Также, пускай будет интерфейс <code>IForSale</code>, 
+Из <code>IHasDescription</code>, <code>IHasAuthor</code>, <code>IHasGenre</code>, <code>IHasReleaseDate</code>, <code>IHasName</code>, <code>IHasPages</code>, <code>IForSale</code>. соберём класс книги, а потом попробуем собрать что-нибудь ещё.</p>
+<p>Пускай будет интерфейс <code>ISearch</code>, который будет реализовывать возможность гибкого поиска по какой-либо коллекции, пускай будет абстрактный класс <code>Library</code> который будет использовать <code>ISearch</code>.</p>
+<p>Также добавим абстрактный класс магазина <code>Shop</code>, где используем интерфейсы <code>IHasAuthor</code>, <code>IHasName</code>, <code>IHasReleaseDate</code></p>
 <p>Как-то так. План следующий:</p>
 <ul>
 <li>Реализуем интерфейсы.</li>
-<li>Собираем абстрактные классы <code>Book</code> и <code>IBookCollection</code>.</li>
+<li>Собираем абстрактные классы <code>Book</code>, <code>Library</code> и <code>Shop</code>.</li>
 <li>Собираем классы для различных жанров книг, класс коллекции книг.</li>
 <li>Делаем какое-то подобие страницы магазина на WindowsForms или чём-то таком. Можно просто - значит делаем просто.</li>
 </ul>
+<p>Список всех интерфейсов для реализации:</p>
+<ul>
+<li><a href="practices/pr5/task3.html#ihasdescription">IHasDescription</a></li>
+<li><a href="practices/pr5/task3.html#ihasauthor">IHasAuthor</a></li>
+<li><a href="practices/pr5/task3.html#ihasgenre">IHasGenre</a></li>
+<li><a href="practices/pr5/task3.html#ihasreleasedate">IHasReleaseDate</a></li>
+<li><a href="practices/pr5/task3.html#ihasname">IHasName</a></li>
+<li><a href="practices/pr5/task3.html#ihaspages">IHasPages</a></li>
+<li><a href="practices/pr5/task3.html#iforsale">IForSale</a></li>
+<li><a href="practices/pr5/task3.html#isearch">ISearch</a></li>
+</ul>
+<p>Начнём с того, что создадим заглушки под каждый интерфейс.
+Жмём <strong>(Ctrl+Shift+A)</strong>, выбираем интерфейс и называем его <code>IHasDescription</code>, создаём.</p>
+<p>Теперь проделаем это со всеми остальными, тоесть <code>IHasAuthor</code>, <code>IHasGenre</code>, <code>IHasReleaseDate</code>, <code>IHasName</code>, <code>IHasPages</code>, <code>IForSale</code>, <code>ISearch</code>.</p>
+<p>А теперь спокойненько все их реализовываем. Вот примерная реализация:</p>
+<h3 id="ihasdescription"><a class="header" href="#ihasdescription">IHasDescription</a></h3>
+<pre><code class="language-C#">public interface IHasDescription
+{
+    string Description { get; set; }
+
+    bool HasDescription() { return Description!= null &amp;&amp; Description.Trim().Length &gt; 0; }
+
+    void FormatDescription() { Description = Description.Trim(); }
+
+    void ClearDescription() { Description = &quot;&quot;; }
+
+    void GetDescription() { &quot;Описание: &quot;.Concat(Description); }
+}
+</code></pre>
+<h3 id="ihasauthor"><a class="header" href="#ihasauthor">IHasAuthor</a></h3>
+<pre><code class="language-C#">public interface IHasAuthor
+{
+    string AuthorName { get; }
+
+    uint AuthorAge { get; }
+
+    string AuthorAbout { get; }
+
+    bool ValidateAuthor();
+}
+</code></pre>
+<h3 id="ihasgenre"><a class="header" href="#ihasgenre">IHasGenre</a></h3>
+<pre><code class="language-C#">public interface IHasGenre
+{
+    HashSet&lt;string&gt; Genres { get; }
+
+    bool ContainsGenre(string genre) { return Genres.Contains(genre); }
+
+    string[] GetGenres() { return Genres.ToArray(); }
+
+    void AddGenre(string genre) { Genres.Add(genre); }
+
+    void RemoveGenre(string genre) { Genres.Remove(genre); }
+
+}
+</code></pre>
+<h3 id="ihasreleasedate"><a class="header" href="#ihasreleasedate">IHasReleaseDate</a></h3>
+<pre><code class="language-C#"></code></pre>
+<h3 id="ihasname"><a class="header" href="#ihasname">IHasName</a></h3>
+<pre><code class="language-C#"></code></pre>
+<h3 id="ihaspages"><a class="header" href="#ihaspages">IHasPages</a></h3>
+<pre><code class="language-C#"></code></pre>
+<h3 id="iforsale"><a class="header" href="#iforsale">IForSale</a></h3>
+<pre><code class="language-C#"></code></pre>
+<h3 id="isearch"><a class="header" href="#isearch">ISearch</a></h3>
+<pre><code class="language-C#"></code></pre>
 <h2 id="Часть-4"><a class="header" href="#Часть-4">Часть 4.</a></h2>
 <p>Для построения UML диаграмм любого типа рекомендуется использование <a href="https://staruml.io">StarUML</a></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="Приложение"><a class="header" href="#Приложение">Приложение</a></h1>

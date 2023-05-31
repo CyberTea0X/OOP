@@ -65,23 +65,106 @@
 ### Возможная реализация архитектуры приложения с помощью интерфейсов (В разработке!)
 
 Ну что же, проект делать всеравно другой в итоге, сделаем книжный магазин!
+В интерфейсы пожалуй будем добавлять только методы.
 
 Итак, какие сущности обитают в книжном магазине? Книги?
 В общем так, рассмотрим воображаемый сайт книжного магазина. Там обязательно есть кнопочка купить, 
 есть страничка книги, есть поиск книг... На этом пожалуй хватит.
 
-Пускай будет интерфейс `IBook`, пускай будет интерфейс `IForSale`, 
-Из `IBook` и `IForSale` соберём книгу. 
+Пускай будет интерфейс `IBook`, хотя, тогда в нём будут лишь поля, да и громоздний наверное выйдет интерфейс...
 
-Пускай будет интерфейс `ISearch`, который будет реализовывать возможность гибкого поиска по какой-либо коллекции, пускай будет абстрактный класс `BookCollection` который будет использовать `ISearch`.
+Тогда сделаем интерфейсы `IHasDescription`, `IHasAuthor`, `IHasGenre`, `IHasReleaseDate`, `IHasName`, `IHasPages`.
+
+
+Также, пускай будет интерфейс `IForSale`, 
+Из `IHasDescription`, `IHasAuthor`, `IHasGenre`, `IHasReleaseDate`, `IHasName`, `IHasPages`, `IForSale`. соберём класс книги, а потом попробуем собрать что-нибудь ещё.
+
+Пускай будет интерфейс `ISearch`, который будет реализовывать возможность гибкого поиска по какой-либо коллекции, пускай будет абстрактный класс `Library` который будет использовать `ISearch`.
+
+Также добавим абстрактный класс магазина `Shop`, где используем интерфейсы `IHasAuthor`, `IHasName`, `IHasReleaseDate`
 
 Как-то так. План следующий:
  - Реализуем интерфейсы.
- - Собираем абстрактные классы `Book` и `IBookCollection`.
+ - Собираем абстрактные классы `Book`, `Library` и `Shop`.
  - Собираем классы для различных жанров книг, класс коллекции книг.
  - Делаем какое-то подобие страницы магазина на WindowsForms или чём-то таком. Можно просто - значит делаем просто.
 
+Список всех интерфейсов для реализации:
+ - [IHasDescription](#ihasdescription)
+ - [IHasAuthor](#ihasauthor)
+ - [IHasGenre](#ihasgenre)
+ - [IHasReleaseDate](#ihasreleasedate)
+ - [IHasName](#ihasname)
+ - [IHasPages](#ihaspages)
+ - [IForSale](#iforsale)
+ - [ISearch](#isearch)
 
+Начнём с того, что создадим заглушки под каждый интерфейс.
+Жмём **(Ctrl+Shift+A)**, выбираем интерфейс и называем его `IHasDescription`, создаём.
+
+Теперь проделаем это со всеми остальными, тоесть `IHasAuthor`, `IHasGenre`, `IHasReleaseDate`, `IHasName`, `IHasPages`, `IForSale`, `ISearch`.
+
+А теперь спокойненько все их реализовываем. Вот примерная реализация:
+
+### IHasDescription
+```C#
+public interface IHasDescription
+{
+    string Description { get; set; }
+
+    bool HasDescription() { return Description!= null && Description.Trim().Length > 0; }
+
+    void FormatDescription() { Description = Description.Trim(); }
+
+    void ClearDescription() { Description = ""; }
+
+    void GetDescription() { "Описание: ".Concat(Description); }
+}
+```
+### IHasAuthor
+```C#
+public interface IHasAuthor
+{
+    string AuthorName { get; }
+
+    uint AuthorAge { get; }
+
+    string AuthorAbout { get; }
+
+    bool ValidateAuthor();
+}
+```
+### IHasGenre
+```C#
+public interface IHasGenre
+{
+    HashSet<string> Genres { get; }
+
+    bool ContainsGenre(string genre) { return Genres.Contains(genre); }
+
+    string[] GetGenres() { return Genres.ToArray(); }
+
+    void AddGenre(string genre) { Genres.Add(genre); }
+
+    void RemoveGenre(string genre) { Genres.Remove(genre); }
+
+}
+```
+### IHasReleaseDate
+```C#
+```
+### IHasName
+```C#
+```
+### IHasPages
+```C#
+```
+### IForSale
+```C#
+```
+### ISearch
+```C#
+```
 
 ## Часть 4.
 

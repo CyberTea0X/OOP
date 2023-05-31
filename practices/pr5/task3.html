@@ -203,7 +203,7 @@
 <p>Также, пускай будет интерфейс <code>IForSale</code>, 
 Из <code>IHasDescription</code>, <code>IHasAuthor</code>, <code>IHasGenre</code>, <code>IHasReleaseDate</code>, <code>IHasName</code>, <code>IHasPages</code>, <code>IForSale</code>. соберём класс книги, а потом попробуем собрать что-нибудь ещё.</p>
 <p>Пускай будет интерфейс <code>ISearch</code>, который будет реализовывать возможность гибкого поиска по какой-либо коллекции, пускай будет абстрактный класс <code>Library</code> который будет использовать <code>ISearch</code>.</p>
-<p>Также добавим абстрактный класс магазина <code>Shop</code>, где используем интерфейсы <code>IHasAuthor</code>, <code>IHasName</code>, <code>IHasReleaseDate</code></p>
+<p>Также добавим абстрактный класс магазина <code>Shop</code>, где используем интерфейсы <code>IHasAuthor</code>, <code>IHasName</code>, <code>IHasDescription</code>, <code>IHasReleaseDate</code></p>
 <p>Как-то так. План следующий:</p>
 <ul>
 <li>Реализуем интерфейсы.</li>
@@ -223,10 +223,10 @@
 </ul>
 <p>Список всех абстрактных классов для реализации:</p>
 <ul>
-<li><a href="">Page</a></li>
-<li><a href="">Book</a></li>
-<li><a href="">Library</a></li>
-<li><a href="">Shop</a></li>
+<li><a href="#page">Page</a></li>
+<li><a href="#book">Book</a></li>
+<li><a href="#library">Library</a></li>
+<li><a href="#shop">Shop</a></li>
 </ul>
 <p>Начнём с того, что создадим заглушки под каждый интерфейс.
 Жмём <strong>(Ctrl+Shift+A)</strong>, выбираем интерфейс и называем его <code>IHasDescription</code>, создаём.</p>
@@ -352,7 +352,111 @@
     T Find(Func&lt;T, bool&gt; predicate);
 }
 </code></pre>
+<p>Теперь, когда мы реализовали все интерфейсы, пока бы начать реализовывать классы.</p>
 <h3 id="page"><a class="header" href="#page">Page</a></h3>
+<pre><code class="language-C#">public abstract class Page : IHasReleaseDate, IHasName, IHasDescription
+{
+    protected Page(DateTime releaseDate, string name, string description)
+    {
+        this.releaseDate = releaseDate;
+        this.name = name;
+        this.description = description;
+    }
+
+    public DateTime releaseDate { get; set; }
+    public string name { get; set; }
+    public string description { get; set; }
+
+    public string Name =&gt; name;
+
+    public string Description { get =&gt; description; set { description = value; } }
+
+    abstract public bool IsValidName(string name);
+}
+</code></pre>
+<p>Для книги нам необходимо реализовать все наши интерфейсы кроме <code>ISearch</code>:</p>
+<pre><code class="language-C#">public abstract class Book: IForSale, IHasAuthor, IHasDescription, IHasGenre, IHasName, IHasPages, IHasReleaseDate
+{
+
+}
+</code></pre>
+<blockquote>
+<p>Совет: пользуйтесь <strong>(Ctrl + '.')</strong> для реализации интерфейсов.</p>
+</blockquote>
+<h3 id="book"><a class="header" href="#book">Book</a></h3>
+<pre><code class="language-C#">public abstract class Book : IForSale, IHasAuthor, IHasDescription, IHasGenre, IHasName, IHasPages, IHasReleaseDate
+{
+    protected Book(string name, int price, int discount, string authorName, uint authorAge, string authorAbout, string description, Page[] pages, DateTime releaseDate)
+    {
+        this.name = name;
+        this.price = price;
+        this.discount = discount;
+        this.authorName = authorName;
+        this.authorAge = authorAge;
+        this.authorAbout = authorAbout;
+        Description = description;
+        this.pages = pages;
+        this.releaseDate = releaseDate;
+    }
+
+    public string name { get; set; }
+    public int price { get; set; }
+    public int discount { get; set; }
+    public string authorName { get; set; }
+    public uint authorAge { get; set; }
+    public string authorAbout { get; set; }
+    public string AuthorName =&gt; authorName;
+
+    public uint AuthorAge =&gt; authorAge;
+
+    public string AuthorAbout =&gt; authorAbout;
+
+    public string Description { get; set; }
+    public abstract HashSet&lt;string&gt; Genres { get; }
+
+    public string Name =&gt; name;
+
+    public Page[] pages { get; set; }
+    public DateTime releaseDate { get; set; }
+
+    public abstract bool IsValidName(string name);
+
+    public abstract bool ValidateAuthor();
+}
+</code></pre>
+<p>Library<code>должен реализовывать</code>ISearch`.</p>
+<h3 id="library"><a class="header" href="#library">Library</a></h3>
+<pre><code class="language-C#">public abstract class Library : ISearch&lt;Page&gt;
+{
+    public abstract Page Find(Func&lt;Page, bool&gt; predicate);
+    public abstract Page[] SearchAll();
+}
+</code></pre>
+<p>Абстрактный класс <code>Shop</code> реализует интерфейсы <code>IHasAuthor</code>, <code>IHasName</code>, <code>IHasDescription</code>, <code>IHasReleaseDate</code></p>
+<h3 id="shop"><a class="header" href="#shop">Shop</a></h3>
+<pre><code class="language-C#">public abstract class Shop : IHasAuthor, IHasName, IHasDescription, IHasReleaseDate
+{
+    protected Shop(string authorName, uint authorAge, string authorAbout, string name, string description, DateTime releaseDate)
+    {
+        AuthorName = authorName;
+        AuthorAge = authorAge;
+        AuthorAbout = authorAbout;
+        Name = name;
+        Description = description;
+        this.releaseDate = releaseDate;
+    }
+
+    public string AuthorName { get; }
+    public uint AuthorAge { get; }
+    public string AuthorAbout { get; }
+    public string Name { get; }
+    public string Description { get; set; }
+    public DateTime releaseDate { get; set; }
+
+    public abstract bool IsValidName(string name);
+    public abstract bool ValidateAuthor();
+}
+</code></pre>
 <h2 id="Часть-4"><a class="header" href="#Часть-4">Часть 4.</a></h2>
 <p>Для построения UML диаграмм любого типа рекомендуется использование <a href="https://staruml.io">StarUML</a></p>
 

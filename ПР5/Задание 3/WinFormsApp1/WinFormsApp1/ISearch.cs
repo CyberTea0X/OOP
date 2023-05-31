@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace WinFormsApp1
 {
-    internal interface ISearch
+    public interface ISearch <T>
     {
+        T[] SearchAll();
+
+        T Find(Func<T, bool> predicate);
     }
 }

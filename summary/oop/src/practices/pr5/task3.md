@@ -73,7 +73,7 @@
 
 Пускай будет интерфейс `IBook`, хотя, тогда в нём будут лишь поля, да и громоздний наверное выйдет интерфейс...
 
-Тогда сделаем интерфейсы `IHasDescription`, `IHasAuthor`, `IHasGenre`, `IHasReleaseDate`, `IHasName`, `IHasPages`.
+Тогда сделаем интерфейсы `IHasDescription`, `IHasAuthor`, `IHasGenre`, `IHasReleaseDate`, `IHasName`, `IPage`, `IHasPages`.
 
 
 Также, пускай будет интерфейс `IForSale`, 
@@ -85,9 +85,8 @@
 
 Как-то так. План следующий:
  - Реализуем интерфейсы.
- - Собираем абстрактные классы `Book`, `Library` и `Shop`.
- - Собираем классы для различных жанров книг, класс коллекции книг.
- - Делаем какое-то подобие страницы магазина на WindowsForms или чём-то таком. Можно просто - значит делаем просто.
+ - Собираем абстрактные классы.
+ - Отдыхаем.
 
 Список всех интерфейсов для реализации:
  - [IHasDescription](#ihasdescription)
@@ -95,16 +94,25 @@
  - [IHasGenre](#ihasgenre)
  - [IHasReleaseDate](#ihasreleasedate)
  - [IHasName](#ihasname)
+ - [IPage](#ipage)
  - [IHasPages](#ihaspages)
  - [IForSale](#iforsale)
  - [ISearch](#isearch)
+
+Список всех абстрактных классов для реализации:
+ - [Page]()
+ - [Book]()
+ - [Library]()
+ - [Shop]()
 
 Начнём с того, что создадим заглушки под каждый интерфейс.
 Жмём **(Ctrl+Shift+A)**, выбираем интерфейс и называем его `IHasDescription`, создаём.
 
 Теперь проделаем это со всеми остальными, тоесть `IHasAuthor`, `IHasGenre`, `IHasReleaseDate`, `IHasName`, `IHasPages`, `IForSale`, `ISearch`.
 
-А теперь спокойненько все их реализовываем. Вот примерная реализация:
+Перед тем, как реализовывать `IHasPages`, придётся реализовать абстрактный класс `Page`, который будет реализовывать интерфейсы `IHasReleaseDate`, `IHasName`, `IHasDescription`
+
+А теперь спокойненько всё реализовываем. Вот примерная реализация:
 
 ### IHasDescription
 ```C#
@@ -152,19 +160,97 @@ public interface IHasGenre
 ```
 ### IHasReleaseDate
 ```C#
+public interface IHasReleaseDate
+{
+    DateTime releaseDate { get; set; }
+
+    void ReleaseBook() { releaseDate = DateTime.Now.ToUniversalTime(); }
+
+    void SetReleaseDate(DateTime releaseDate) { releaseDate = releaseDate.ToUniversalTime(); }
+
+    DateTime ReleasedAt() { return releaseDate; }
+
+    bool isOlderReleased(DateTime someDate) { return releaseDate > someDate; }
+
+    bool isNewerReleased(DateTime someDate) { return releaseDate < someDate; }
+}
 ```
 ### IHasName
 ```C#
+public interface IHasName
+{
+    string Name { get; }
+
+    bool IsValidName(string name);
+
+}
 ```
+
+Мы дошли до IHasPages, а значит, пора реализовывать первый абстрактный класс - `Page`
+Он должен реализовывать интерфейсы `IHasReleaseDate`, `IHasName`, `IHasDescription`.
+
+Напишем, что мы их реализуем:
+
+```C#
+public abstract class Page: IHasReleaseDate, IHasName, IHasDescription
+{
+
+}
+```
+
+А затем нажмём по всем интерфейсам **(Ctrl + '.')** и создадим заглушки, а также создадим таким же образом конструктор, после чего просто пойдём дальше делать каркас нашего приложения.
+
+Версия с заглушками: 
+```C#
+public abstract class Page : IHasReleaseDate, IHasName, IHasDescription
+{
+    public DateTime releaseDate { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+    public string Name => throw new NotImplementedException();
+
+    public string Description { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+    public bool IsValidName(string name)
+    {
+        throw new NotImplementedException();
+    }
+}
+```
+
 ### IHasPages
 ```C#
+public interface IHasPages
+{
+    Page[] pages { get; set; }
+
+    int pagesCount() { return pages.Length; }
+
+    void addPage(Page newPage) { pages.Append(newPage); }
+    void removePage(int pageNumber) { pages = pages.Where((_, idx) => idx != pageNumber).ToArray(); }
+}
 ```
 ### IForSale
 ```C#
+public interface IForSale
+{
+    int price { get; set; }
+
+    int discount { get; set; }
+
+    int getPrice() { return Math.Max(price - discount, 0); }
+}
 ```
 ### ISearch
 ```C#
+public interface ISearch <T>
+{
+    T[] SearchAll();
+
+    T Find(Func<T, bool> predicate);
+}
 ```
+
+### Page
 
 ## Часть 4.
 

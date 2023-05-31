@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace WinFormsApp1
 {
-    internal interface IHasName
+    public interface IHasName
     {
+        string Name { get; }
+
+        bool IsValidName(string name);
+
     }
 }

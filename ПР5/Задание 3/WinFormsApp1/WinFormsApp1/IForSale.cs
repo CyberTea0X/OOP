@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace WinFormsApp1
 {
-    internal interface IForSale
+    public interface IForSale
     {
+        int price { get; set; }
+
+        int discount { get; set; }
+
+        int getPrice() { return Math.Max(price - discount, 0); }
     }
 }

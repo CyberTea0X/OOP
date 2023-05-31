@@ -1380,7 +1380,7 @@ namespace MeasureMassDeviceNS
 В общем так, рассмотрим воображаемый сайт книжного магазина. Там обязательно есть кнопочка купить, 
 есть страничка книги, есть поиск книг... На этом пожалуй хватит.</p>
 <p>Пускай будет интерфейс <code>IBook</code>, хотя, тогда в нём будут лишь поля, да и громоздний наверное выйдет интерфейс...</p>
-<p>Тогда сделаем интерфейсы <code>IHasDescription</code>, <code>IHasAuthor</code>, <code>IHasGenre</code>, <code>IHasReleaseDate</code>, <code>IHasName</code>, <code>IHasPages</code>.</p>
+<p>Тогда сделаем интерфейсы <code>IHasDescription</code>, <code>IHasAuthor</code>, <code>IHasGenre</code>, <code>IHasReleaseDate</code>, <code>IHasName</code>, <code>IPage</code>, <code>IHasPages</code>.</p>
 <p>Также, пускай будет интерфейс <code>IForSale</code>, 
 Из <code>IHasDescription</code>, <code>IHasAuthor</code>, <code>IHasGenre</code>, <code>IHasReleaseDate</code>, <code>IHasName</code>, <code>IHasPages</code>, <code>IForSale</code>. соберём класс книги, а потом попробуем собрать что-нибудь ещё.</p>
 <p>Пускай будет интерфейс <code>ISearch</code>, который будет реализовывать возможность гибкого поиска по какой-либо коллекции, пускай будет абстрактный класс <code>Library</code> который будет использовать <code>ISearch</code>.</p>
@@ -1388,9 +1388,8 @@ namespace MeasureMassDeviceNS
 <p>Как-то так. План следующий:</p>
 <ul>
 <li>Реализуем интерфейсы.</li>
-<li>Собираем абстрактные классы <code>Book</code>, <code>Library</code> и <code>Shop</code>.</li>
-<li>Собираем классы для различных жанров книг, класс коллекции книг.</li>
-<li>Делаем какое-то подобие страницы магазина на WindowsForms или чём-то таком. Можно просто - значит делаем просто.</li>
+<li>Собираем абстрактные классы.</li>
+<li>Отдыхаем.</li>
 </ul>
 <p>Список всех интерфейсов для реализации:</p>
 <ul>
@@ -1403,10 +1402,18 @@ namespace MeasureMassDeviceNS
 <li><a href="practices/pr5/task3.html#iforsale">IForSale</a></li>
 <li><a href="practices/pr5/task3.html#isearch">ISearch</a></li>
 </ul>
+<p>Список всех абстрактных классов для реализации:</p>
+<ul>
+<li><a href="practices/pr5/">Page</a></li>
+<li><a href="practices/pr5/">Book</a></li>
+<li><a href="practices/pr5/">Library</a></li>
+<li><a href="practices/pr5/">Shop</a></li>
+</ul>
 <p>Начнём с того, что создадим заглушки под каждый интерфейс.
 Жмём <strong>(Ctrl+Shift+A)</strong>, выбираем интерфейс и называем его <code>IHasDescription</code>, создаём.</p>
 <p>Теперь проделаем это со всеми остальными, тоесть <code>IHasAuthor</code>, <code>IHasGenre</code>, <code>IHasReleaseDate</code>, <code>IHasName</code>, <code>IHasPages</code>, <code>IForSale</code>, <code>ISearch</code>.</p>
-<p>А теперь спокойненько все их реализовываем. Вот примерная реализация:</p>
+<p>Перед тем, как реализовывать <code>IHasPages</code>, придётся реализовать абстрактный класс <code>Page</code>, который будет реализовывать интерфейсы <code>IHasReleaseDate</code>, <code>IHasName</code>, <code>IHasDescription</code></p>
+<p>А теперь спокойненько всё реализовываем. Вот примерная реализация:</p>
 <h3 id="ihasdescription"><a class="header" href="#ihasdescription">IHasDescription</a></h3>
 <pre><code class="language-C#">public interface IHasDescription
 {
@@ -1449,15 +1456,84 @@ namespace MeasureMassDeviceNS
 }
 </code></pre>
 <h3 id="ihasreleasedate"><a class="header" href="#ihasreleasedate">IHasReleaseDate</a></h3>
-<pre><code class="language-C#"></code></pre>
+<pre><code class="language-C#">public interface IHasReleaseDate
+{
+    DateTime releaseDate { get; set; }
+
+    void ReleaseBook() { releaseDate = DateTime.Now.ToUniversalTime(); }
+
+    void SetReleaseDate(DateTime releaseDate) { releaseDate = releaseDate.ToUniversalTime(); }
+
+    DateTime ReleasedAt() { return releaseDate; }
+
+    bool isOlderReleased(DateTime someDate) { return releaseDate &gt; someDate; }
+
+    bool isNewerReleased(DateTime someDate) { return releaseDate &lt; someDate; }
+}
+</code></pre>
 <h3 id="ihasname"><a class="header" href="#ihasname">IHasName</a></h3>
-<pre><code class="language-C#"></code></pre>
+<pre><code class="language-C#">public interface IHasName
+{
+    string Name { get; }
+
+    bool IsValidName(string name);
+
+}
+</code></pre>
+<p>Мы дошли до IHasPages, а значит, пора реализовывать первый абстрактный класс - <code>Page</code>
+Он должен реализовывать интерфейсы <code>IHasReleaseDate</code>, <code>IHasName</code>, <code>IHasDescription</code>.</p>
+<p>Напишем, что мы их реализуем:</p>
+<pre><code class="language-C#">public abstract class Page: IHasReleaseDate, IHasName, IHasDescription
+{
+
+}
+</code></pre>
+<p>А затем нажмём по всем интерфейсам <strong>(Ctrl + '.')</strong> и создадим заглушки, а также создадим таким же образом конструктор, после чего просто пойдём дальше делать каркас нашего приложения.</p>
+<p>Версия с заглушками: </p>
+<pre><code class="language-C#">public abstract class Page : IHasReleaseDate, IHasName, IHasDescription
+{
+    public DateTime releaseDate { get =&gt; throw new NotImplementedException(); set =&gt; throw new NotImplementedException(); }
+
+    public string Name =&gt; throw new NotImplementedException();
+
+    public string Description { get =&gt; throw new NotImplementedException(); set =&gt; throw new NotImplementedException(); }
+
+    public bool IsValidName(string name)
+    {
+        throw new NotImplementedException();
+    }
+}
+</code></pre>
 <h3 id="ihaspages"><a class="header" href="#ihaspages">IHasPages</a></h3>
-<pre><code class="language-C#"></code></pre>
+<pre><code class="language-C#">public interface IHasPages
+{
+    Page[] pages { get; set; }
+
+    int pagesCount() { return pages.Length; }
+
+    void addPage(Page newPage) { pages.Append(newPage); }
+    void removePage(int pageNumber) { pages = pages.Where((_, idx) =&gt; idx != pageNumber).ToArray(); }
+}
+</code></pre>
 <h3 id="iforsale"><a class="header" href="#iforsale">IForSale</a></h3>
-<pre><code class="language-C#"></code></pre>
+<pre><code class="language-C#">public interface IForSale
+{
+    int price { get; set; }
+
+    int discount { get; set; }
+
+    int getPrice() { return Math.Max(price - discount, 0); }
+}
+</code></pre>
 <h3 id="isearch"><a class="header" href="#isearch">ISearch</a></h3>
-<pre><code class="language-C#"></code></pre>
+<pre><code class="language-C#">public interface ISearch &lt;T&gt;
+{
+    T[] SearchAll();
+
+    T Find(Func&lt;T, bool&gt; predicate);
+}
+</code></pre>
+<h3 id="page"><a class="header" href="#page">Page</a></h3>
 <h2 id="Часть-4"><a class="header" href="#Часть-4">Часть 4.</a></h2>
 <p>Для построения UML диаграмм любого типа рекомендуется использование <a href="https://staruml.io">StarUML</a></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="Приложение"><a class="header" href="#Приложение">Приложение</a></h1>

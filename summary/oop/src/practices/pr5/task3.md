@@ -88,21 +88,21 @@
  - Собираем абстрактные классы.
  - Отдыхаем.
 
-Список всех интерфейсов для реализации:
- - [IHasDescription](#ihasdescription)
- - [IHasAuthor](#ihasauthor)
- - [IHasGenre](#ihasgenre)
- - [IHasReleaseDate](#ihasreleasedate)
- - [IHasName](#ihasname)
- - [IHasPages](#ihaspages)
- - [IForSale](#iforsale)
- - [ISearch](#isearch)
+### Список всех интерфейсов для реализации:
+ - [IHasDescription](#ihasdescription) - Интерфейс для всего, что имеет описание.
+ - [IHasAuthor](#ihasauthor) - Интерфейс для всего, у чего есть автор.
+ - [IHasGenre](#ihasgenre) - Интерфейс для всего, у чего есть жанр.
+ - [IHasReleaseDate](#ihasreleasedate) - Интерфейс для всего, у чего есть дата выпуска.
+ - [IHasName](#ihasname) - Интерфейс для всего, у чего есть имя или название.
+ - [IHasPages](#ihaspages) - Интерфейс для всего, у чего есть страницы.
+ - [IForSale](#iforsale) - Интерфейс для всего, что можно продать.
+ - [ISearch](#isearch) - Интерфейс для всего, что может реализовывать поиск.
 
-Список всех абстрактных классов для реализации:
- - [Page](#page)
- - [Book](#book)
- - [Library](#library)
- - [Shop](#shop)
+### Список всех абстрактных классов для реализации:
+ - [Page](#page) - реализует `IHasReleaseDate`, `IHasName`, `IHasDescription`.
+ - [Book](#book) - реализует все наши интерфейсы, кроме ISearch.
+ - [Library](#library) - реализует ISearch.
+ - [Shop](#shop) - реализует `IHasAuthor`, `IHasName`, `IHasDescription`, `IHasReleaseDate`.
 
 Начнём с того, что создадим заглушки под каждый интерфейс.
 Жмём **(Ctrl+Shift+A)**, выбираем интерфейс и называем его `IHasDescription`, создаём.

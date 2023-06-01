@@ -1607,10 +1607,10 @@ namespace MeasureMassDeviceNS
 </code></pre>
 <p>Library<code>должен реализовывать</code>ISearch`.</p>
 <h3 id="library"><a class="header" href="#library">Library</a></h3>
-<pre><code class="language-C#">public abstract class Library : ISearch&lt;Page&gt;
+<pre><code class="language-C#">public abstract class Library : ISearch&lt;Book&gt;
 {
-    public abstract Page Find(Func&lt;Page, bool&gt; predicate);
-    public abstract Page[] SearchAll();
+    public abstract Book Find(Func&lt;Book, bool&gt; predicate);
+    public abstract Book[] SearchAll();
 }
 </code></pre>
 <p>Абстрактный класс <code>Shop</code> реализует интерфейсы <code>IHasAuthor</code>, <code>IHasName</code>, <code>IHasDescription</code>, <code>IHasReleaseDate</code></p>

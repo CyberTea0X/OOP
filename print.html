@@ -1391,28 +1391,29 @@ namespace MeasureMassDeviceNS
 <li>Собираем абстрактные классы.</li>
 <li>Отдыхаем.</li>
 </ul>
-<p>Список всех интерфейсов для реализации:</p>
+<h3 id="Список-всех-интерфейсов-для-реализации"><a class="header" href="#Список-всех-интерфейсов-для-реализации">Список всех интерфейсов для реализации:</a></h3>
 <ul>
-<li><a href="practices/pr5/task3.html#ihasdescription">IHasDescription</a></li>
-<li><a href="practices/pr5/task3.html#ihasauthor">IHasAuthor</a></li>
-<li><a href="practices/pr5/task3.html#ihasgenre">IHasGenre</a></li>
-<li><a href="practices/pr5/task3.html#ihasreleasedate">IHasReleaseDate</a></li>
-<li><a href="practices/pr5/task3.html#ihasname">IHasName</a></li>
-<li><a href="practices/pr5/task3.html#ihaspages">IHasPages</a></li>
-<li><a href="practices/pr5/task3.html#iforsale">IForSale</a></li>
-<li><a href="practices/pr5/task3.html#isearch">ISearch</a></li>
+<li><a href="practices/pr5/task3.html#ihasdescription">IHasDescription</a> - Интерфейс для всего, что имеет описание.</li>
+<li><a href="practices/pr5/task3.html#ihasauthor">IHasAuthor</a> - Интерфейс для всего, у чего есть автор.</li>
+<li><a href="practices/pr5/task3.html#ihasgenre">IHasGenre</a> - Интерфейс для всего, у чего есть жанр.</li>
+<li><a href="practices/pr5/task3.html#ihasreleasedate">IHasReleaseDate</a> - Интерфейс для всего, у чего есть дата выпуска.</li>
+<li><a href="practices/pr5/task3.html#ihasname">IHasName</a> - Интерфейс для всего, у чего есть имя или название.</li>
+<li><a href="practices/pr5/task3.html#ihaspages">IHasPages</a> - Интерфейс для всего, у чего есть страницы.</li>
+<li><a href="practices/pr5/task3.html#iforsale">IForSale</a> - Интерфейс для всего, что можно продать.</li>
+<li><a href="practices/pr5/task3.html#isearch">ISearch</a> - Интерфейс для всего, что может реализовывать поиск.</li>
 </ul>
-<p>Список всех абстрактных классов для реализации:</p>
+<h3 id="Список-всех-абстрактных-классов-для-реализации"><a class="header" href="#Список-всех-абстрактных-классов-для-реализации">Список всех абстрактных классов для реализации:</a></h3>
 <ul>
-<li><a href="practices/pr5/task3.html#page">Page</a></li>
-<li><a href="practices/pr5/task3.html#book">Book</a></li>
-<li><a href="practices/pr5/task3.html#library">Library</a></li>
-<li><a href="practices/pr5/task3.html#shop">Shop</a></li>
+<li><a href="practices/pr5/task3.html#page">Page</a> - реализует <code>IHasReleaseDate</code>, <code>IHasName</code>, <code>IHasDescription</code>.</li>
+<li><a href="practices/pr5/task3.html#book">Book</a> - реализует все наши интерфейсы, кроме ISearch.</li>
+<li><a href="practices/pr5/task3.html#library">Library</a> - реализует ISearch.</li>
+<li><a href="practices/pr5/task3.html#shop">Shop</a> - реализует <code>IHasAuthor</code>, <code>IHasName</code>, <code>IHasDescription</code>, <code>IHasReleaseDate</code>.</li>
 </ul>
 <p>Начнём с того, что создадим заглушки под каждый интерфейс.
 Жмём <strong>(Ctrl+Shift+A)</strong>, выбираем интерфейс и называем его <code>IHasDescription</code>, создаём.</p>
 <p>Теперь проделаем это со всеми остальными, тоесть <code>IHasAuthor</code>, <code>IHasGenre</code>, <code>IHasReleaseDate</code>, <code>IHasName</code>, <code>IHasPages</code>, <code>IForSale</code>, <code>ISearch</code>.</p>
 <p>Перед тем, как реализовывать <code>IHasPages</code>, придётся реализовать абстрактный класс <code>Page</code>, который будет реализовывать интерфейсы <code>IHasReleaseDate</code>, <code>IHasName</code>, <code>IHasDescription</code></p>
+<p>Замечу, что в ходе выполнения работы список интерфейсов постоянно менялся, а они самым неожиданным образом становились частями разных классов, хотя изначально создавались только для Book и Library. Это ещё раз подчёркивает гибкость <a href="practices/pr5/task3.html#%D0%B2%D0%B8%D0%BA%D0%B8%D0%BF%D0%B5%D0%B4%D0%B8%D1%8F">композиции</a>.</p>
 <p>А теперь спокойненько всё реализовываем. Вот примерная реализация:</p>
 <h3 id="ihasdescription"><a class="header" href="#ihasdescription">IHasDescription</a></h3>
 <pre><code class="language-C#">public interface IHasDescription

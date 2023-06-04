@@ -97,8 +97,8 @@ var message = () => Console.Write("Hello ");
 var world = () => Console.Write("World!");
 var meow = () => Console.Write("Meow! ");
 message += world;
-message += meow;
-message -= world;
+message += meow;  // Добавляем Meow
+message -= world;  // Уничтожаем мир с помощью C#
 message();  // Hello Meow!
 ```
 

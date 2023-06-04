@@ -2450,8 +2450,8 @@ message();  // 512 раз выведет Hello через пробел
 var world = () =&gt; Console.Write(&quot;World!&quot;);
 var meow = () =&gt; Console.Write(&quot;Meow! &quot;);
 message += world;
-message += meow;
-message -= world;
+message += meow;  // Добавляем Meow
+message -= world;  // Уничтожаем мир с помощью C#
 message();  // Hello Meow!
 </code></pre>
 <p>Как и делегаты, лямбда-выражения можно передавать параметрам метода, которые представляют делегат.</p>

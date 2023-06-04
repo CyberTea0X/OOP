@@ -1,0 +1,839 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>ООП практические работы 5-8</title>
+        <meta name="robots" content="noindex" />
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = null;
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="intro.html"><strong aria-hidden="true">1.</strong> Введение</a></li><li class="chapter-item expanded "><a href="practices/pr5/p5.html"><strong aria-hidden="true">2.</strong> Практическая работа №5</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="practices/pr5/key_concepts.html"><strong aria-hidden="true">2.1.</strong> Ключевые понятия</a></li><li class="chapter-item expanded "><a href="practices/pr5/task1.html"><strong aria-hidden="true">2.2.</strong> Задание 1. Использование интерфейсов</a></li></ol></li><li class="chapter-item expanded "><a href="appendix/page.html"><strong aria-hidden="true">3.</strong> Приложение</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="appendix/interfaces.html"><strong aria-hidden="true">3.1.</strong> Интерфейсы</a></li><li class="chapter-item expanded "><a href="appendix/abstract_class.html"><strong aria-hidden="true">3.2.</strong> Абстрактный класс</a></li><li class="chapter-item expanded "><a href="appendix/multiple_interface_inherit.html"><strong aria-hidden="true">3.3.</strong> Множественное наследование</a></li><li class="chapter-item expanded "><a href="appendix/explicit_interfaces.html"><strong aria-hidden="true">3.4.</strong> Явная реализация интерфейсов</a></li><li class="chapter-item expanded "><a href="appendix/abstract_classes_vs_interfaces.html"><strong aria-hidden="true">3.5.</strong> Абстрактные классы vs интерфейсы</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">ООП практические работы 5-8</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="Введение"><a class="header" href="#Введение">Введение</a></h1>
+<p>Данный документ это сокращённая и упрощённая версия методички по 5-8 работам с ключевыми понятиями и пояснениями как и что именно нужно делать на русском языке.</p>
+<p>На код, который я писал сам, я буду оставлять ссылки, а сам код будет в конце каждой практики.</p>
+<p><a href="https://github.com/rust-lang/book/tree/main/src">Вк автора</a></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="Практическая-работа-5"><a class="header" href="#Практическая-работа-5">Практическая работа №5</a></h1>
+<h2 id="Тема-Наследование-классов-и-использование-интерфейсов"><a class="header" href="#Тема-Наследование-классов-и-использование-интерфейсов">Тема: Наследование классов и использование интерфейсов</a></h2>
+<p><strong>Цель работы:</strong> Научиться на практике наследовать классы и интерфейсы. Разобраться на практике с вопросами отличия интерфейсов и абстрактных классов, реализовать множественное наследование интерфейсов и явную реализация интерфейсов. Научиться строить архитектуру приложения с помощью интерфейсов, разобраться с преимуществами такого подхода при промышленном программировании.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="Ключевые-понятия"><a class="header" href="#Ключевые-понятия">Ключевые понятия</a></h1>
+<p>Краткое описание ключевых понятий без особых подробностей.</p>
+<h2 id="Интерфейс"><a class="header" href="#Интерфейс">Интерфейс</a></h2>
+<p>Интерфейс представляет ссылочный тип, который может определять некоторый функционал - набор методов и свойств без реализации. Затем этот функционал реализуют классы и структуры, которые применяют данные интерфейсы.
+Для определения интерфейса используется ключевое слово <code>interface</code>. Как правило, названия интерфейсов в C# начинаются с заглавной буквы I, например, <code>IComparable</code>, <code>IEnumerable</code> (так называемая венгерская нотация), однако это не обязательное требование, а больше стиль программирования.</p>
+<pre><code class="language-C#">interface IMovable
+{
+    // константа
+    const int minSpeed = 0;     // минимальная скорость
+    // статическая переменная
+    static int maxSpeed = 60;   // максимальная скорость
+    // метод
+    void Move();                // движение
+    // свойство
+    string Name { get; set; }   // название
+     
+    delegate void MoveHandler(string message);  // определение делегата для события
+    // событие
+    event MoveHandler MoveEvent;    // событие движения
+}
+</code></pre>
+<blockquote>
+<p>Более подробно об <a href="practices/pr5/../../appendix/interfaces.html">интерфейсах</a></p>
+</blockquote>
+<h2 id="Абстрактный-класс"><a class="header" href="#Абстрактный-класс">Абстрактный класс</a></h2>
+<p>Абстрактные классы в C#. Для абстрактного класса такое создание объекта через new невозможно, т.к. абстрактный класс - это шаблон или базовый класс, который предназначен для наследования другими классами.
+У абстрактных классов могут быть как абстрактные методы (методы без реализации), так и не абстрактные методы. Если у класса есть хотя бы один абстрактный метод, то он должен быть объявлен как абстрактный.
+Абстрактные классы могут использоваться в ситуациях, когда вы хотите определить набор общих поведений или свойств, которые должны быть реализованы производными классами. Делая это, вы можете обеспечить согласованный интерфейс для всех классов, которые наследуются от него.</p>
+<pre><code class="language-C#">abstract class Transport
+{
+    public void Move()
+    {
+        Console.WriteLine(&quot;Транспортное средство движется&quot;);
+    }
+}
+</code></pre>
+<blockquote>
+<p>Более подробно об <a href="practices/pr5/../../appendix/abstract_class.html">абстрактных классах</a></p>
+</blockquote>
+<h2 id="Множественное-наследование-интерфейсов"><a class="header" href="#Множественное-наследование-интерфейсов">Множественное наследование интерфейсов</a></h2>
+<p>Множественное наследование относится к способности класса наследовать от нескольких базовых классов. C # не поддерживает множественное наследование классов, но он поддерживает множественное наследование с использованием интерфейсов. Это может быть полезно, когда нам нужно реализовать несколько абстракций и наследовать их свойства и методы.</p>
+<pre><code class="language-C#">public interface I1
+{
+    void Method1();
+}
+
+public interface I2
+{
+    void Method2();
+}
+
+public interface I3
+{
+    void Method3();
+}
+
+public class MyClass : I1, I2, I3
+{
+    public void Method1()
+    {
+        Console.WriteLine(&quot;Method1 called&quot;);
+    }
+
+    public void Method2()
+    {
+        Console.WriteLine(&quot;Method2 called&quot;);
+    }
+
+    public void Method3()
+    {
+        Console.WriteLine(&quot;Method3 called&quot;);
+    }
+}
+</code></pre>
+<blockquote>
+<p>Более подробно о <a href="practices/pr5/../../appendix/multiple_interface_inherit.html">множественном наследовании</a></p>
+</blockquote>
+<h2 id="Явная-реализация-интерфейсов"><a class="header" href="#Явная-реализация-интерфейсов">Явная реализация интерфейсов</a></h2>
+<p>Если класс реализует два интерфейса, а интерфейсы содержат одинаковые методы, то возникает необходимость в явной реализации интерфейсов. Сначала рассмотрим проблемный код.</p>
+<pre><code class="language-C#">// Определим интерфейсы
+public interface IControl
+{
+    void Paint();
+}
+public interface ISurface
+{
+    void Paint();
+}
+// Попробуем их реализовать стандартным способом
+public class SampleClass : IControl, ISurface
+{
+    // Оба ISurface.Paint и IControl.Paint вызывают данный метод
+    public void Paint()
+    {
+        Console.WriteLine(&quot;Paint method in SampleClass&quot;);
+    }
+}
+SampleClass sample = new SampleClass();
+IControl control = sample;
+ISurface surface = sample;
+
+// Все эти строки вызовут один и тот же метод.
+sample.Paint();
+control.Paint();
+surface.Paint();
+
+// Вывод (О нет, он одинаковый):
+// Paint method in SampleClass
+// Paint method in SampleClass
+// Paint method in SampleClass
+</code></pre>
+<p>А теперь, явная реализация. Сравните с кодом класса <code>SampleClass</code> выше, чтобы понять разницу.</p>
+<pre><code class="language-C#">public class SampleClass : IControl, ISurface
+{
+    void IControl.Paint() // [интерфейс].[метод]
+    {
+        System.Console.WriteLine(&quot;IControl.Paint&quot;);
+    }
+    void ISurface.Paint() // Так и выглядит явная реализация интерфейсов
+    {
+        System.Console.WriteLine(&quot;ISurface.Paint&quot;);
+    }
+}
+SampleClass sample = new SampleClass();
+IControl control = sample;
+ISurface surface = sample;
+
+// Все эти строки вызовут один и тот же метод.
+//sample.Paint(); // Compiler error.
+control.Paint();  // Вызовет IControl.Paint на SampleClass.
+surface.Paint();  // Вызовет ISurface.Paint на SampleClass.
+
+// Вывод:
+// IControl.Paint
+// ISurface.Paint
+</code></pre>
+<blockquote>
+<p>Более подробно о <a href="practices/pr5/../../appendix/explicit_interfaces.html">явной реализации интерфейсов</a></p>
+</blockquote>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="Задание-1-Использование-интерфейсов"><a class="header" href="#Задание-1-Использование-интерфейсов">Задание 1. Использование интерфейсов</a></h1>
+<p>Для начала создадим новый проект с графическим интерфейсом, лично я буду использовать старый добрый Windows Forms:</p>
+<p><img src="practices/pr5/./images/p5-1.png" alt="Скриншот создания проекта" /></p>
+<p>Теперь добавим в новый элемент нажатием <strong>Ctrl+Shift+A</strong>, в котором мы будем хранить наш интерфейс измерительного прибора. Назовём его <code>MeasuringDevice.cs</code></p>
+<p>Теперь скопируем код с методички, кстати, документацию я перевёл я. Вот как должен выглядить файл после копирования:</p>
+<blockquote>
+<p>p.s там есть кнопочка справа вверху кодового блока, можешь не выделять</p>
+</blockquote>
+<h2 id=""><a class="header" href="#"></a></h2>
+<pre><code class="language-C#">using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace MeasuringDevice
+{
+    public interface IMeasuringDevice
+    {
+        /// &lt;summary&gt;
+        /// Преобразует необработанные данные, собранные устройством измерения, в значение в метрических единицах.
+        /// &lt;/summary&gt;
+        /// &lt;returns&gt;Последнее измерение устройства преобразовано в метрические единицы.&lt;/returns&gt;
+        decimal MetricValue();
+
+        /// &lt;summary&gt;
+        /// Преобразует необработанные данные, собранные устройством измерения, в значение в имперических единицах.
+        /// &lt;/summary&gt;
+        /// &lt;returns&gt;Последнее измерение устройства преобразовано в имперические единицы.&lt;/returns&gt;
+        decimal ImperialValue();
+
+        /// &lt;summary&gt;
+        /// Запускает сбор данных устройства измерения.
+        /// &lt;/summary&gt;
+        void StartCollecting();
+
+        /// &lt;summary&gt;
+        /// Останавливает сбор данных устройства измерения.
+        /// &lt;/summary&gt;
+        void StopCollecting();
+
+        /// &lt;summary&gt;
+        /// Предоставляет доступ к необработанным данным, собранным устройством измерения, в любых единицах, используемых устройством.
+        /// &lt;/summary&gt;
+        /// &lt;returns&gt;Необработанные данные, собранные устройством измерения, в их сыром формате.&lt;/returns&gt;
+        int[] GetRawData();
+    }
+}
+</code></pre>
+<p>Теперь нужно создать перечисление Units, которое описывает выбранную систему измерения (метрическая или империческая). Добавим новый элемент нажатием <strong>Ctrl+Shift+A</strong> и назовём его <a href="practices/pr5/task1.html#unitsenumerationcs">UnitsEnumeration.cs</a>. Нам нужно объявить перечисление через ключевое слово <code>enum</code>, назвать Units. Членами перечисления должны быть <code>Metric</code> и <code>Imperial</code>. Также, можно добавить комментарии. Это всё выполним самостоятельно.</p>
+<p>Создадим класс MeasureLengthDevice, где нам нужно будет реализовать выше объявленный интерфейс. Для этого создадим файл <a href="practices/pr5/task1.html#measurelengthdevicecs">MeasureLengthDevice.cs</a>, где этот класс и определим:</p>
+<pre><code class="language-C#">using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace WinFormsApp1
+{
+    internal class MeasureLengthDevice
+    {
+    }
+}
+</code></pre>
+<p>Теперь нужно заменить модификатор доступа на <code>public</code></p>
+<h2 id="Код-который-нужно-было-написать-самостоятельно"><a class="header" href="#Код-который-нужно-было-написать-самостоятельно">Код, который нужно было написать самостоятельно:</a></h2>
+<h3 id="unitsenumerationcs"><a class="header" href="#unitsenumerationcs">UnitsEnumeration.cs</a></h3>
+<pre><code class="language-C#">using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace UnitsEnumeration
+{
+    /// &lt;summary&gt;
+    /// Перечисление, которое используется для указания системы измерения.
+    /// &lt;/summary&gt;
+    public enum Units
+    {
+        Metric,
+        Imperial
+    }
+}
+</code></pre>
+<h3 id="measurelengthdevicecs"><a class="header" href="#measurelengthdevicecs">MeasureLengthDevice.cs</a></h3>
+<pre><code class="language-C#">using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace WinFormsApp1
+{
+    public class MeasureLengthDevice
+    {
+    }
+}
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="Приложение"><a class="header" href="#Приложение">Приложение</a></h1>
+<p>Тут более подробно описаны различные концепты языка С#, которые были встречены в работах</p>
+<h2 id="Основные-источники"><a class="header" href="#Основные-источники">Основные источники:</a></h2>
+<ul>
+<li><a href="https://learn.microsoft.com/ru-ru/dotnet/csharp/programming-guide">Официальная документация Microsoft</a></li>
+<li><a href="https://metanit.com">Сайт Metanit.com</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="Интерфейсы"><a class="header" href="#Интерфейсы">Интерфейсы</a></h1>
+<p>Интерфейс представляет ссылочный тип, который может определять некоторый функционал - набор методов и свойств без реализации (а после версии  C# 8.0 и с <a href="appendix/interfaces.html#%D0%A0%D0%B5%D0%B0%D0%BB%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F-%D0%BF%D0%BE-%D1%83%D0%BC%D0%BE%D0%BB%D1%87%D0%B0%D0%BD%D0%B8%D1%8E">реализацией по умолчанию</a>). Затем этот функционал реализуют классы и структуры, которые применяют данные интерфейсы.
+Для определения интерфейса используется ключевое слово <code>interface</code>. Как правило, названия интерфейсов в C# начинаются с заглавной буквы I, например, <code>IComparable</code>, <code>IEnumerable</code> (так называемая венгерская нотация), однако это не обязательное требование, а больше стиль программирования.
+В целом интерфейсы могут определять следующие сущности:</p>
+<ul>
+<li>
+<p>Методы</p>
+</li>
+<li>
+<p>Свойства</p>
+</li>
+<li>
+<p>Индексаторы</p>
+</li>
+<li>
+<p>События</p>
+</li>
+<li>
+<p>Статические поля и константы (начиная с версии C# 8.0)</p>
+</li>
+</ul>
+<p>Простейший интерфейс, который определяет все эти компоненты:</p>
+<pre><code class="language-C#">
+interface IMovable
+{
+    // константа
+    const int minSpeed = 0;     // минимальная скорость
+    // статическая переменная
+    static int maxSpeed = 60;   // максимальная скорость
+    // метод
+    void Move();                // движение
+    // свойство
+    string Name { get; set; }   // название
+     
+    delegate void MoveHandler(string message);  // определение делегата для события
+    // событие
+    event MoveHandler MoveEvent;    // событие движения
+}
+</code></pre>
+<p>В данном случае определен интерфейс <code>IMovable</code>, который представляет некоторый движущийся объект. Интерфейс описывает некоторый функционал, который должен быть у движущегося объекта.</p>
+<h2 id="Модификаторы-доступа"><a class="header" href="#Модификаторы-доступа">Модификаторы доступа</a></h2>
+<p>В интерфейсе методы и свойства по умолчанию имеют модификатор <code>public</code>, так как цель интерфейса - определение функционала для реализации его классом. Сам интерфейс имеет модификатор доступа <code>internal</code> Мы могли бы обратиться к константе <code>minSpeed</code> и переменной <code>maxSpeed</code> интерфейса <code>IMovable</code>:</p>
+<pre><code class="language-C#">Console.WriteLine(IMovable.maxSpeed);   // 60
+Console.WriteLine(IMovable.minSpeed);   // 0
+</code></pre>
+<p>Но также, начиная с версии C# 8.0, мы можем явно указывать модификаторы доступа у компонентов интерфейса:</p>
+<pre><code class="language-C#">interface IMovable
+{
+    public const int minSpeed = 0;     // минимальная скорость
+    private static int maxSpeed = 60;   // максимальная скорость
+    public void Move();
+    protected internal string Name { get; set; }    // название
+    public delegate void MoveHandler(string message);  // определение делегата для события
+    public event MoveHandler MoveEvent;    // событие движения
+}
+</code></pre>
+<p>Также с помощью модификатора public мы можем сделать интерфейс общедоступным:</p>
+<pre><code class="language-C#">public interface IMovable
+{
+    void Move();
+}
+</code></pre>
+<h2 id="Реализация-по-умолчанию"><a class="header" href="#Реализация-по-умолчанию">Реализация по умолчанию</a></h2>
+<p>Также начиная с версии C# 8.0 интерфейсы поддерживают реализацию методов и свойств по умолчанию. Это значит, что мы можем определить в интерфейсах полноценные методы и свойства, которые имеют реализацию как в обычных классах и структурах. Например, определим реализацию метода Move по умолчанию:</p>
+<pre><code class="language-C#">interface IMovable
+{
+    // реализация метода по умолчанию
+    void Move()
+    {
+        Console.WriteLine(&quot;Walking&quot;);
+    }
+}
+</code></pre>
+<p>Стоит отметить, что если интерфейс имеет приватные методы и свойства (то есть с модификатором private), то они должны иметь реализацию по умолчанию. То же самое относится к статическим методам (не обязательно приватным):</p>
+<pre><code class="language-C#">interface IMovable
+{
+    public const int minSpeed = 0;     // минимальная скорость
+    private static int maxSpeed = 60;   // максимальная скорость
+    // находим время, за которое надо пройти расстояние distance со скоростью speed
+    static double GetTime(double distance, double speed) =&gt; distance / speed;
+    static int MaxSpeed
+    {
+        get =&gt; maxSpeed;
+        set
+        {
+            if (value &gt; 0) maxSpeed = value;
+        }
+    }
+}
+</code></pre>
+<p>Благодаря интерфейсам, можно реализовать <a href="appendix/./multiple_interface_inherit.html">множественное наследование</a>, которое на самом деле называется композицией. </p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="Абстрактный-класс-1"><a class="header" href="#Абстрактный-класс-1">Абстрактный класс</a></h1>
+<p>Абстрактные классы в C#. Для абстрактного класса такое создание объекта через new невозможно, т.к. абстрактный класс - это шаблон или базовый класс, который предназначен для наследования другими классами.
+У абстрактных классов могут быть как <a href="appendix/abstract_class.html#%D0%90%D0%B1%D1%81%D1%82%D1%80%D0%B0%D0%BA%D1%82%D0%BD%D1%8B%D0%B5-%D0%BC%D0%B5%D1%82%D0%BE%D0%B4%D1%8B">абстрактные методы</a> (методы без реализации), так и не абстрактные методы. Если у класса есть хотя бы один абстрактный метод, то он должен быть объявлен как абстрактный.
+Абстрактные классы могут использоваться в ситуациях, когда вы хотите определить набор общих поведений или свойств, которые должны быть реализованы производными классами (однако, если производный класс абстрактный, <a href="appendix/abstract_class.html#%D0%9E%D1%82%D0%BA%D0%B0%D0%B7-%D0%BE%D1%82-%D1%80%D0%B5%D0%B0%D0%BB%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8-%D0%B0%D0%B1%D1%81%D1%82%D1%80%D0%B0%D0%BA%D1%82%D0%BD%D1%8B%D1%85-%D1%87%D0%BB%D0%B5%D0%BD%D0%BE%D0%B2">этого можно и не делать</a>).</p>
+<p>Определив абстрактный класс, вы можете обеспечить согласованный интерфейс для всех классов, которые наследуются от него.</p>
+<p>При определении абстрактных классов используется ключевое слово <code>abstract</code>. Например, определим абстрактный класс, который представляет некое транспортное средство:</p>
+<pre><code class="language-C#">abstract class Transport
+{
+    public void Move()
+    {
+        Console.WriteLine(&quot;Транспортное средство движется&quot;);
+    }
+}
+</code></pre>
+<p>А также определим несколько производных классов</p>
+<pre><code class="language-C#">// класс корабля
+class Ship : Transport { }
+// класс самолета
+class Aircraft : Transport { }
+// класс машины
+class Car : Transport { }
+</code></pre>
+<pre><code class="language-C#">Transport car = new Car();
+Transport ship = new Ship();
+Transport aircraft = new Aircraft();
+car.Move(); // Выведет: Транспортное средство движется
+ship.Move(); // Выведет: Транспортное средство движется
+aircraft.Move(); // Выведет: Транспортное средство движется
+</code></pre>
+<p>Транспортное средство представляет некоторую абстракцию, которая не имеет конкретного воплощения. То есть есть легковые и грузовые машины, самолеты, морские судна, кто-то на космическом корабле любит покататься, но как такового транспортного средства нет. Тем не менее все транспортные средства имеют нечто общее - они могут перемещаться. И для этого в классе определен метод Move, который эмулирует перемещение.</p>
+<p>Главное отличие абстрактных классов от обычных состоит в том, что мы НЕ можем использовать конструктор абстрактного класса для создания экземпляра класса. Например, следующий код выдаст ошибку:</p>
+<pre><code class="language-C#">Transport tesla = new Transport();  // Ошибка компиляции
+</code></pre>
+<h2 id="Конструкторы"><a class="header" href="#Конструкторы">Конструкторы</a></h2>
+<p>Выше писалось, что мы не можем использовать конструктор абстрактного класса для создания экземпляра этого класса. Тем не менее такой класс также может определять конструкторы:</p>
+<pre><code class="language-C#">abstract class Transport
+{
+    public string Name { get; }
+    // конструктор абстрактного класса Transport
+    public Transport(string name)
+    {
+        Name = name;
+    }
+    public void Move() =&gt;Console.WriteLine($&quot;{Name} движется&quot;);
+}
+</code></pre>
+<p>В данном случае в абстрактном классе Transport определен конструктор - с помощью параметра он устанавливает значение свойства Name, которое хранит название транспортного средства. И в этом случае производные классы должны в своих конструкторах вызвать этот конструктор.</p>
+<h2 id="Абстрактные-члены-классов"><a class="header" href="#Абстрактные-члены-классов">Абстрактные члены классов</a></h2>
+<p>Кроме обычных свойств и методов абстрактный класс может иметь абстрактные члены классов, которые определяются с помощью ключевого слова <code>abstract</code> и не имеют никакого функционала. В частности, абстрактными могут быть:</p>
+<ul>
+<li>
+<p><a href="appendix/abstract_class.html#%D0%90%D0%B1%D1%81%D1%82%D1%80%D0%B0%D0%BA%D1%82%D0%BD%D1%8B%D0%B5-%D0%BC%D0%B5%D1%82%D0%BE%D0%B4%D1%8B">Методы</a></p>
+</li>
+<li>
+<p><a href="appendix/abstract_class.html#%D0%90%D0%B1%D1%81%D1%82%D1%80%D0%B0%D0%BA%D1%82%D0%BD%D1%8B%D0%B5-%D1%81%D0%B2%D0%BE%D0%B9%D1%81%D1%82%D0%B2%D0%B0">Свойства</a></p>
+</li>
+<li>
+<p>Индексаторы</p>
+</li>
+<li>
+<p>События</p>
+</li>
+</ul>
+<p>Абстрактные члены классов не должны иметь модификатор <code>private</code>. При этом производный класс обязан переопределить и реализовать все абстрактные методы и свойства, которые имеются в базовом абстрактном классе.</p>
+<h3 id="Абстрактные-методы"><a class="header" href="#Абстрактные-методы">Абстрактные методы</a></h3>
+<p>Например, выше в примере с транспортными средствами метод Move описывает передвижение транспортного средства. Однако различные типы транспорта перемещаются по разному - ездят по земле, летят по воздуху, плывут на воде и т.д. В этом случае мы можем сделать метод <code>Move</code> абстрактным.</p>
+<pre><code class="language-C#">abstract class Transport
+{
+    public abstract void Move();
+}
+</code></pre>
+<p>А его реализацию метода <code>Move</code> переложить на производные классы:</p>
+<pre><code class="language-C#">class Ship : Transport 
+{
+    // мы должны реализовать все абстрактные методы и свойства базового класса
+    public override void Move()
+    {
+        Console.WriteLine(&quot;Корабль плывет&quot;);
+    }
+}
+
+class Aircraft : Transport
+{
+    public override void Move()
+    {
+        Console.WriteLine(&quot;Самолет летит&quot;);
+    }
+}
+
+class Car : Transport
+{
+    public override void Move()
+    {
+        Console.WriteLine(&quot;Машина едет&quot;);
+    }
+}
+</code></pre>
+<p>Применение классов:</p>
+<pre><code class="language-C#">Transport car = new Car();
+Transport ship = new Ship();
+Transport aircraft = new Aircraft();
+ 
+car.Move();         // Выведет: Машина едет
+ship.Move();        // Выведет: Корабль плывет
+aircraft.Move();    // Выведет: Самолет летит
+</code></pre>
+<h3 id="Абстрактные-свойства"><a class="header" href="#Абстрактные-свойства">Абстрактные свойства</a></h3>
+<p>Следует отметить использование абстрактных свойств:</p>
+<pre><code class="language-C#">abstract class Transport
+{
+    // абстрактное свойство для хранения скорости
+    public abstract int Speed { get; set; } 
+}
+</code></pre>
+<p>Определим производный класс:</p>
+<pre><code class="language-C#">class Ship: Transport
+{
+    int speed;
+    public override int Speed 
+    { 
+        get =&gt; speed; 
+        set =&gt; speed = value; 
+    }
+}
+</code></pre>
+<h3 id="Отказ-от-реализации-абстрактных-членов"><a class="header" href="#Отказ-от-реализации-абстрактных-членов">Отказ от реализации абстрактных членов</a></h3>
+<p>Производный класс обязан реализовать все абстрактные члены базового класса. Однако мы можем отказаться от реализации, но в этом случае производный класс также должен быть определен как абстрактный:</p>
+<pre><code class="language-C#">abstract class Transport
+{
+    public abstract void Move();
+}
+// класс машины
+abstract class Car :Transport{}
+</code></pre>
+<p>Однако любые неабстрактные классы, производные от Car, все равно должны реализовать все унаследованные абстрактные методы и свойства:</p>
+<pre><code class="language-C#">/// Класс легковой машины
+class Auto: Car
+{
+    public override void Move()
+    {
+        Console.WriteLine(&quot;легковая машина едет&quot;);
+    }
+}
+
+Transport tesla = new Auto();
+tesla.Move();           // легковая машина едет
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="Множественное-наследование"><a class="header" href="#Множественное-наследование">Множественное наследование</a></h1>
+<p>Множественное наследование относится к способности класса наследовать от нескольких базовых классов. C # не поддерживает множественное наследование классов, но он поддерживает множественное наследование с использованием интерфейсов. Это может быть полезно, когда нам нужно реализовать несколько абстракций и наследовать их свойства и методы.</p>
+<pre><code class="language-C#">public interface I1
+{
+    void Method1();
+}
+
+public interface I2
+{
+    void Method2();
+}
+
+public interface I3
+{
+    void Method3();
+}
+
+public class MyClass : I1, I2, I3
+{
+    public void Method1()
+    {
+        Console.WriteLine(&quot;Method1 called&quot;);
+    }
+
+    public void Method2()
+    {
+        Console.WriteLine(&quot;Method2 called&quot;);
+    }
+
+    public void Method3()
+    {
+        Console.WriteLine(&quot;Method3 called&quot;);
+    }
+}
+</code></pre>
+<p>При таком наследовании может возникнуть проблема, что несколько интерфейсов определяют один и тот же метод. В таком случае в производном от этих интерфейсов классе можно применять <a href="appendix/./explicit_interfaces.html">явную реализацию интерфейсов</a></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="Явная-реализация-интерфейсов-1"><a class="header" href="#Явная-реализация-интерфейсов-1">Явная реализация интерфейсов</a></h1>
+<p>Если класс реализует два интерфейса, а интерфейсы содержат одинаковые методы, то возникает необходимость в явной реализации интерфейсов. Сначала рассмотрим проблемный код.</p>
+<pre><code class="language-C#">// Определим интерфейсы
+public interface IControl
+{
+    void Paint();
+}
+public interface ISurface
+{
+    void Paint();
+}
+// Попробуем их реализовать стандартным способом
+public class SampleClass : IControl, ISurface
+{
+    // Оба ISurface.Paint и IControl.Paint вызывают данный метод
+    public void Paint()
+    {
+        Console.WriteLine(&quot;Paint method in SampleClass&quot;);
+    }
+}
+SampleClass sample = new SampleClass();
+IControl control = sample;
+ISurface surface = sample;
+
+// Все эти строки вызовут один и тот же метод.
+sample.Paint();
+control.Paint();
+surface.Paint();
+
+// Вывод (О нет, он одинаковый):
+// Paint method in SampleClass
+// Paint method in SampleClass
+// Paint method in SampleClass
+</code></pre>
+<p>А теперь, явная реализация. Сравните с кодом класса <code>SampleClass</code> выше, чтобы понять разницу.</p>
+<pre><code class="language-C#">public class SampleClass : IControl, ISurface
+{
+    void IControl.Paint() // [интерфейс].[метод]
+    {
+        System.Console.WriteLine(&quot;IControl.Paint&quot;);
+    }
+    void ISurface.Paint() // Так и выглядит явная реализация интерфейсов
+    {
+        System.Console.WriteLine(&quot;ISurface.Paint&quot;);
+    }
+}
+SampleClass sample = new SampleClass();
+IControl control = sample;
+ISurface surface = sample;
+
+// Все эти строки вызовут один и тот же метод.
+//sample.Paint(); // Compiler error.
+control.Paint();  // Вызовет IControl.Paint на SampleClass.
+surface.Paint();  // Вызовет ISurface.Paint на SampleClass.
+
+// Так тоже можно
+((IControl)sample).Study(); // Вызовет IControl.Paint на SampleClass.
+((ISurface)sample).Study(); // Вызовет ISurface.Paint на SampleClass.
+
+// Вывод:
+// IControl.Paint
+// ISurface.Paint
+</code></pre>
+<h2 id="Модификаторы-доступа-1"><a class="header" href="#Модификаторы-доступа-1">Модификаторы доступа</a></h2>
+<p>Члены интерфейса могут иметь разные модификаторы доступа. Если модификатор доступа не <code>public</code>, а какой-то другой, то для реализации метода, свойства или события интерфейса в классах и структурах также необходимо использовать явную реализацию интерфейса.</p>
+<pre><code class="language-C#">interface IMovable
+{
+    protected internal void Move();
+    protected internal string Name { get;}
+    delegate void MoveHandler();
+    protected internal event MoveHandler MoveEvent;
+}
+class Person : IMovable
+{
+    string name;
+    // явная реализация события - дополнительно создается переменная
+    IMovable.MoveHandler? moveEvent;
+    event IMovable.MoveHandler IMovable.MoveEvent
+    {
+        add =&gt; moveEvent += value;
+        remove =&gt; moveEvent -= value;
+    }
+    // явная реализация свойства - в виде автосвойства
+    string IMovable.Name { get =&gt; name; }
+    public Person(string name) =&gt; this.name = name;
+    // явная реализация метода
+    void IMovable.Move()
+    {
+        Console.WriteLine($&quot;{name} is walking&quot;);
+        moveEvent?.Invoke();
+    }
+}
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="Абстрактные-классы-vs-интерфейсы"><a class="header" href="#Абстрактные-классы-vs-интерфейсы">Абстрактные классы vs интерфейсы</a></h1>
+<h2 id="Преимущества-абстрактного-класса"><a class="header" href="#Преимущества-абстрактного-класса">Преимущества абстрактного класса:</a></h2>
+<ul>
+<li>Возможность указания реализации по умолчанию методов</li>
+<li>Добавление проверки инвариантов в функции</li>
+<li>Более гибкий контроль в том, как методы &quot;интерфейса&quot; вызываются</li>
+<li>Возможность предоставления поведения, связанного с интерфейсом или несвязанного с ним &quot;бесплатно&quot;</li>
+</ul>
+<blockquote>
+<p>Обновление: Новая функция C# 8.0: С начала C# 8.0, интерфейс может определять реализацию по умолчанию для членов, включая свойства. Определение реализации по умолчанию для свойства в интерфейсе редко, так как интерфейсы не могут определять поля экземпляров данных.</p>
+</blockquote>
+<p>Интерфейсы являются просто контрактами передачи данных и не имеют этих функций. Однако они обычно более гибкие, так как тип может быть произведен только из одного класса, но может реализовывать любое количество интерфейсов.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+        <script>
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+    </div>
+    </body>
+</html>

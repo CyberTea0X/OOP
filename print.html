@@ -1881,14 +1881,12 @@ event IEventEnabledMeasuringDevice.HeartBeatEventHandler IEventEnabledMeasuringD
 <p>Примечание. Хорошей практикой программирования является проверка наличия подписчиков на событие перед его инициированием. Если у события нет подписчиков, связанный делегат имеет значение null, и среда выполнения .NET Framework выдаст исключение, если возникнет событие.</p>
 </blockquote>
 <h2 id="background-worker-ы"><a class="header" href="#background-worker-ы">Background worker-ы</a></h2>
-<p>Самостоятельно добавим приватное поле типа <code>BackgroundWorker</code> с названием <code>dataCollector</code> в наш класс <code>MeasureDataDevice</code>;</p>
+<p>Самостоятельно добавим <code>private</code> поле типа <code>BackgroundWorker</code> с названием <code>dataCollector</code> в наш класс <code>MeasureDataDevice</code>;</p>
 <pre><code class="language-C#">private BackgroundWorker dataCollector;
 </code></pre>
-<p>Далее нам придётся изменить метод <code>GetMeasurments</code>. 
+<p>Далее нам придётся полностью переписать <code>GetMeasurments</code>. 
 Делаем его приватным <code>void</code>, без параметров. Например, так:</p>
-<pre><code class="language-C#">private void GetMeasurements() {
-    //...
-}
+<pre><code class="language-C#">private void GetMeasurements() { }
 </code></pre>
 <p>В методе <code>GetMeasurements</code> самостоятельно добавим код для выполнения следующих действий:</p>
 <ul>
@@ -1904,27 +1902,75 @@ public bool WorkerReportsProgress;
 <h2 id="getmeasurements-2"><a class="header" href="#getmeasurements-2">GetMeasurements</a></h2>
 <pre><code class="language-C#">public void GetMeasurements()
 {
-    dataCaptured = new int[10];
-    System.Threading.ThreadPool.QueueUserWorkItem((dummy) =&gt;
-    {
-        int x = 0;
-        Random timer = new Random();
 
-        while (controller != null)
-        {
-            System.Threading.Thread.Sleep(timer.Next(1000, 5000));
-            dataCaptured[x] = controller != null ?
-                controller.TakeMeasurement() : dataCaptured[x];
-            mostRecentMeasure = dataCaptured[x];
-            x++;
-            if (x == 10)
-            {
-                x = 0;
-            }
-        }
-    });
+    dataCollector = new BackgroundWorker();
+    WorkerReportsProgress = true;
+    WorkerSupportsCancellation = true;
 }
 </code></pre>
+<p>Далее добавим следующий код в наш метод:</p>
+<pre><code class="language-C#">dataCollector.DoWork += new DoWorkEventHandler(dataCollector_DoWork);
+</code></pre>
+<p>Данный код добавляет обработчик события <code>DoWork</code>, который вызывает наш пока ещё не реализованный метод <code>dataCollector_DoWork</code>. </p>
+<p>Теперь похожим образом нужно самостоятельно реализовать обработчик события <code>ProgressChanged</code>. В качестве вызываемого метода будет выступать пока ещё не реализованный метод <code>dataCollector_ProgressChanged</code>:</p>
+<pre><code class="language-C#">dataCollector.ProgressChanged += new ProgressChangedEventHandler(dataCollector_ProgressChanged);
+</code></pre>
+<p>Последний шаг перед реализацией необходимых методов - самостоятельно добавим код, запускающий нашего рабочего:</p>
+<pre><code class="language-C#">dataCollector.RunWorkerAsync();
+</code></pre>
+<p>Теперь нам нужно реализовать сами методы. Сперва можно прокликать их и реализовать заглушки:</p>
+<pre><code class="language-C#">private void dataCollector_ProgressChanged(object? sender, ProgressChangedEventArgs e)
+{
+    throw new NotImplementedException();
+}
+
+private void dataCollector_DoWork(object? sender, DoWorkEventArgs e)
+{
+    throw new NotImplementedException();
+}
+</code></pre>
+<h2 id="Реализация-метода-datacollector_dowork"><a class="header" href="#Реализация-метода-datacollector_dowork">Реализация метода dataCollector_DoWork</a></h2>
+<p>Под методом <code>GetMeasurements</code> найдите метод <code>dataCollector_DoWork</code>.</p>
+<p>Этот метод был сгенерирован во время выполнения предыдущей задачи. Он работает в фоновом потоке, и его целью является сбор и хранение данных измерений.</p>
+<h3 id="В-методе-datacollector_dowork-необходимо-удалить-оператор-который-генерирует-исключение-notimplementedexception-и-добавить-код-для-выполнения-следующих-действий"><a class="header" href="#В-методе-datacollector_dowork-необходимо-удалить-оператор-который-генерирует-исключение-notimplementedexception-и-добавить-код-для-выполнения-следующих-действий">В методе dataCollector_DoWork() необходимо удалить оператор, который генерирует исключение NotImplementedException, и добавить код для выполнения следующих действий:</a></h3>
+<ul>
+<li>Создать массив <code>dataCaptured</code> с помощью нового целочисленного массива, который содержит 10 элементов. Определить целочисленную переменную <code>i</code> со значением нуля. Мы будем использовать эту переменную для отслеживания текущей позиции в массиве <code>dataCaptured</code>.</li>
+<li>Добавить цикл <code>while</code>, который будет работать до тех пор, пока свойство <code>dataCollector.CancellationPending</code> не будет равно <code>false</code>.</li>
+</ul>
+<h3 id="В-цикле-while-необходимо-добавить-код-для-выполнения-следующих-действий"><a class="header" href="#В-цикле-while-необходимо-добавить-код-для-выполнения-следующих-действий">В цикле while необходимо добавить код для выполнения следующих действий:</a></h3>
+<ul>
+<li>
+<p>Вызвать метод <code>controller.TakeMeasurement()</code> и сохранить результат в массив <code>dataCaptured</code> по позиции, указанной целочисленной переменной <code>i</code>. Метод <code>TakeMeasurement()</code> объекта <code>controller</code> блокируется до тех пор, пока новое измерение не будет готово.</p>
+</li>
+<li>
+<p>Обновить свойство <code>mostRecentCapture</code>, чтобы оно содержало значение <code>dataCaptured</code> по позиции, указанной целочисленной переменной <code>i</code>.</p>
+</li>
+<li>
+<p>Если значение переменной <code>disposed</code> равно <code>true</code>, завершить цикл <code>while</code>. Этот шаг гарантирует, что сбор измерений останавливается, когда объект <code>MeasureDataDevice</code> уничтожается.</p>
+</li>
+</ul>
+<h3 id="После-добавления-операторов-которые-мы-добавили-в-предыдущий-шаг-необходимо-добавить-код-для-выполнения-следующих-действий"><a class="header" href="#После-добавления-операторов-которые-мы-добавили-в-предыдущий-шаг-необходимо-добавить-код-для-выполнения-следующих-действий">После добавления операторов, которые мы добавили в предыдущий шаг, необходимо добавить код для выполнения следующих действий:</a></h3>
+<ul>
+<li>
+<p>Проверить, равно ли свойство <code>loggingFileWriter</code> значение <code>null</code>.</p>
+</li>
+<li>
+<p>Если свойство <code>loggingFileWriter</code> не равно <code>null</code>, вызвать метод <code>loggingFileWriter.Writeline()</code>, передавая строковый параметр формата &quot;Measurement - mostRecentMeasure&quot;, где <code>mostRecentMeasure</code> - значение переменной <code>mostRecentMeasure</code>.</p>
+</li>
+<li>
+<p>Добавить строку кода в конец цикла <code>while</code>, чтобы вызвать метод <code>dataCollector.ReportProgress()</code>, передавая ему ноль в качестве параметра.</p>
+</li>
+</ul>
+<blockquote>
+<p>Примечание: свойство <code>loggingFileWriter</code> является простым объектом <code>StreamWriter</code>, который записывает в текстовый файл. Это свойство инициализируется в методе <code>StartCollecting()</code>. Можно использовать метод <code>WriteLine()</code> для записи в объект <code>StreamWriter</code>.</p>
+</blockquote>
+<p>Метод <code>ReportProgress()</code> генерирует событие <code>ReportProgress</code> и обычно используется для возврата процента завершения задач, назначенных объекту <code>BackgroundWorker</code>. Мы можем использовать это событие для обновления индикаторов прогресса или оценок времени в пользовательском интерфейсе. Т. к. задача будет работать бесконечно до отмены, мы будем использовать это событие как механизм для запроса пользовательского интерфейса о обновлении отображения с новым измерением.</p>
+<p>Добавим код в конец цикла <code>while</code> для выполнения следующих действий:</p>
+<ul>
+<li>Увеличить целочисленную переменную <code>i</code>.</li>
+<li>Если значение целочисленной переменной больше 9, сбросить <code>i</code> в ноль.</li>
+</ul>
+<p>Мы используем целочисленную переменную <code>i</code> как указатель на следующую позицию, в которую нужно записать измерение, массива <code>dataCaptured</code>. Этот массив имеет место для 10 измерений. Когда элемент последний элемент заполнен (его индекс 9), устройство начнет перезаписывать данные с начала массива. </p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="Приложение"><a class="header" href="#Приложение">Приложение</a></h1>
 <p>Тут более подробно описаны различные концепты языка С#, которые были встречены в работах</p>
 <h2 id="Основные-источники"><a class="header" href="#Основные-источники">Основные источники:</a></h2>
@@ -1935,7 +1981,7 @@ public bool WorkerReportsProgress;
 <div style="break-before: page; page-break-before: always;"></div><h1 id="visual-studio-хоткеи"><a class="header" href="#visual-studio-хоткеи">Visual studio хоткеи</a></h1>
 <div class="table-wrapper"><table><thead><tr><th>Хоткей</th><th>Назначение</th></tr></thead><tbody>
 <tr><td>Ctrl+Shift+A</td><td>Создание нового элемента (класс, файл с кодом и т.п.)</td></tr>
-<tr><td>Ctrl+'.'</td><td>При нажатии на кодовый элемент, а после данного сочетания клавиш, позволяет выбрать одно из возможных действий с элементом, вроде реализации абстрактного класса, интерфейса, конструктора и т.п.</td></tr>
+<tr><td>Ctrl+'.'</td><td>При нажатии на кодовый элемент + сочетания клавиш  позволяет выбрать одно из возможных действий с элементом  вроде реализации абстрактного класса, интерфейса, конструктора и т.п.</td></tr>
 </tbody></table>
 </div><div style="break-before: page; page-break-before: always;"></div><h1 id="Интерфейсы"><a class="header" href="#Интерфейсы">Интерфейсы</a></h1>
 <p>Интерфейс представляет ссылочный тип, который может определять некоторый функционал - набор методов и свойств без реализации (а после версии  C# 8.0 и с <a href="appendix/interfaces.html#%D0%A0%D0%B5%D0%B0%D0%BB%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F-%D0%BF%D0%BE-%D1%83%D0%BC%D0%BE%D0%BB%D1%87%D0%B0%D0%BD%D0%B8%D1%8E">реализацией по умолчанию</a>). Затем этот функционал реализуют классы и структуры, которые применяют данные интерфейсы.

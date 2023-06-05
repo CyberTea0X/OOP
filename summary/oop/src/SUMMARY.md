@@ -10,6 +10,7 @@
     - [Ключевые понятия](practices/pr6/key_concepts.md)
     - [Задание 1. Использование событий (в разработке)](practices/pr6/task1.md)
 - [Приложение](appendix/page.md)
+    - [Visual studio хоткеи](appendix/vs_hotkeys.md)
     - [Интерфейсы](appendix/interfaces.md)
     - [Абстрактный класс](appendix/abstract_class.md)
     - [Множественное наследование](appendix/multiple_interface_inherit.md)

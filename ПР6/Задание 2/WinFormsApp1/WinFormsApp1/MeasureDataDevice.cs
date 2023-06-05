@@ -58,6 +58,16 @@ namespace MeasuringDevice
 
         public void GetMeasurements()
         {
+
+            dataCollector = new BackgroundWorker();
+            WorkerReportsProgress = true;
+            WorkerSupportsCancellation = true;
+
+            dataCollector.DoWork += new DoWorkEventHandler(dataCollector_DoWork);
+            dataCollector.ProgressChanged += new ProgressChangedEventHandler(dataCollector_ProgressChanged);
+
+            dataCollector.RunWorkerAsync();
+
             dataCaptured = new int[10];
             System.Threading.ThreadPool.QueueUserWorkItem((dummy) =>
             {
@@ -79,6 +89,15 @@ namespace MeasuringDevice
             });
         }
 
+        private void dataCollector_ProgressChanged(object? sender, ProgressChangedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void dataCollector_DoWork(object? sender, DoWorkEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
 
         public int[] GetRawData()
         {

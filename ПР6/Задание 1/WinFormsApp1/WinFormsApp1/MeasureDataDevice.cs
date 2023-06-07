@@ -10,9 +10,11 @@ namespace MeasuringDevice
         public int mostRecentMeasure;
         public DeviceController? controller;
         public DeviceType measurementType;
-        private BackgroundWorker dataCollector;
+        private BackgroundWorker? dataCollector;
         public bool WorkerSupportsCancellation;
         public bool WorkerReportsProgress;
+        public bool disposed = false;
+        private StreamWriter? loggingFileWriter;
 
         public int HeartBeatInterval => throw new NotImplementedException();
 
@@ -42,6 +44,7 @@ namespace MeasuringDevice
         public void StartCollecting()
         {
             controller = DeviceController.StartDevice(measurementType);
+            loggingFileWriter = new StreamWriter("log.txt");
             GetMeasurements();
         }
         /// <summary>
@@ -54,9 +57,10 @@ namespace MeasuringDevice
                 controller.StopDevice();
                 controller = null;
             }
+            disposed = true;
         }
 
-        public void GetMeasurements()
+        private void GetMeasurements()
         {
 
             dataCollector = new BackgroundWorker();
@@ -67,36 +71,27 @@ namespace MeasuringDevice
             dataCollector.ProgressChanged += new ProgressChangedEventHandler(dataCollector_ProgressChanged);
 
             dataCollector.RunWorkerAsync();
-
-            dataCaptured = new int[10];
-            System.Threading.ThreadPool.QueueUserWorkItem((dummy) =>
-            {
-                int x = 0;
-                Random timer = new Random();
-
-                while (controller != null)
-                {
-                    System.Threading.Thread.Sleep(timer.Next(1000, 5000));
-                    dataCaptured[x] = controller != null ?
-                        controller.TakeMeasurement() : dataCaptured[x];
-                    mostRecentMeasure = dataCaptured[x];
-                    x++;
-                    if (x == 10)
-                    {
-                        x = 0;
-                    }
-                }
-            });
         }
 
         private void dataCollector_ProgressChanged(object? sender, ProgressChangedEventArgs e)
         {
-            throw new NotImplementedException();
+            OnNewMeasurementTaken();
         }
 
         private void dataCollector_DoWork(object? sender, DoWorkEventArgs e)
         {
-            throw new NotImplementedException();
+            dataCaptured = new int[10];
+            int i = 0;
+
+            while (dataCollector?.CancellationPending == false && disposed == false)
+            {
+                dataCaptured[i] = controller != null ?
+                    controller.TakeMeasurement() : dataCaptured[i];
+                mostRecentMeasure = dataCaptured[i];
+                loggingFileWriter?.WriteLine($"Measurement - {mostRecentMeasure}");
+                dataCollector.ReportProgress(0);
+                i = (i + 1) % 10;
+            }
         }
 
         public int[] GetRawData()

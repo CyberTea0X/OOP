@@ -14,7 +14,7 @@
  
 Мы протестируем новую функциональность, используя приложение, которое создает экземпляр класса `MeasureMassDevice` и перехватывает вызываемые им события с помощью делегата. Приложение должно иметь возможность приостановить, а затем перезапустить класс `MeasureMassDevice`.
 
-**Настоятельно рекомендуется скопировать своё решение задания 2 предедущей работы**
+**Настоятельно рекомендуется скопировать своё решение задания 2 предедущей практики!**
 
 ## Расширяем интерфейс
 
@@ -137,18 +137,6 @@ public bool WorkerSupportsCancellation;
 public bool WorkerReportsProgress;
 ```
 
-## GetMeasurements
-
-```C#
-public void GetMeasurements()
-{
-
-    dataCollector = new BackgroundWorker();
-    WorkerReportsProgress = true;
-    WorkerSupportsCancellation = true;
-}
-```
-
 Далее добавим следующий код в наш метод:
 
 ```C#
@@ -183,34 +171,88 @@ private void dataCollector_DoWork(object? sender, DoWorkEventArgs e)
 }
 ```
 
+Код GetMeasurements, который получился в итоге:
+
+### GetMeasurements
+
+```C#
+public void GetMeasurements()
+{
+
+    dataCollector = new BackgroundWorker();
+    WorkerReportsProgress = true;
+    WorkerSupportsCancellation = true;
+
+    dataCollector.DoWork += new DoWorkEventHandler(dataCollector_DoWork);
+    dataCollector.ProgressChanged += new ProgressChangedEventHandler(dataCollector_ProgressChanged);
+
+    dataCollector.RunWorkerAsync();
+}
+```
+
 ## Реализация метода dataCollector_DoWork
 
 Под методом `GetMeasurements` найдите метод `dataCollector_DoWork`.
  
-Этот метод был сгенерирован во время выполнения предыдущей задачи. Он работает в фоновом потоке, и его целью является сбор и хранение данных измерений.
+Этот метод мы создали во время выполнения предыдущей задачи. Он работает в фоновом потоке, и его целью является сбор и хранение данных измерений.
 
 ### В методе dataCollector_DoWork() необходимо удалить оператор, который генерирует исключение NotImplementedException, и добавить код для выполнения следующих действий:
 
  - Создать массив `dataCaptured` с помощью нового целочисленного массива, который содержит 10 элементов. Определить целочисленную переменную `i` со значением нуля. Мы будем использовать эту переменную для отслеживания текущей позиции в массиве `dataCaptured`.
- - Добавить цикл `while`, который будет работать до тех пор, пока свойство `dataCollector.CancellationPending` не будет равно `false`.
+ - Добавить цикл `while`, который будет работать до тех пор, пока свойство `dataCollector.CancellationPending` будет равно `false`.
 
 ### В цикле while необходимо добавить код для выполнения следующих действий:
 
  - Вызвать метод `controller.TakeMeasurement()` и сохранить результат в массив `dataCaptured` по позиции, указанной целочисленной переменной `i`. Метод `TakeMeasurement()` объекта `controller` блокируется до тех пор, пока новое измерение не будет готово.
 
- - Обновить свойство `mostRecentCapture`, чтобы оно содержало значение `dataCaptured` по позиции, указанной целочисленной переменной `i`.
+ - Обновить свойство `mostRecentMeasure`, чтобы оно содержало значение `dataCaptured` по позиции, указанной целочисленной переменной `i`.
 
  - Если значение переменной `disposed` равно `true`, завершить цикл `while`. Этот шаг гарантирует, что сбор измерений останавливается, когда объект `MeasureDataDevice` уничтожается.
 
-### После добавления операторов, которые мы добавили в предыдущий шаг, необходимо добавить код для выполнения следующих действий:
+ - Кстати, переменной `disposed` у нас никогда и не было, поэтому самостоятельно придумаем что это за переменная и куда её вставлять.
 
- - Проверить, равно ли свойство `loggingFileWriter` значение `null`.
+Возможная реализация `disposed`:
 
- - Если свойство `loggingFileWriter` не равно `null`, вызвать метод `loggingFileWriter.Writeline()`, передавая строковый параметр формата "Measurement - mostRecentMeasure", где `mostRecentMeasure` - значение переменной `mostRecentMeasure`.
+```C#
+public bool disposed = false;  // Добавляем новое поле в класс MeasureDataDevice
+// ...
+public void StopCollecting()
+{
+    if (controller != null)
+    {
+        controller.StopDevice();
+        controller = null;
+    }
+    disposed = true;  // Устанавливаем disposed как true в случае остановки сбора данных
+}
+```
+
+Пока что в методе `dataCollector_DoWork` должно быть что-то похожее на это:
+
+```C#
+private void dataCollector_DoWork(object? sender, DoWorkEventArgs e)
+{
+    dataCaptured = new int[10];
+    int i = 0;
+
+    while (dataCollector?.CancellationPending == false && disposed == false)
+    {
+        dataCaptured[i] = controller != null ?
+            controller.TakeMeasurement() : dataCaptured[i];
+        mostRecentMeasure = dataCaptured[i];
+    }
+}
+```
+
+Идём дальше
+
+### После добавления операторов, которые мы добавили на предедущем шаге, необходимо добавить код для выполнения следующих действий:
+
+ - Добавить в наш класс свойство `loggingFileWriter` типа `StreamWriter`, а также инициализировать его в методе `StartCollecting`
+
+ - Если свойство `loggingFileWriter` не равно `null`, вызвать метод `loggingFileWriter.WriteLine()`, передавая строковый параметр формата "Measurement - mostRecentMeasure", где `mostRecentMeasure` - значение переменной `mostRecentMeasure`.
 
  - Добавить строку кода в конец цикла `while`, чтобы вызвать метод `dataCollector.ReportProgress()`, передавая ему ноль в качестве параметра.
-
- > Примечание: свойство `loggingFileWriter` является простым объектом `StreamWriter`, который записывает в текстовый файл. Это свойство инициализируется в методе `StartCollecting()`. Можно использовать метод `WriteLine()` для записи в объект `StreamWriter`.
 
 Метод `ReportProgress()` генерирует событие `ReportProgress` и обычно используется для возврата процента завершения задач, назначенных объекту `BackgroundWorker`. Мы можем использовать это событие для обновления индикаторов прогресса или оценок времени в пользовательском интерфейсе. Т. к. задача будет работать бесконечно до отмены, мы будем использовать это событие как механизм для запроса пользовательского интерфейса о обновлении отображения с новым измерением.
 
@@ -220,3 +262,74 @@ private void dataCollector_DoWork(object? sender, DoWorkEventArgs e)
  - Если значение целочисленной переменной больше 9, сбросить `i` в ноль.
 
 Мы используем целочисленную переменную `i` как указатель на следующую позицию, в которую нужно записать измерение, массива `dataCaptured`. Этот массив имеет место для 10 измерений. Когда элемент последний элемент заполнен (его индекс 9), устройство начнет перезаписывать данные с начала массива. 
+
+Возможная реализация `LoggingFileWriter`
+
+#### LoggingFileWriter
+
+```C#
+private StreamWriter? loggingFileWriter;
+//...
+public void StartCollecting()
+{
+    controller = DeviceController.StartDevice(measurementType);
+    loggingFileWriter = new StreamWriter("log.txt");
+    GetMeasurements();
+}
+```
+
+Возможная реализация `dataCollector_DoWork`:
+
+#### dataCollector_DoWork
+
+```C#
+private void dataCollector_DoWork(object? sender, DoWorkEventArgs e)
+{
+    dataCaptured = new int[10];
+    int i = 0;
+
+    while (dataCollector?.CancellationPending == false && disposed == false)
+    {
+        dataCaptured[i] = controller != null ?
+            controller.TakeMeasurement() : dataCaptured[i];
+        mostRecentMeasure = dataCaptured[i];
+        loggingFileWriter?.WriteLine($"Measurement - {mostRecentMeasure}");
+        dataCollector.ReportProgress(0);
+        i = (i + 1) % 10;  // Когда в скобках будет значение 10, операция 10 % 10 даст 0, так это и работает.
+    }
+}
+```
+
+## Реализация метода `dataCollector_ProgressChanged`
+
+ - Найдите в своём коде метод `dataCollector_ProgressChanged`.
+
+ > Этот метод мы недавно добавили как заглушку. 
+ Он запускается при возникновении события `ProgressChanged`.
+ Это событие мы вызываем, когда метод dataCollector_DoWork принимает и сохраняет новое измерение.
+ Код, отвечающий за привязку метода `dataCollector_ProgressChanged`,
+ мы реализовали в [GetMeasurements](#getmeasurements)
+
+ - В методе удалите код, вызывающий исключение и затем вызовите метод `OnNewMeasurementTaken` без параметров.
+
+Должно получиться как-то так:
+
+#### dataCollector_ProgressChanged
+
+```C#
+private void dataCollector_ProgressChanged(object? sender, ProgressChangedEventArgs e)
+{
+    OnNewMeasurementTaken();
+}
+```
+
+ > Метод `OnNewMeasurementTaken` вызывает событие `NewMeasurementTaken`,
+ определенное ранее. Мы можем изменить пользовательский интерфейс,
+ чтобы подписаться на это событие, чтобы при его возникновении пользовательский интерфейс
+ мог обновлять отображаемую информацию.
+
+## Доработка нескольких методов и проверка кода
+
+ - Убедимся, что в методе `StartCollecting` мы вызываем [GetMeasurements](#getmeasurements)
+ - в методе `StopCollecting`, если элемент `dataCollector` не является `null`,
+ нам нужно добавить вызов метода `CancelAsync`, чтобы остановить работу, выполняемую объектом `DataCollector BackgroundWorker`.

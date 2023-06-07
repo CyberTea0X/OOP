@@ -1894,11 +1894,9 @@ event IEventEnabledMeasuringDevice.HeartBeatEventHandler IEventEnabledMeasuringD
 <li>Укажем, что член <code>DataCollector</code> <code>BackgroundWorker</code> поддерживает отмену.</li>
 <li>Укажем, что член <code>DataCollector</code> <code>BackgroundWorker</code> сообщает о ходе выполнения во время работы.</li>
 </ul>
-<p>Для этого сперва создадим свойства <code>WorkerSupportsCancellation</code> и <code>WorkerReportsProgress</code>.
-Их нужно задать в нашем абстрактном классе:</p>
-<pre><code class="language-C#">public bool WorkerSupportsCancellation;
-public bool WorkerReportsProgress;
-</code></pre>
+<blockquote>
+<p>у <code>dataCollector</code> есть отдельные поля, называющиеся <code>WorkerReportsProgress</code> и <code>WorkerSupportsCancellation</code>.</p>
+</blockquote>
 <p>Далее добавим следующий код в наш метод:</p>
 <pre><code class="language-C#">dataCollector.DoWork += new DoWorkEventHandler(dataCollector_DoWork);
 </code></pre>
@@ -1920,14 +1918,14 @@ private void dataCollector_DoWork(object? sender, DoWorkEventArgs e)
     throw new NotImplementedException();
 }
 </code></pre>
-<p>Код GetMeasurements, который получился в итоге:</p>
+<p>Возможный код <code>GetMeasurements</code>, который получился в итоге:</p>
 <h3 id="getmeasurements-2"><a class="header" href="#getmeasurements-2">GetMeasurements</a></h3>
 <pre><code class="language-C#">public void GetMeasurements()
 {
 
     dataCollector = new BackgroundWorker();
-    WorkerReportsProgress = true;
-    WorkerSupportsCancellation = true;
+    dataCollector.WorkerReportsProgress = true;
+    dataCollector.WorkerSupportsCancellation = true;
 
     dataCollector.DoWork += new DoWorkEventHandler(dataCollector_DoWork);
     dataCollector.ProgressChanged += new ProgressChangedEventHandler(dataCollector_ProgressChanged);
@@ -2096,7 +2094,22 @@ public void StartCollecting()
     dataCollector?.Dispose();
 }
 </code></pre>
-<h2 id="Работа-с-ui"><a class="header" href="#Работа-с-ui">Работа с UI</a></h2>
+<p>Как всегда проверим, что всё работает, простым запуском решения.
+На этом моменте всё должно собираться, однако, нажатие кнопки &quot;Начать сбор данных&quot; после создания устройства вызывает полное зависание приложения.
+Это происходит из за того, что хотя мы реализовали асинхронный функционал, наше приложение
+всё ещё работает синхронно и на моменте сбора данных уходит в бесконечный цикл...</p>
+<p>Таким образом, следующий наш шаг это заставить интерфейс работать нормально с нашим асинхронным кодом.</p>
+<h2 id="Обновление-пользовательского-интерфейс-для-обработки-событий-измерения"><a class="header" href="#Обновление-пользовательского-интерфейс-для-обработки-событий-измерения">Обновление пользовательского интерфейс для обработки событий измерения</a></h2>
+<blockquote>
+<p>Примечание: мы работаем с двумя классами, значит соответствующие переменные и обработчики нужно объявить для обоих. В какой последовательности реализовывать работу с событиями для этих классов - на ваше усмотрение.</p>
+</blockquote>
+<p>Итак, первым делом нам нужно добавить как поле формы делегат для связи с методом <code>NewMeasurementEvent</code>.
+Этот делегат должен иметь тип <code>EventHandler</code> и называться <code>newMeasurementTaken</code>.</p>
+<p>Далее, в методе, отвечающем за начало сбора измерений, нам нужно сделать следующее:</p>
+<ul>
+<li>Инициализируем наш новый делегат <code>newMeasurementTaken</code> как <code>new EventHandler()</code>, передавая ему метод
+<code>device_NewMeasurementTaken</code>. Сам метод мы реализуем немного позже, поэтому просто сделаем для него заглушку.</li>
+</ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="Приложение"><a class="header" href="#Приложение">Приложение</a></h1>
 <p>Тут более подробно описаны различные концепты языка С#, которые были встречены в работах</p>
 <h2 id="Основные-источники"><a class="header" href="#Основные-источники">Основные источники:</a></h2>

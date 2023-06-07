@@ -129,13 +129,7 @@ private void GetMeasurements() { }
  - Укажем, что член `DataCollector` `BackgroundWorker` поддерживает отмену.
  - Укажем, что член `DataCollector` `BackgroundWorker` сообщает о ходе выполнения во время работы.
 
-Для этого сперва создадим свойства `WorkerSupportsCancellation` и `WorkerReportsProgress`.
-Их нужно задать в нашем абстрактном классе:
-
-```C#
-public bool WorkerSupportsCancellation;
-public bool WorkerReportsProgress;
-```
+ > у `dataCollector` есть отдельные поля, называющиеся `WorkerReportsProgress` и `WorkerSupportsCancellation`.
 
 Далее добавим следующий код в наш метод:
 
@@ -171,7 +165,7 @@ private void dataCollector_DoWork(object? sender, DoWorkEventArgs e)
 }
 ```
 
-Код GetMeasurements, который получился в итоге:
+Возможный код `GetMeasurements`, который получился в итоге:
 
 ### GetMeasurements
 
@@ -180,8 +174,8 @@ public void GetMeasurements()
 {
 
     dataCollector = new BackgroundWorker();
-    WorkerReportsProgress = true;
-    WorkerSupportsCancellation = true;
+    dataCollector.WorkerReportsProgress = true;
+    dataCollector.WorkerSupportsCancellation = true;
 
     dataCollector.DoWork += new DoWorkEventHandler(dataCollector_DoWork);
     dataCollector.ProgressChanged += new ProgressChangedEventHandler(dataCollector_ProgressChanged);
@@ -373,4 +367,21 @@ private void Dispose()
 }
 ```
 
-## Работа с UI
+Как всегда проверим, что всё работает, простым запуском решения.
+На этом моменте всё должно собираться, однако, нажатие кнопки "Начать сбор данных" после создания устройства вызывает полное зависание приложения.
+Это происходит из за того, что хотя мы реализовали асинхронный функционал, наше приложение
+всё ещё работает синхронно и на моменте сбора данных уходит в бесконечный цикл...
+
+Таким образом, следующий наш шаг это заставить интерфейс работать нормально с нашим асинхронным кодом.
+
+## Обновление пользовательского интерфейс для обработки событий измерения
+
+ > Примечание: мы работаем с двумя классами, значит соответствующие переменные и обработчики нужно объявить для обоих. В какой последовательности реализовывать работу с событиями для этих классов - на ваше усмотрение.
+
+Итак, первым делом нам нужно добавить как поле формы делегат для связи с методом `NewMeasurementEvent`.
+Этот делегат должен иметь тип `EventHandler` и называться `newMeasurementTaken`.
+
+Далее, в методе, отвечающем за начало сбора измерений, нам нужно сделать следующее:
+
+ - Инициализируем наш новый делегат `newMeasurementTaken` как `new EventHandler()`, передавая ему метод
+ `device_NewMeasurementTaken`. Сам метод мы реализуем немного позже, поэтому просто сделаем для него заглушку.

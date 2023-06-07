@@ -9,6 +9,8 @@ namespace WinFormsApp1
         MeasureMassDevice? device2;
         Units unitsToUse1 = Units.Metric;
         Units unitsToUse2 = Units.Metric;
+        EventHandler newMeasurementTaken;
+
 
         public Form1()
         {
@@ -18,6 +20,7 @@ namespace WinFormsApp1
         private void button1_Click(object sender, EventArgs e)
         {
             device1 = new MeasureLengthDevice(unitsToUse1);
+            newMeasurementTaken = new EventHandler(device_NewMeasurementTaken);
         }
 
         private void button3_Click(object sender, EventArgs e)

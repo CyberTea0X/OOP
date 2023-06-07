@@ -11,8 +11,6 @@ namespace MeasuringDevice
         public DeviceController? controller;
         public DeviceType measurementType;
         private BackgroundWorker? dataCollector;
-        public bool WorkerSupportsCancellation;
-        public bool WorkerReportsProgress;
         public bool disposed = false;
         private StreamWriter? loggingFileWriter;
 
@@ -70,8 +68,8 @@ namespace MeasuringDevice
         {
 
             dataCollector = new BackgroundWorker();
-            WorkerReportsProgress = true;
-            WorkerSupportsCancellation = true;
+            dataCollector.WorkerReportsProgress = true;
+            dataCollector.WorkerSupportsCancellation = true;
 
             dataCollector.DoWork += new DoWorkEventHandler(dataCollector_DoWork);
             dataCollector.ProgressChanged += new ProgressChangedEventHandler(dataCollector_ProgressChanged);
@@ -95,7 +93,7 @@ namespace MeasuringDevice
                     controller.TakeMeasurement() : dataCaptured[i];
                 mostRecentMeasure = dataCaptured[i];
                 loggingFileWriter?.WriteLine($"Measurement - {mostRecentMeasure}");
-                dataCollector.ReportProgress(0);
+                dataCollector.ReportProgress(1);
                 i = (i + 1) % 10;
             }
         }

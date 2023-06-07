@@ -404,7 +404,37 @@ public void StartCollecting()
 <li>Убедимся, что в методе <code>StartCollecting</code> мы вызываем <a href="#getmeasurements">GetMeasurements</a></li>
 <li>в методе <code>StopCollecting</code>, если элемент <code>dataCollector</code> не является <code>null</code>,
 нам нужно добавить вызов метода <code>CancelAsync</code>, чтобы остановить работу, выполняемую объектом <code>DataCollector BackgroundWorker</code>.</li>
+<li>Создадим новый метод с названием <code>Dispose</code> в классе <code>MeasureDataDevice</code>, который будет вызывать <code>Dispose</code> на поле
+<code>dataCollector</code>, в случае если <code>dataCollector</code> не равен <code>null</code>. Таким образом мы будем уничтожать наш фоновый сборщик данных при уничтожении экземпляра класса <code>MeasureDataDevice</code>.</li>
 </ul>
+<p>Вот возможная реализация вышеперечисленных трёх пунктов:</p>
+<h3 id="startcollecting"><a class="header" href="#startcollecting">StartCollecting</a></h3>
+<pre><code class="language-C#">public void StartCollecting()
+{
+    controller = DeviceController.StartDevice(measurementType);
+    loggingFileWriter = new StreamWriter(&quot;log.txt&quot;);
+    GetMeasurements();
+}
+</code></pre>
+<h3 id="stopcollecting"><a class="header" href="#stopcollecting">StopCollecting</a></h3>
+<pre><code class="language-C#">public void StopCollecting()
+{
+    if (controller != null)
+    {
+        controller.StopDevice();
+        controller = null;
+    }
+    dataCollector?.CancelAsync();
+    disposed = true;
+}
+</code></pre>
+<h3 id="dispose"><a class="header" href="#dispose">Dispose</a></h3>
+<pre><code class="language-C#">private void Dispose()
+{
+    dataCollector?.Dispose();
+}
+</code></pre>
+<h2 id="Работа-с-ui"><a class="header" href="#Работа-с-ui">Работа с UI</a></h2>
 
                     </main>
 

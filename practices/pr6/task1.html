@@ -152,7 +152,7 @@
 <p>Мы будем использовать компонент <code>BackgroundWorker</code> для опроса новых измерений. Опрос новых измерений будет происходить в событии <code>DoWork</code>, а событие <code>ProgressReported</code> вызовет событие <code>NewMeasurementTaken</code>, чтобы уведомить клиентское приложение о том, что было выполнено новое измерение.</p>
 <p>Мы запустим фоновый поток с помощью метода <code>RunWorkerAsync</code>, а устройство будет поддерживать отмену фонового потока с помощью метода <code>CancelWorkerAsync</code>.</p>
 <p>Мы протестируем новую функциональность, используя приложение, которое создает экземпляр класса <code>MeasureMassDevice</code> и перехватывает вызываемые им события с помощью делегата. Приложение должно иметь возможность приостановить, а затем перезапустить класс <code>MeasureMassDevice</code>.</p>
-<p><strong>Настоятельно рекомендуется скопировать своё решение задания 2 предедущей работы</strong></p>
+<p><strong>Настоятельно рекомендуется скопировать своё решение задания 2 предедущей практики!</strong></p>
 <h2 id="Расширяем-интерфейс"><a class="header" href="#Расширяем-интерфейс">Расширяем интерфейс</a></h2>
 <p>Теперь создадим новый интерфейс с поддержкой событий, который будет наследовать от нашего старого интерфейса <code>IMeasuringDevice</code>. Для этого нажмём <strong>(Ctrl + Shift + A)</strong> и создадим интерфейс IEventEnabledMeasuringDevice:</p>
 <h3 id="ieventenabledmeasuringdevice"><a class="header" href="#ieventenabledmeasuringdevice">IEventEnabledMeasuringDevice</a></h3>
@@ -237,15 +237,6 @@ event IEventEnabledMeasuringDevice.HeartBeatEventHandler IEventEnabledMeasuringD
 <pre><code class="language-C#">public bool WorkerSupportsCancellation;
 public bool WorkerReportsProgress;
 </code></pre>
-<h2 id="getmeasurements"><a class="header" href="#getmeasurements">GetMeasurements</a></h2>
-<pre><code class="language-C#">public void GetMeasurements()
-{
-
-    dataCollector = new BackgroundWorker();
-    WorkerReportsProgress = true;
-    WorkerSupportsCancellation = true;
-}
-</code></pre>
 <p>Далее добавим следующий код в наш метод:</p>
 <pre><code class="language-C#">dataCollector.DoWork += new DoWorkEventHandler(dataCollector_DoWork);
 </code></pre>
@@ -267,13 +258,28 @@ private void dataCollector_DoWork(object? sender, DoWorkEventArgs e)
     throw new NotImplementedException();
 }
 </code></pre>
+<p>Код GetMeasurements, который получился в итоге:</p>
+<h3 id="getmeasurements"><a class="header" href="#getmeasurements">GetMeasurements</a></h3>
+<pre><code class="language-C#">public void GetMeasurements()
+{
+
+    dataCollector = new BackgroundWorker();
+    WorkerReportsProgress = true;
+    WorkerSupportsCancellation = true;
+
+    dataCollector.DoWork += new DoWorkEventHandler(dataCollector_DoWork);
+    dataCollector.ProgressChanged += new ProgressChangedEventHandler(dataCollector_ProgressChanged);
+
+    dataCollector.RunWorkerAsync();
+}
+</code></pre>
 <h2 id="Реализация-метода-datacollector_dowork"><a class="header" href="#Реализация-метода-datacollector_dowork">Реализация метода dataCollector_DoWork</a></h2>
 <p>Под методом <code>GetMeasurements</code> найдите метод <code>dataCollector_DoWork</code>.</p>
-<p>Этот метод был сгенерирован во время выполнения предыдущей задачи. Он работает в фоновом потоке, и его целью является сбор и хранение данных измерений.</p>
+<p>Этот метод мы создали во время выполнения предыдущей задачи. Он работает в фоновом потоке, и его целью является сбор и хранение данных измерений.</p>
 <h3 id="В-методе-datacollector_dowork-необходимо-удалить-оператор-который-генерирует-исключение-notimplementedexception-и-добавить-код-для-выполнения-следующих-действий"><a class="header" href="#В-методе-datacollector_dowork-необходимо-удалить-оператор-который-генерирует-исключение-notimplementedexception-и-добавить-код-для-выполнения-следующих-действий">В методе dataCollector_DoWork() необходимо удалить оператор, который генерирует исключение NotImplementedException, и добавить код для выполнения следующих действий:</a></h3>
 <ul>
 <li>Создать массив <code>dataCaptured</code> с помощью нового целочисленного массива, который содержит 10 элементов. Определить целочисленную переменную <code>i</code> со значением нуля. Мы будем использовать эту переменную для отслеживания текущей позиции в массиве <code>dataCaptured</code>.</li>
-<li>Добавить цикл <code>while</code>, который будет работать до тех пор, пока свойство <code>dataCollector.CancellationPending</code> не будет равно <code>false</code>.</li>
+<li>Добавить цикл <code>while</code>, который будет работать до тех пор, пока свойство <code>dataCollector.CancellationPending</code> будет равно <code>false</code>.</li>
 </ul>
 <h3 id="В-цикле-while-необходимо-добавить-код-для-выполнения-следующих-действий"><a class="header" href="#В-цикле-while-необходимо-добавить-код-для-выполнения-следующих-действий">В цикле while необходимо добавить код для выполнения следующих действий:</a></h3>
 <ul>
@@ -281,27 +287,55 @@ private void dataCollector_DoWork(object? sender, DoWorkEventArgs e)
 <p>Вызвать метод <code>controller.TakeMeasurement()</code> и сохранить результат в массив <code>dataCaptured</code> по позиции, указанной целочисленной переменной <code>i</code>. Метод <code>TakeMeasurement()</code> объекта <code>controller</code> блокируется до тех пор, пока новое измерение не будет готово.</p>
 </li>
 <li>
-<p>Обновить свойство <code>mostRecentCapture</code>, чтобы оно содержало значение <code>dataCaptured</code> по позиции, указанной целочисленной переменной <code>i</code>.</p>
+<p>Обновить свойство <code>mostRecentMeasure</code>, чтобы оно содержало значение <code>dataCaptured</code> по позиции, указанной целочисленной переменной <code>i</code>.</p>
 </li>
 <li>
 <p>Если значение переменной <code>disposed</code> равно <code>true</code>, завершить цикл <code>while</code>. Этот шаг гарантирует, что сбор измерений останавливается, когда объект <code>MeasureDataDevice</code> уничтожается.</p>
 </li>
+<li>
+<p>Кстати, переменной <code>disposed</code> у нас никогда и не было, поэтому самостоятельно придумаем что это за переменная и куда её вставлять.</p>
+</li>
 </ul>
-<h3 id="После-добавления-операторов-которые-мы-добавили-в-предыдущий-шаг-необходимо-добавить-код-для-выполнения-следующих-действий"><a class="header" href="#После-добавления-операторов-которые-мы-добавили-в-предыдущий-шаг-необходимо-добавить-код-для-выполнения-следующих-действий">После добавления операторов, которые мы добавили в предыдущий шаг, необходимо добавить код для выполнения следующих действий:</a></h3>
+<p>Возможная реализация <code>disposed</code>:</p>
+<pre><code class="language-C#">public bool disposed = false;  // Добавляем новое поле в класс MeasureDataDevice
+// ...
+public void StopCollecting()
+{
+    if (controller != null)
+    {
+        controller.StopDevice();
+        controller = null;
+    }
+    disposed = true;  // Устанавливаем disposed как true в случае остановки сбора данных
+}
+</code></pre>
+<p>Пока что в методе <code>dataCollector_DoWork</code> должно быть что-то похожее на это:</p>
+<pre><code class="language-C#">private void dataCollector_DoWork(object? sender, DoWorkEventArgs e)
+{
+    dataCaptured = new int[10];
+    int i = 0;
+
+    while (dataCollector?.CancellationPending == false &amp;&amp; disposed == false)
+    {
+        dataCaptured[i] = controller != null ?
+            controller.TakeMeasurement() : dataCaptured[i];
+        mostRecentMeasure = dataCaptured[i];
+    }
+}
+</code></pre>
+<p>Идём дальше</p>
+<h3 id="После-добавления-операторов-которые-мы-добавили-на-предедущем-шаге-необходимо-добавить-код-для-выполнения-следующих-действий"><a class="header" href="#После-добавления-операторов-которые-мы-добавили-на-предедущем-шаге-необходимо-добавить-код-для-выполнения-следующих-действий">После добавления операторов, которые мы добавили на предедущем шаге, необходимо добавить код для выполнения следующих действий:</a></h3>
 <ul>
 <li>
-<p>Проверить, равно ли свойство <code>loggingFileWriter</code> значение <code>null</code>.</p>
+<p>Добавить в наш класс свойство <code>loggingFileWriter</code> типа <code>StreamWriter</code>, а также инициализировать его в методе <code>StartCollecting</code></p>
 </li>
 <li>
-<p>Если свойство <code>loggingFileWriter</code> не равно <code>null</code>, вызвать метод <code>loggingFileWriter.Writeline()</code>, передавая строковый параметр формата &quot;Measurement - mostRecentMeasure&quot;, где <code>mostRecentMeasure</code> - значение переменной <code>mostRecentMeasure</code>.</p>
+<p>Если свойство <code>loggingFileWriter</code> не равно <code>null</code>, вызвать метод <code>loggingFileWriter.WriteLine()</code>, передавая строковый параметр формата &quot;Measurement - mostRecentMeasure&quot;, где <code>mostRecentMeasure</code> - значение переменной <code>mostRecentMeasure</code>.</p>
 </li>
 <li>
 <p>Добавить строку кода в конец цикла <code>while</code>, чтобы вызвать метод <code>dataCollector.ReportProgress()</code>, передавая ему ноль в качестве параметра.</p>
 </li>
 </ul>
-<blockquote>
-<p>Примечание: свойство <code>loggingFileWriter</code> является простым объектом <code>StreamWriter</code>, который записывает в текстовый файл. Это свойство инициализируется в методе <code>StartCollecting()</code>. Можно использовать метод <code>WriteLine()</code> для записи в объект <code>StreamWriter</code>.</p>
-</blockquote>
 <p>Метод <code>ReportProgress()</code> генерирует событие <code>ReportProgress</code> и обычно используется для возврата процента завершения задач, назначенных объекту <code>BackgroundWorker</code>. Мы можем использовать это событие для обновления индикаторов прогресса или оценок времени в пользовательском интерфейсе. Т. к. задача будет работать бесконечно до отмены, мы будем использовать это событие как механизм для запроса пользовательского интерфейса о обновлении отображения с новым измерением.</p>
 <p>Добавим код в конец цикла <code>while</code> для выполнения следующих действий:</p>
 <ul>
@@ -309,6 +343,68 @@ private void dataCollector_DoWork(object? sender, DoWorkEventArgs e)
 <li>Если значение целочисленной переменной больше 9, сбросить <code>i</code> в ноль.</li>
 </ul>
 <p>Мы используем целочисленную переменную <code>i</code> как указатель на следующую позицию, в которую нужно записать измерение, массива <code>dataCaptured</code>. Этот массив имеет место для 10 измерений. Когда элемент последний элемент заполнен (его индекс 9), устройство начнет перезаписывать данные с начала массива. </p>
+<p>Возможная реализация <code>LoggingFileWriter</code></p>
+<h4 id="loggingfilewriter"><a class="header" href="#loggingfilewriter">LoggingFileWriter</a></h4>
+<pre><code class="language-C#">private StreamWriter? loggingFileWriter;
+//...
+public void StartCollecting()
+{
+    controller = DeviceController.StartDevice(measurementType);
+    loggingFileWriter = new StreamWriter(&quot;log.txt&quot;);
+    GetMeasurements();
+}
+</code></pre>
+<p>Возможная реализация <code>dataCollector_DoWork</code>:</p>
+<h4 id="datacollector_dowork"><a class="header" href="#datacollector_dowork">dataCollector_DoWork</a></h4>
+<pre><code class="language-C#">private void dataCollector_DoWork(object? sender, DoWorkEventArgs e)
+{
+    dataCaptured = new int[10];
+    int i = 0;
+
+    while (dataCollector?.CancellationPending == false &amp;&amp; disposed == false)
+    {
+        dataCaptured[i] = controller != null ?
+            controller.TakeMeasurement() : dataCaptured[i];
+        mostRecentMeasure = dataCaptured[i];
+        loggingFileWriter?.WriteLine($&quot;Measurement - {mostRecentMeasure}&quot;);
+        dataCollector.ReportProgress(0);
+        i = (i + 1) % 10;  // Когда в скобках будет значение 10, операция 10 % 10 даст 0, так это и работает.
+    }
+}
+</code></pre>
+<h2 id="Реализация-метода-datacollector_progresschanged"><a class="header" href="#Реализация-метода-datacollector_progresschanged">Реализация метода <code>dataCollector_ProgressChanged</code></a></h2>
+<ul>
+<li>Найдите в своём коде метод <code>dataCollector_ProgressChanged</code>.</li>
+</ul>
+<blockquote>
+<p>Этот метод мы недавно добавили как заглушку. 
+Он запускается при возникновении события <code>ProgressChanged</code>.
+Это событие мы вызываем, когда метод dataCollector_DoWork принимает и сохраняет новое измерение.
+Код, отвечающий за привязку метода <code>dataCollector_ProgressChanged</code>,
+мы реализовали в <a href="#getmeasurements">GetMeasurements</a></p>
+</blockquote>
+<ul>
+<li>В методе удалите код, вызывающий исключение и затем вызовите метод <code>OnNewMeasurementTaken</code> без параметров.</li>
+</ul>
+<p>Должно получиться как-то так:</p>
+<h4 id="datacollector_progresschanged"><a class="header" href="#datacollector_progresschanged">dataCollector_ProgressChanged</a></h4>
+<pre><code class="language-C#">private void dataCollector_ProgressChanged(object? sender, ProgressChangedEventArgs e)
+{
+    OnNewMeasurementTaken();
+}
+</code></pre>
+<blockquote>
+<p>Метод <code>OnNewMeasurementTaken</code> вызывает событие <code>NewMeasurementTaken</code>,
+определенное ранее. Мы можем изменить пользовательский интерфейс,
+чтобы подписаться на это событие, чтобы при его возникновении пользовательский интерфейс
+мог обновлять отображаемую информацию.</p>
+</blockquote>
+<h2 id="Доработка-нескольких-методов-и-проверка-кода"><a class="header" href="#Доработка-нескольких-методов-и-проверка-кода">Доработка нескольких методов и проверка кода</a></h2>
+<ul>
+<li>Убедимся, что в методе <code>StartCollecting</code> мы вызываем <a href="#getmeasurements">GetMeasurements</a></li>
+<li>в методе <code>StopCollecting</code>, если элемент <code>dataCollector</code> не является <code>null</code>,
+нам нужно добавить вызов метода <code>CancelAsync</code>, чтобы остановить работу, выполняемую объектом <code>DataCollector BackgroundWorker</code>.</li>
+</ul>
 
                     </main>
 

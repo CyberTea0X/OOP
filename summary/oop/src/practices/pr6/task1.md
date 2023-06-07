@@ -333,3 +333,44 @@ private void dataCollector_ProgressChanged(object? sender, ProgressChangedEventA
  - Убедимся, что в методе `StartCollecting` мы вызываем [GetMeasurements](#getmeasurements)
  - в методе `StopCollecting`, если элемент `dataCollector` не является `null`,
  нам нужно добавить вызов метода `CancelAsync`, чтобы остановить работу, выполняемую объектом `DataCollector BackgroundWorker`.
+ - Создадим новый метод с названием `Dispose` в классе `MeasureDataDevice`, который будет вызывать `Dispose` на поле
+ `dataCollector`, в случае если `dataCollector` не равен `null`. Таким образом мы будем уничтожать наш фоновый сборщик данных при уничтожении экземпляра класса `MeasureDataDevice`.
+
+Вот возможная реализация вышеперечисленных трёх пунктов:
+
+### StartCollecting
+
+```C#
+public void StartCollecting()
+{
+    controller = DeviceController.StartDevice(measurementType);
+    loggingFileWriter = new StreamWriter("log.txt");
+    GetMeasurements();
+}
+```
+
+### StopCollecting
+
+```C#
+public void StopCollecting()
+{
+    if (controller != null)
+    {
+        controller.StopDevice();
+        controller = null;
+    }
+    dataCollector?.CancelAsync();
+    disposed = true;
+}
+```
+
+### Dispose
+
+```C#
+private void Dispose()
+{
+    dataCollector?.Dispose();
+}
+```
+
+## Работа с UI

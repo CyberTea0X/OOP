@@ -57,7 +57,13 @@ namespace MeasuringDevice
                 controller.StopDevice();
                 controller = null;
             }
+            dataCollector?.CancelAsync();
             disposed = true;
+        }
+
+        private void Dispose()
+        {
+            dataCollector?.Dispose();
         }
 
         private void GetMeasurements()

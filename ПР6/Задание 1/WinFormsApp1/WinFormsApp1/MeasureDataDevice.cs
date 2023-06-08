@@ -1,6 +1,7 @@
 ﻿using DeviceTypeNS;
 using DeviceControllerNS;
 using System.ComponentModel;
+using System.Linq;
 
 namespace MeasuringDevice
 {
@@ -42,7 +43,8 @@ namespace MeasuringDevice
         public void StartCollecting()
         {
             controller = DeviceController.StartDevice(measurementType);
-            loggingFileWriter = new StreamWriter("log.txt");
+            string currentTime = DateTime.Now.ToString().Replace(' ', '-').Replace(':', '-');
+            loggingFileWriter = new StreamWriter($"log_{currentTime}.txt");
             GetMeasurements();
         }
         /// <summary>
@@ -55,18 +57,20 @@ namespace MeasuringDevice
                 controller.StopDevice();
                 controller = null;
             }
+            loggingFileWriter?.Close();
+            loggingFileWriter?.Dispose();
             dataCollector?.CancelAsync();
-            disposed = true;
+            Dispose();
         }
 
         private void Dispose()
         {
+            disposed = true;
             dataCollector?.Dispose();
         }
 
         private void GetMeasurements()
         {
-
             dataCollector = new BackgroundWorker();
             dataCollector.WorkerReportsProgress = true;
             dataCollector.WorkerSupportsCancellation = true;
@@ -86,14 +90,14 @@ namespace MeasuringDevice
         {
             dataCaptured = new int[10];
             int i = 0;
-
             while (dataCollector?.CancellationPending == false && disposed == false)
             {
                 dataCaptured[i] = controller != null ?
                     controller.TakeMeasurement() : dataCaptured[i];
                 mostRecentMeasure = dataCaptured[i];
                 loggingFileWriter?.WriteLine($"Measurement - {mostRecentMeasure}");
-                dataCollector.ReportProgress(1);
+                Thread.Sleep(500);
+                dataCollector.ReportProgress(0);
                 i = (i + 1) % 10;
             }
         }

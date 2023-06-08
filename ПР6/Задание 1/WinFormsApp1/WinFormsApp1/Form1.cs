@@ -17,36 +17,39 @@ namespace WinFormsApp1
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void createDevice1_Click(object sender, EventArgs e)
         {
+            device1?.StopCollecting();
             device1 = new MeasureLengthDevice(unitsToUse1);
-            newMeasurementTaken = new EventHandler(device_NewMeasurementTaken);
         }
 
-        private void button3_Click(object sender, EventArgs e)
-        {
-            device1?.StartCollecting();
-            if (device1 == null)
-            {
-                MessageBox.Show("Устройство ещё не создано");
-            }
-        }
-
-        private void button2_Click(object sender, EventArgs e)
+        private void startCollecting1_Click(object sender, EventArgs e)
         {
             if (device1 == null)
             {
                 MessageBox.Show("Устройство ещё не создано");
                 return;
             }
-            listBox1.Items.Clear();
-            foreach (int el in device1.GetRawData())
+            newMeasurementTaken = new EventHandler(device1_NewMeasurementTaken);
+            device1.NewMeasurementTaken += newMeasurementTaken;
+            device1.StartCollecting();
+        }
+
+        private void device1_NewMeasurementTaken(object? sender, EventArgs e)
+        {
+            if (device1!= null)
             {
-                listBox1.Items.Add(el);
+                metricValue1.Text = device1.MetricValue().ToString();
+                ImperialValue1.Text = device1.ImperialValue().ToString();
+                listBox1.Items.Clear();
+                foreach (int el in device1.GetRawData())
+                {
+                    listBox1.Items.Add(el);
+                }
             }
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private void StopCollecting1_Click(object sender, EventArgs e)
         {
             device1?.StopCollecting();
             if (device1 == null)
@@ -55,74 +58,41 @@ namespace WinFormsApp1
             }
         }
 
-        private void button5_Click(object sender, EventArgs e)
+        private void createDevice2_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(device1?.MetricValue().ToString());
-            if (device1 == null)
-            {
-                MessageBox.Show("Устройство ещё не создано");
-            }
-        }
-
-        private void button6_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show(device1?.ImperialValue().ToString());
-            if (device1 == null)
-            {
-                MessageBox.Show("Устройство ещё не создано");
-            }
-        }
-
-        private void button12_Click(object sender, EventArgs e)
-        {
+            device2?.StopCollecting();
             device2 = new MeasureMassDevice(unitsToUse2);
         }
 
-        private void button10_Click(object sender, EventArgs e)
-        {
-            device2?.StartCollecting();
-            if (device2 == null)
-            {
-                MessageBox.Show("Устройство ещё не создано");
-            }
-        }
-
-        private void button11_Click(object sender, EventArgs e)
+        private void startCollecting2_Click(object sender, EventArgs e)
         {
             if (device2 == null)
             {
                 MessageBox.Show("Устройство ещё не создано");
                 return;
             }
-            listBox2.Items.Clear();
-            foreach (int el in device2.GetRawData())
+            newMeasurementTaken = new EventHandler(device2_NewMeasurementTaken);
+            device2.NewMeasurementTaken += newMeasurementTaken;
+            device2.StartCollecting();
+        }
+
+        private void device2_NewMeasurementTaken(object? sender, EventArgs e)
+        {
+            if (device2 != null)
             {
-                listBox2.Items.Add(el);
+                metricValue2.Text = device2.MetricValue().ToString();
+                ImperialValue2.Text = device2.ImperialValue().ToString();
+                listBox2.Items.Clear();
+                foreach (int el in device2.GetRawData())
+                {
+                    listBox2.Items.Add(el);
+                }
             }
         }
 
-        private void button9_Click(object sender, EventArgs e)
+        private void StopCollecting2_Click(object sender, EventArgs e)
         {
             device2?.StopCollecting();
-            if (device2 == null)
-            {
-                MessageBox.Show("Устройство ещё не создано");
-            }
-
-        }
-
-        private void button8_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show(device2?.MetricValue().ToString());
-            if (device2 == null)
-            {
-                MessageBox.Show("Устройство ещё не создано");
-            }
-        }
-
-        private void button7_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show(device2?.ImperialValue().ToString());
             if (device2 == null)
             {
                 MessageBox.Show("Устройство ещё не создано");

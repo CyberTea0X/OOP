@@ -287,6 +287,8 @@ public void StopCollecting() {
 }
 ```
 
+Файл потом можно будет найти примерно где-то в (путь к коду проекта) + `\bin\Debug\net6.0-windows`.
+
 #### dataCollector_DoWork
 
 Возможная реализация `dataCollector_DoWork`:

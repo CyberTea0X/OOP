@@ -274,7 +274,7 @@ namespace DeviceControllerNS
 // Meow
 ```
 
-Вернёмся обратно в `MeasureLengthDevice`. Нам нужно найти метод `StartCollecting`, а затем удалить тело метода по умолчанию, после чего добавить в метод `StartCollecting` код для создания экземпляра поля контроллера с помощью статического метода `StartDevice` класса `DeviceController`. Для этого нужно передать значение в поле MeasurementType в качестве параметра методу `StartCollecting`.
+Вернёмся обратно в класс `MeasureLengthDevice`. Нам нужно найти метод `StartCollecting`, а затем удалить тело метода по умолчанию, после чего добавить в метод `StartCollecting` код для создания экземпляра поля контроллера с помощью статического метода `StartDevice` класса `DeviceController`. Для этого нужно передать значение в поле MeasurementType в качестве параметра методу `StartCollecting`.
 
 ```C#
 //...

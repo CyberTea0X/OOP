@@ -9,6 +9,7 @@
 - [Практическая работа №6](practices/pr6/p6.md)
     - [Ключевые понятия](practices/pr6/key_concepts.md)
     - [Задание 1. Использование событий](practices/pr6/task1.md)
+    - [Задание 2. Использование лямбда-выражений (В разработке)](practices/pr6/task2.md)
 - [Приложение](appendix/page.md)
     - [Visual studio хоткеи](appendix/vs_hotkeys.md)
     - [Интерфейсы](appendix/interfaces.md)

@@ -9,11 +9,15 @@ namespace MeasureMassDeviceNS
         private Units unitsToUse;
         new private const DeviceType measurementType = DeviceType.MASS;
 
-        public MeasureMassDevice(Units unitsToUse)
+        public MeasureMassDevice(Units unitsToUse, int heartBeatInterval)
         {
             this.unitsToUse = unitsToUse;
             this.dataCaptured = new int[0];
+            this.heartBeatInterval = heartBeatInterval;
         }
+
+        public MeasureMassDevice(Units deviceUnits) : this(deviceUnits, 1000) { }
+
         override public decimal ImperialValue()
         {
             switch (unitsToUse)

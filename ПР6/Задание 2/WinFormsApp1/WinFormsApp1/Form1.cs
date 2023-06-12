@@ -1,5 +1,6 @@
 using UnitsEnumeration;
 using MeasureMassDeviceNS;
+using MeasuringDevice;
 
 namespace WinFormsApp1
 {
@@ -9,7 +10,6 @@ namespace WinFormsApp1
         MeasureMassDevice? device2;
         Units unitsToUse1 = Units.Metric;
         Units unitsToUse2 = Units.Metric;
-        EventHandler newMeasurementTaken;
 
 
         public Form1()
@@ -30,12 +30,11 @@ namespace WinFormsApp1
                 MessageBox.Show("Устройство ещё не создано");
                 return;
             }
-            newMeasurementTaken = new EventHandler(device1_NewMeasurementTaken);
-            device1.NewMeasurementTaken += newMeasurementTaken;
+            device1.HeartBeat += new HeartBeatEventHandler(device1_NewMeasurementTaken);
             device1.StartCollecting();
         }
 
-        private void device1_NewMeasurementTaken(object? sender, EventArgs e)
+        private void device1_NewMeasurementTaken(object? sender, HeartBeatEventArgs e)
         {
             if (device1!= null)
             {
@@ -71,8 +70,7 @@ namespace WinFormsApp1
                 MessageBox.Show("Устройство ещё не создано");
                 return;
             }
-            newMeasurementTaken = new EventHandler(device2_NewMeasurementTaken);
-            device2.NewMeasurementTaken += newMeasurementTaken;
+            device2.HeartBeat += new HeartBeatEventHandler(device2_NewMeasurementTaken);
             device2.StartCollecting();
         }
 

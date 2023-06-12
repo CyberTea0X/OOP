@@ -9,11 +9,14 @@ namespace WinFormsApp1
     {
         private Units unitsToUse;
         new private const DeviceType measurementType = DeviceType.LENGTH;
-        public MeasureLengthDevice(Units unitsToUse)
+        public MeasureLengthDevice(Units unitsToUse, int heartBeatInterval)
         {
             this.unitsToUse = unitsToUse;
             this.dataCaptured = new int[0];
+            this.heartBeatInterval = heartBeatInterval;
         }
+
+        public MeasureLengthDevice(Units deviceUnits) : this(deviceUnits, 1000) { }
 
         override public decimal ImperialValue()
         {

@@ -11,21 +11,50 @@ namespace MeasuringDevice
         public int mostRecentMeasure;
         public DeviceController? controller;
         public DeviceType measurementType;
-        private BackgroundWorker? dataCollector;
         public bool disposed = false;
         private StreamWriter? loggingFileWriter;
+        private BackgroundWorker? heartBeatTimer;
 
-        public int HeartBeatInterval => throw new NotImplementedException();
+        public event HeartBeatEventHandler? HeartBeat;
 
-        public event EventHandler? NewMeasurementTaken;
+        public int heartBeatInterval;
+        public int HeartBeatInterval { get => heartBeatInterval; private set => heartBeatInterval = value; }
+        private void startHeartBeat()
+        {
+            dataCaptured = new int[10];
+            int i = 0;
+            heartBeatTimer = new BackgroundWorker();
+            heartBeatTimer.WorkerReportsProgress = true;
+            heartBeatTimer.WorkerSupportsCancellation = true;
+            heartBeatTimer.DoWork += (e, args) =>
+            {
+                while (heartBeatTimer?.CancellationPending == false && disposed == false)
+                {
+                    dataCaptured[i] = controller != null ? controller.TakeMeasurement() : dataCaptured[i];
+                    Thread.Sleep(heartBeatInterval);
+                    mostRecentMeasure = dataCaptured[i];
+                    if (heartBeatTimer?.CancellationPending == false)
+                    {
+                        loggingFileWriter?.WriteLine($"Measurement - {mostRecentMeasure}");
+                        heartBeatTimer.ReportProgress(0);
+                        i = (i + 1) % 10;
+                    }
+                }
+            };
+            heartBeatTimer.ProgressChanged += (e, args) =>
+            {
+                OnHeartBeat();
+            };
+            heartBeatTimer.RunWorkerAsync();
+        }
 
         event IEventEnabledMeasuringDevice.HeartBeatEventHandler IEventEnabledMeasuringDevice.HeartBeat
         {
-            add { }
-            remove { }
+            add {}
+            remove {}
         }
 
-        protected virtual void OnNewMeasurementTaken() => NewMeasurementTaken?.Invoke(this, EventArgs.Empty);
+        protected virtual void OnHeartBeat() => HeartBeat?.Invoke(this, new HeartBeatEventArgs());
 
         /// <summary>
         /// Преобразует необработанные данные, собранные устройством измерения, в значение в метрических единицах.
@@ -45,7 +74,7 @@ namespace MeasuringDevice
             controller = DeviceController.StartDevice(measurementType);
             string currentTime = DateTime.Now.ToString().Replace(' ', '-').Replace(':', '-');
             loggingFileWriter = new StreamWriter($"log_{currentTime}.txt");
-            GetMeasurements();
+            startHeartBeat();
         }
         /// <summary>
         /// Останавливает сбор данных устройства измерения.
@@ -59,47 +88,14 @@ namespace MeasuringDevice
             }
             loggingFileWriter?.Close();
             loggingFileWriter?.Dispose();
-            dataCollector?.CancelAsync();
+            heartBeatTimer?.CancelAsync();
             Dispose();
         }
 
         private void Dispose()
         {
             disposed = true;
-            dataCollector?.Dispose();
-        }
-
-        private void GetMeasurements()
-        {
-            dataCollector = new BackgroundWorker();
-            dataCollector.WorkerReportsProgress = true;
-            dataCollector.WorkerSupportsCancellation = true;
-
-            dataCollector.DoWork += new DoWorkEventHandler(dataCollector_DoWork);
-            dataCollector.ProgressChanged += new ProgressChangedEventHandler(dataCollector_ProgressChanged);
-
-            dataCollector.RunWorkerAsync();
-        }
-
-        private void dataCollector_ProgressChanged(object? sender, ProgressChangedEventArgs e)
-        {
-            OnNewMeasurementTaken();
-        }
-
-        private void dataCollector_DoWork(object? sender, DoWorkEventArgs e)
-        {
-            dataCaptured = new int[10];
-            int i = 0;
-            while (dataCollector?.CancellationPending == false && disposed == false)
-            {
-                dataCaptured[i] = controller != null ?
-                    controller.TakeMeasurement() : dataCaptured[i];
-                mostRecentMeasure = dataCaptured[i];
-                loggingFileWriter?.WriteLine($"Measurement - {mostRecentMeasure}");
-                Thread.Sleep(500);
-                dataCollector.ReportProgress(0);
-                i = (i + 1) % 10;
-            }
+            heartBeatTimer?.Dispose();
         }
 
         public int[] GetRawData()

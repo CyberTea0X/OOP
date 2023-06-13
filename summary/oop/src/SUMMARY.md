@@ -10,6 +10,7 @@
     - [Ключевые понятия](practices/pr6/key_concepts.md)
     - [Задание 1. Использование событий](practices/pr6/task1.md)
     - [Задание 2. Использование лямбда-выражений](practices/pr6/task2.md)
+    - [Задание 3. Создание собственных событий](practices/pr6/task3.md)
 - [Приложение](appendix/page.md)
     - [Visual studio хоткеи](appendix/vs_hotkeys.md)
     - [Интерфейсы](appendix/interfaces.md)

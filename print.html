@@ -2621,6 +2621,12 @@ public void StartGame()
 <div style="break-before: page; page-break-before: always;"></div><h1 id="Задание-2-Реализовать-3-4-паттерна-проектирования-на-языке-программирования-c-В-разработке"><a class="header" href="#Задание-2-Реализовать-3-4-паттерна-проектирования-на-языке-программирования-c-В-разработке">Задание 2. Реализовать 3-4 паттерна проектирования на языке программирования C# (В разработке)</a></h1>
 <p>В качестве основы для проекта можно выбрать раздел Интернет-магазина, торгующего различными товарами (добиться расширяемости и масштабируемости проекта).
 Можно выбрать сложную иерархитческую структуру объектов и классов, типа студент, преподаватель, менеджер, руководитель и т.п.</p>
+<h2 id="singleton-одиночка"><a class="header" href="#singleton-одиночка">Singleton (одиночка)</a></h2>
+<h2 id="Фабричный-метод-factory-method"><a class="header" href="#Фабричный-метод-factory-method">Фабричный метод (Factory Method)</a></h2>
+<h2 id="Абстрактная-фабрика-abstract-factory"><a class="header" href="#Абстрактная-фабрика-abstract-factory">Абстрактная фабрика (Abstract Factory)</a></h2>
+<h2 id="Итератор-iterator"><a class="header" href="#Итератор-iterator">Итератор (Iterator)</a></h2>
+<h2 id="mediator-посредник"><a class="header" href="#mediator-посредник">Mediator (посредник)</a></h2>
+<h2 id="bridge-мост"><a class="header" href="#bridge-мост">Bridge (мост)</a></h2>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="Приложение"><a class="header" href="#Приложение">Приложение</a></h1>
 <p>Тут более подробно описаны различные концепты языка С#, которые были встречены в работах</p>
 <h2 id="Основные-источники"><a class="header" href="#Основные-источники">Основные источники:</a></h2>
@@ -3731,7 +3737,7 @@ DisplayMessage удален
 <div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
 <p>Книга банды четырёх.</p>
 </div>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="Абстрактная-фабрика-abstract-factory"><a class="header" href="#Абстрактная-фабрика-abstract-factory">Абстрактная фабрика (Abstract Factory)</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="Абстрактная-фабрика-abstract-factory-1"><a class="header" href="#Абстрактная-фабрика-abstract-factory-1">Абстрактная фабрика (Abstract Factory)</a></h1>
 <p>Абстрактная фабрика — паттерн, порождающий объекты.</p>
 <p>Предоставляет интерфейс для создания семейств взаимосвязанных или взаимозависимых объектов, не специфицируя их конкретных классов.</p>
 <h2 id="Мотивация"><a class="header" href="#Мотивация">Мотивация</a></h2>
@@ -3812,9 +3818,62 @@ DisplayMessage удален
 </li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="Строитель-builder"><a class="header" href="#Строитель-builder">Строитель (Builder)</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="Фабричный-метод-factory-method"><a class="header" href="#Фабричный-метод-factory-method">Фабричный метод (Factory Method)</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="Фабричный-метод-factory-method-1"><a class="header" href="#Фабричный-метод-factory-method-1">Фабричный метод (Factory Method)</a></h1>
+<p>Фабричный метод — паттерн, порождающий классы.</p>
+<p>Определяет интерфейс для создания объекта, но оставляет подклассам решение о том, экземпляры какого класса должны создаваться. Фабричный метод позволяет классу делегировать создание экземпляров подклассам.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="Прототип-prototype"><a class="header" href="#Прототип-prototype">Прототип (Prototype)</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="Одиночка-singleton"><a class="header" href="#Одиночка-singleton">Одиночка (Singleton)</a></h1>
+<p>Одиночка — паттерн, порождающий объекты.
+Гарантирует, что у класса существует только один экземпляр, и предоставляет к нему глобальную точку доступа.</p>
+<h2 id="Мотивация-1"><a class="header" href="#Мотивация-1">Мотивация</a></h2>
+<p>Для некоторых классов важно, чтобы существовал только один экземпляр. В системе может быть много принтеров, но может существовать лишь один спулер. В операционной системе должна быть только одна файловая система и единственный оконный менеджер. В цифровом фильтре может находиться только один аналого-цифровой преобразователь (АЦП). Бухгалтерская система обслуживает только одну компанию.</p>
+<p>Как гарантировать, что у класса есть единственный экземпляр и что этот экземпляр легко доступен? Глобальная переменная дает доступ к объекту, но не запрещает создать несколько экземпляров класса.
+Более удачное решение — возложить на сам класс ответственность за то, что у него существует только один экземпляр. Класс может запретить создание дополнительных экземпляров, перехватывая запросы на создание новых объектов, и он же способен предоставить доступ к своему экземпляру. Это и есть назначение паттерна одиночка.</p>
+<h2 id="Применимость-1"><a class="header" href="#Применимость-1">Применимость</a></h2>
+<p>Основные условия для применения паттерна одиночка:</p>
+<ul>
+<li>
+<p>должен существовать ровно один экземпляр некоторого класса, к которому может обратиться любой клиент через известную точку доступа;</p>
+</li>
+<li>
+<p>единственный экземпляр должен расширяться путем порождения подклассов, а клиенты должны иметь возможность работать с расширенным экземпляром без модификации своего кода.</p>
+</li>
+</ul>
+<h2 id="Структура-1"><a class="header" href="#Структура-1">Структура</a></h2>
+<p><img src="appendix/patterns/./images/singleton.png" alt="Синглтон" /></p>
+<h2 id="Участники-1"><a class="header" href="#Участники-1">Участники</a></h2>
+<p><code>Singleton</code> — одиночка:</p>
+<ul>
+<li>
+<p>определяет операцию <code>Instance</code>, которая позволяет клиентам получить доступ к единственному экземпляру. <code>Instance</code> — это операция класса, то есть статический метод.</p>
+</li>
+<li>
+<p>может нести ответственность за создание собственного уникального экземпляра.</p>
+</li>
+</ul>
+<h2 id="Отношения-1"><a class="header" href="#Отношения-1">Отношения</a></h2>
+<ul>
+<li>Клиенты получают доступ к экземпляру класса <code>Singleton</code> только через его операцию <code>Instance</code>.</li>
+</ul>
+<h2 id="Результаты-1"><a class="header" href="#Результаты-1">Результаты</a></h2>
+<p>Паттерн одиночка обладает рядом достоинств:</p>
+<ul>
+<li>
+<p>Контролируемый доступ к единственному экземпляру. Поскольку класс <code>Singleton</code> инкапсулирует свой единственный экземпляр, он полностью контролирует то, как и когда клиенты получают доступ к нему;</p>
+</li>
+<li>
+<p>Сокращение пространства имен. Паттерн одиночка — шаг вперед по сравнению с глобальными переменными. Он позволяет избежать засорения пространства имен глобальными переменными, в которых хранятся уникальные экземпляры;</p>
+</li>
+<li>
+<p>Возможность уточнения операций и представления. От класса <code>Singleton</code> можно порождать подклассы, а приложение легко настраивается экземпляром расширенного класса. Приложение можно настроить экземпляром нужного класса во время выполнения;</p>
+</li>
+<li>
+<p>Возможность использования переменного числа экземпляров. Паттерн позволяет легко изменить решение и разрешить появление более одного экземпляра класса <code>Singleton</code>. Более того, тот же подход может использоваться для управления числом экземпляров, используемых в приложении. Изменить нужно будет лишь операцию, дающую доступ к экземпляру класса <code>Singleton</code>;</p>
+</li>
+<li>
+<p>Большая гибкость, чем у операций класса. Другой способ реализации функциональности одиночки — использование статических методов. Но этот приём препятствует изменению дизайна, если потребуется разрешить наличие нескольких экземпляров класса.</p>
+</li>
+</ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="Адаптер-adapter"><a class="header" href="#Адаптер-adapter">Адаптер (Adapter)</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="Мост-bridge"><a class="header" href="#Мост-bridge">Мост (Bridge)</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="Компоновщик-composite"><a class="header" href="#Компоновщик-composite">Компоновщик (Composite)</a></h1>
@@ -3825,7 +3884,7 @@ DisplayMessage удален
 <div style="break-before: page; page-break-before: always;"></div><h1 id="Цепочка-обязанностей-chain-of-responsibility"><a class="header" href="#Цепочка-обязанностей-chain-of-responsibility">Цепочка обязанностей (Chain of responsibility)</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="Команда-command"><a class="header" href="#Команда-command">Команда (Command)</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="Интерпретатор-interpreter"><a class="header" href="#Интерпретатор-interpreter">Интерпретатор (Interpreter)</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="Итератор-iterator"><a class="header" href="#Итератор-iterator">Итератор (Iterator)</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="Итератор-iterator-1"><a class="header" href="#Итератор-iterator-1">Итератор (Iterator)</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="Посредник-mediator"><a class="header" href="#Посредник-mediator">Посредник (Mediator)</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="Хранитель-memento"><a class="header" href="#Хранитель-memento">Хранитель (Memento)</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="Наблюдатель-observer"><a class="header" href="#Наблюдатель-observer">Наблюдатель (Observer)</a></h1>

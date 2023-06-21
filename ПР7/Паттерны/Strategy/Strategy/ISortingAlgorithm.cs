@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Interpreter
+namespace Strategy
 {
-    internal class AbstractExpression
+    internal interface ISortingAlgorithm<T>
     {
+        void Sort(ref T[] array);
     }
 }

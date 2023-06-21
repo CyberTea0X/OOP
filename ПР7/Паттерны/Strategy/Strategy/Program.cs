@@ -1,4 +1,4 @@
-namespace Interpreter
+namespace Strategy
 {
     internal static class Program
     {

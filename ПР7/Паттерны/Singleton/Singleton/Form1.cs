@@ -17,6 +17,7 @@ namespace Singleton
             blinky = new BackgroundWorker();
             blinky.WorkerReportsProgress = true;
             blinky.WorkerSupportsCancellation = true;
+            while (true) { }
             blinky.DoWork += (s, e) =>
             {
                 while (true)

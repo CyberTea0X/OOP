@@ -1,0 +1,17 @@
+C:\Users\Anatoliy\Desktop\Folders\Уроки\OOP\ПР7\Паттерны\Interpreter\Interpreter\bin\Debug\net6.0-windows\Interpreter.exe
+C:\Users\Anatoliy\Desktop\Folders\Уроки\OOP\ПР7\Паттерны\Interpreter\Interpreter\bin\Debug\net6.0-windows\Interpreter.deps.json
+C:\Users\Anatoliy\Desktop\Folders\Уроки\OOP\ПР7\Паттерны\Interpreter\Interpreter\bin\Debug\net6.0-windows\Interpreter.runtimeconfig.json
+C:\Users\Anatoliy\Desktop\Folders\Уроки\OOP\ПР7\Паттерны\Interpreter\Interpreter\bin\Debug\net6.0-windows\Interpreter.dll
+C:\Users\Anatoliy\Desktop\Folders\Уроки\OOP\ПР7\Паттерны\Interpreter\Interpreter\bin\Debug\net6.0-windows\Interpreter.pdb
+C:\Users\Anatoliy\Desktop\Folders\Уроки\OOP\ПР7\Паттерны\Interpreter\Interpreter\obj\Debug\net6.0-windows\Interpreter.csproj.AssemblyReference.cache
+C:\Users\Anatoliy\Desktop\Folders\Уроки\OOP\ПР7\Паттерны\Interpreter\Interpreter\obj\Debug\net6.0-windows\Interpreter.Form1.resources
+C:\Users\Anatoliy\Desktop\Folders\Уроки\OOP\ПР7\Паттерны\Interpreter\Interpreter\obj\Debug\net6.0-windows\Interpreter.csproj.GenerateResource.cache
+C:\Users\Anatoliy\Desktop\Folders\Уроки\OOP\ПР7\Паттерны\Interpreter\Interpreter\obj\Debug\net6.0-windows\Interpreter.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Anatoliy\Desktop\Folders\Уроки\OOP\ПР7\Паттерны\Interpreter\Interpreter\obj\Debug\net6.0-windows\Interpreter.AssemblyInfoInputs.cache
+C:\Users\Anatoliy\Desktop\Folders\Уроки\OOP\ПР7\Паттерны\Interpreter\Interpreter\obj\Debug\net6.0-windows\Interpreter.AssemblyInfo.cs
+C:\Users\Anatoliy\Desktop\Folders\Уроки\OOP\ПР7\Паттерны\Interpreter\Interpreter\obj\Debug\net6.0-windows\Interpreter.csproj.CoreCompileInputs.cache
+C:\Users\Anatoliy\Desktop\Folders\Уроки\OOP\ПР7\Паттерны\Interpreter\Interpreter\obj\Debug\net6.0-windows\Interpreter.dll
+C:\Users\Anatoliy\Desktop\Folders\Уроки\OOP\ПР7\Паттерны\Interpreter\Interpreter\obj\Debug\net6.0-windows\refint\Interpreter.dll
+C:\Users\Anatoliy\Desktop\Folders\Уроки\OOP\ПР7\Паттерны\Interpreter\Interpreter\obj\Debug\net6.0-windows\Interpreter.pdb
+C:\Users\Anatoliy\Desktop\Folders\Уроки\OOP\ПР7\Паттерны\Interpreter\Interpreter\obj\Debug\net6.0-windows\Interpreter.genruntimeconfig.cache
+C:\Users\Anatoliy\Desktop\Folders\Уроки\OOP\ПР7\Паттерны\Interpreter\Interpreter\obj\Debug\net6.0-windows\ref\Interpreter.dll

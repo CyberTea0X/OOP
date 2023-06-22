@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33815.320
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StableDiffusion", "StableDiffusion\StableDiffusion.csproj", "{783D46D2-366B-4DDE-ADB5-4541E7D80864}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{783D46D2-366B-4DDE-ADB5-4541E7D80864}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{783D46D2-366B-4DDE-ADB5-4541E7D80864}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{783D46D2-366B-4DDE-ADB5-4541E7D80864}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{783D46D2-366B-4DDE-ADB5-4541E7D80864}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E1144D44-B25E-4EE3-9D7C-2B76966B62D1}
+	EndGlobalSection
+EndGlobal
